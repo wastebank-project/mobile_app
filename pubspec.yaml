@@ -42,10 +42,3 @@ flutter:
           weight: 500
         - asset: assets/fonts/Poppins-SemiBold.ttf
           weight: 700
-
-
-flutter_native_splash:
-  android: true
-  ios: true
-  web: false
-  background_image: assets/png/WasteApp.png
