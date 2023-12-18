@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waste_app/screens/homepage.dart';
+import 'package:waste_app/screens/onboarding.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Poppins",
         useMaterial3: true,
       ),
-      home: MyHomePage(title: "HomePage"),
+      home: Onboarding_Screen(),
     );
   }
 }
