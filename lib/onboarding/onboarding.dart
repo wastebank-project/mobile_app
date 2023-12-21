@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:waste_app/screens/welcoming_page.dart';
+import 'package:waste_app/onboarding/welcoming_page.dart';
 
 class Onboarding_Screen extends StatefulWidget {
   const Onboarding_Screen({super.key});
@@ -134,7 +134,7 @@ class _Onboarding_ScreenState extends State<Onboarding_Screen> {
                                     child: child,
                                   );
                                 },
-                                transitionDuration: const Duration(milliseconds: 500),
+                                transitionDuration: const Duration(milliseconds: 1000),
                               ),
                             );
 
