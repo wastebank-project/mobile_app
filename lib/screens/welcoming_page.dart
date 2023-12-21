@@ -7,12 +7,13 @@ class WelcomingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 70),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            SizedBox(height: 150),
             SvgPicture.asset("assets/svg/log-reg.svg"),
             SizedBox(height: 60),
             const Center(
@@ -34,25 +35,25 @@ class WelcomingPage extends StatelessWidget {
             ),
             SizedBox(height: 40),
             TextButton(
-                onPressed: (){
-            },
+              onPressed: (){
+              },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(const Color(0xFF7FB77E)),
                 shape: MaterialStateProperty.all(const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                    ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
                 ),
                 ),
               ),
-                child: const Text(
-                    "Create New Account",
-                    style: TextStyle(
+              child: const Text(
+                  "Create New Account",
+                  style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.w600
-                    )
-                ),
+                  )
+              ),
             ),
             SizedBox(height: 10),
             TextButton(
@@ -66,9 +67,9 @@ class WelcomingPage extends StatelessWidget {
                     )
                 ),
                 shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  )
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    )
                 ),
               ),
               child: const Text(
@@ -82,7 +83,7 @@ class WelcomingPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      )
     );
   }
 }
