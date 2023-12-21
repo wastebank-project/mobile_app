@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:waste_app/screens/welcoming_page.dart';
 
 class Onboarding_Screen extends StatefulWidget {
   const Onboarding_Screen({super.key});
@@ -108,19 +109,46 @@ class _Onboarding_ScreenState extends State<Onboarding_Screen> {
                           )),
                           fixedSize: MaterialStateProperty.all(Size(100,40)), // Set custom width and height
                         ),
-                        onPressed: (){},
+                        onPressed: (){
+                          if (_currentPage < 2) {
+                            _pageController.nextPage(
+                                duration: Duration(milliseconds: 1000),
+                                curve: Curves.ease
+                            );
+                          } else {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                              return WelcomingPage();
+                            }));
+                          }
+                        },
                         child: Text(
-                          _currentPage < 2 ? "Next" : "Selesai",
+                          _currentPage < 2 ? "Berikutnya" : "Selesai",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color:  Colors.white,
                             fontSize: 15
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
-                ))
+                )),
+            Positioned(
+              left: 150,
+              bottom: 60,
+                child:
+                SmoothPageIndicator(
+                  controller: _pageController,
+                  count: 3, // Number of pages in the PageView
+                  effect:  ExpandingDotsEffect(
+                    activeDotColor: Colors.teal,
+                    dotColor: Colors.grey.shade300,
+                    dotWidth: 7,
+                    dotHeight: 7,
+                    spacing: 15,
+                    // verticalOffset: 10
+                  ),
+                ), )
           ],
         )
       ),
