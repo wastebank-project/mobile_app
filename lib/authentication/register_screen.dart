@@ -24,7 +24,7 @@ class _RegisterScreen extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                SizedBox(height: 200),
+                SizedBox(height: 120),
                 Text(
                   "Welcome to WasteApp",
                   style: TextStyle(
@@ -39,6 +39,36 @@ class _RegisterScreen extends State<RegisterScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 70),
+                Container(
+                  decoration:
+                  BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xffE0E0E0),
+                  ),
+                  child:
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: "Name",
+                      hintStyle: TextStyle(
+                          fontSize: 12,
+                          color: Color(0XFF7F7F7F)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: Colors.white
+                          )
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
                 Container(
                   decoration:
                   BoxDecoration(
@@ -111,6 +141,48 @@ class _RegisterScreen extends State<RegisterScreen> {
                   ),
                 ),
                 SizedBox(height: 15),
+                Container(
+                  decoration:
+                  BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xffE0E0E0),
+                  ),
+                  child:
+                  TextField(
+                    obscureText: _obscureText,
+                    decoration: InputDecoration(
+                        hintText: "Confirm Password",
+                        hintStyle: TextStyle(
+                            fontSize: 12,
+                            color: Color(0XFF7F7F7F)
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                                color: Colors.white
+                            )
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureText ? Icons.visibility : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                        )
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
               ],
             ),
             Container(
@@ -119,7 +191,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                 children: <Widget>[
                   RichText(
                     text: TextSpan(
-                        text: "Belum punya akun?",
+                        text: "Sudah punya akun?",
                         style: TextStyle(
                             color: Color(0xFF7FB77E),
                             fontSize: 11
@@ -149,7 +221,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   ),
                                 );
                               },
-                              text: ' Daftar Sekarang',
+                              text: ' Login Sekarang',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold
                               )
