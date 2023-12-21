@@ -1,18 +1,18 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:waste_app/authentication/register_screen.dart';
+import 'package:waste_app/authentication/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreen();
 }
 bool _obscureText = true;
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreen extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,24 +26,24 @@ class _LoginScreenState extends State<LoginScreen> {
               children: <Widget>[
                 SizedBox(height: 200),
                 Text(
-                    "Welcome to WasteApp",
-                style: TextStyle(
-                  fontSize: 16),
+                  "Welcome to WasteApp",
+                  style: TextStyle(
+                      fontSize: 16),
                 ),
                 SizedBox(height: 5),
                 Text(
-                  "Login",
+                  "Register",
                   style: TextStyle(
-                    color: Color(0xFF7FB77E),
-                    fontSize: 42,
-                    fontWeight: FontWeight.w700),
+                      color: Color(0xFF7FB77E),
+                      fontSize: 42,
+                      fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 70),
                 Container(
                   decoration:
                   BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color(0xffE0E0E0),
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xffE0E0E0),
                   ),
                   child:
                   TextField(
@@ -79,23 +79,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextField(
                     obscureText: _obscureText,
                     decoration: InputDecoration(
-                      hintText: "Password",
-                      hintStyle: TextStyle(
-                          fontSize: 12,
-                          color: Color(0XFF7F7F7F)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: Colors.white,
+                        hintText: "Password",
+                        hintStyle: TextStyle(
+                            fontSize: 12,
+                            color: Color(0XFF7F7F7F)
                         ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
+                        focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                              color: Colors.white
-                          )
-                      ),
+                            color: Colors.white,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                                color: Colors.white
+                            )
+                        ),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _obscureText ? Icons.visibility : Icons.visibility_off,
@@ -118,44 +118,44 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   RichText(
-                      text: TextSpan(
-                          text: "Belum punya akun?",
-                          style: TextStyle(
-                              color: Color(0xFF7FB77E),
-                              fontSize: 11
-                          ),
+                    text: TextSpan(
+                        text: "Belum punya akun?",
+                        style: TextStyle(
+                            color: Color(0xFF7FB77E),
+                            fontSize: 11
+                        ),
                         children: [
                           TextSpan(
-                            recognizer: TapGestureRecognizer()..onTap=(){
-                              Navigator.pushReplacement(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation, secondaryAnimation) => RegisterScreen(),
-                                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                    const begin = Offset(1.0, 0.0);
-                                    const end = Offset.zero;
-                                    const curve = Curves.easeInOut;
+                              recognizer: TapGestureRecognizer()..onTap=(){
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
+                                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.easeInOut;
 
-                                    var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-                                    var offsetAnimation = animation.drive(tween);
+                                      var offsetAnimation = animation.drive(tween);
 
-                                    return SlideTransition(
-                                      position: offsetAnimation,
-                                      child: child,
-                                    );
-                                  },
-                                  transitionDuration: const Duration(milliseconds: 1000),
-                                ),
-                              );
-                          },
-                            text: ' Daftar Sekarang',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold
-                            )
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                    transitionDuration: const Duration(milliseconds: 1000),
+                                  ),
+                                );
+                              },
+                              text: ' Daftar Sekarang',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                              )
                           )
                         ]
-                      ),
+                    ),
                   ),
                   SizedBox(height: 80),
                   TextButton(
