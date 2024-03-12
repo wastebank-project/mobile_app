@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waste_app/onboarding/onboarding.dart';
+import 'package:waste_app/presentation/page/onboarding_page/onboarding_page.dart';
 
 void main() {
   runApp(const MyApp());

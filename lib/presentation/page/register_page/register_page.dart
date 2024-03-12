@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:waste_app/authentication/login_screen.dart';
+import 'package:waste_app/presentation/page/login_page/login_screen.dart';
 import 'package:waste_app/presentation/widgets/text_fields.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -19,7 +19,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 25),
         child: Column(
@@ -62,6 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 WasteAppTextFields(
                   labelText: 'Confirm Password',
                   controller: confPassword,
+                  obscureText: true,
                   suffixIcon: true,
                 ),
                 const SizedBox(height: 15),
@@ -129,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       minimumSize: MaterialStateProperty.all(
                           Size(350, 50)), // Set your custom width and height
                     ),
-                    child: const Text("Login Now",
+                    child: const Text("Register",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
