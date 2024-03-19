@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:waste_app/presentation/page/home_page/methods/logout.dart';
 import 'package:waste_app/presentation/page/home_page/methods/username.dart';
+import 'package:waste_app/presentation/page/home_page/methods/logout.dart';
 
-class HomePageScreen extends StatelessWidget {
-  const HomePageScreen({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
