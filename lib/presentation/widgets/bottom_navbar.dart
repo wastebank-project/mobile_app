@@ -8,8 +8,19 @@ class BottomNavbar extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
+        width: double.infinity,
+        height: 73,
         decoration: BoxDecoration(
-          color: const Color(0xFF7FB77E),
+          color: Color(0xFF7FB77E),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 0,
+              blurRadius: 30,
+            )
+          ],
         ),
       ),
     );
