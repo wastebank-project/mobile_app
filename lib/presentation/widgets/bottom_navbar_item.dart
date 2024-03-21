@@ -21,8 +21,8 @@ class BottomNavbarItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          width: 30,
-          height: 30,
+          width: 35,
+          height: 35,
           child: Image.asset(isSelected ? selectedImage : image),
         ),
         SizedBox(
@@ -31,7 +31,7 @@ class BottomNavbarItem extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-              fontSize: 10, fontWeight: FontWeight.w500, color: Colors.white),
+              fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white),
         )
       ],
     );

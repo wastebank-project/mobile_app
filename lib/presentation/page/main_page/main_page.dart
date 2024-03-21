@@ -45,19 +45,19 @@ class _MainPageState extends State<MainPage> {
                     isSelected: selectedPage == 0,
                     title: 'Home',
                     image: 'assets/png/home.png',
-                    selectedImage: 'assets/png/home.png'),
+                    selectedImage: 'assets/png/home_selected.png'),
                 BottomNavbarItem(
                     index: 1,
                     isSelected: selectedPage == 1,
                     title: 'Pindai',
                     image: 'assets/png/scan.png',
-                    selectedImage: 'assets/png/scan.png'),
+                    selectedImage: 'assets/png/scan_selected.png'),
                 BottomNavbarItem(
                     index: 2,
                     isSelected: selectedPage == 2,
                     title: 'Nasabah',
                     image: 'assets/png/customer.png',
-                    selectedImage: 'assets/png/customer.png')
+                    selectedImage: 'assets/png/customer_selected.png')
               ],
               onTap: (Index) {
                 selectedPage = Index;
