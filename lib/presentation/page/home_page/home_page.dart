@@ -8,18 +8,39 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
-        child: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Username(context),
-              LogoutButton(context),
-            ],
+      body: SingleChildScrollView(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Username(context),
+                LogoutButton(context),
+              ],
+            ),
           ),
-        ),
-      ),
+          const SizedBox(height: 70),
+          const Text(
+            'Selamat Datang!',
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const Text(
+            '"WasteApp" adalah aplikasi inovatif '
+            'yang dirancang untuk memberdayakan pengelola bank sampah dalam '
+            'menjaga lingkungan dengan menyediakan fitur deteksi sampah dan '
+            'pencatatan transaksi sampah di Bank Sampah.'
+            '\n\nAplikasi ini menggunakan teknologi pengenalan gambar dan kecerdasan buatan untuk '
+            'mengidentifikasi jenis sampah dan rekomendasi daur ulang sampah.',
+            textAlign: TextAlign.justify,
+            style: TextStyle(fontSize: 15, height: 1.7),
+          )
+        ],
+      )),
     );
   }
 }

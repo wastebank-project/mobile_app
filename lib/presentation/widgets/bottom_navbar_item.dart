@@ -26,7 +26,7 @@ class BottomNavbarItem extends StatelessWidget {
           child: Image.asset(isSelected ? selectedImage : image),
         ),
         SizedBox(
-          height: 5,
+          height: 2,
         ),
         Text(
           title,

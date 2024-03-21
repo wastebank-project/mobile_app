@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:waste_app/presentation/page/customers_page/customers_page.dart';
 import 'package:waste_app/presentation/page/home_page/home_page.dart';
 import 'package:waste_app/presentation/page/waste_detection/waste_detection.dart';
@@ -21,22 +23,15 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: Stack(
         children: [
-          PageView(
-            controller: pageController,
-            onPageChanged: (value) => setState(() {
-              selectedPage = value;
-            }),
-            children: const [
-              Center(
-                child: HomePage(),
-              ),
-              Center(
-                child: WasteDetection(),
-              ),
-              Center(
-                child: CustomersPage(),
-              )
-            ],
+          Padding(
+            padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
+            child: PageView(
+              controller: pageController,
+              onPageChanged: (value) => setState(() {
+                selectedPage = value;
+              }),
+              children: [HomePage(), WasteDetection(), CustomersPage()],
+            ),
           ),
           BottomNavbar(
               items: [
