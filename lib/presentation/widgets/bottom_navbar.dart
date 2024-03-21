@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:waste_app/presentation/widgets/bottom_navbar_item.dart';
 
 class BottomNavbar extends StatelessWidget {
-  const BottomNavbar({super.key});
+  final List<BottomNavbarItem> items;
+  final void Function(int index) onTap;
+  final int selectedIndex;
+
+  const BottomNavbar(
+      {super.key,
+      required this.items,
+      required this.onTap,
+      required this.selectedIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +30,15 @@ class BottomNavbar extends StatelessWidget {
               blurRadius: 30,
             )
           ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: items
+              .map((e) => GestureDetector(
+                    onTap: () => onTap(e.index),
+                    child: e,
+                  ))
+              .toList(),
         ),
       ),
     );
