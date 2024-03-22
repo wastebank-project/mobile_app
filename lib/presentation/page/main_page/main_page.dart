@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:waste_app/presentation/page/customers_page/customers_page.dart';
 import 'package:waste_app/presentation/page/home_page/home_page.dart';
 import 'package:waste_app/presentation/page/waste_detection/waste_detection.dart';
