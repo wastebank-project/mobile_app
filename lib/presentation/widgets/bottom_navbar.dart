@@ -18,11 +18,11 @@ class BottomNavbar extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         width: double.infinity,
-        height: 73,
+        height: 70,
         decoration: BoxDecoration(
           color: Color(0xFF7FB77E),
           borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+              topLeft: Radius.circular(35), topRight: Radius.circular(35)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.3),

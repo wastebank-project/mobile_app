@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 70),
+          const SizedBox(height: 50),
           const Text(
             'Selamat Datang!',
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),

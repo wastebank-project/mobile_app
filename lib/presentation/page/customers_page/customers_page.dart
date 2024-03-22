@@ -5,38 +5,82 @@ class CustomersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: 50),
+        padding: const EdgeInsets.only(top: 50),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Nasabah\nBank Sampah',
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(
-                height: 70,
-              ),
-              Text(
-                'Nasabah Baru',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
-              ),
-              Text(
-                  'Diperuntukkan untuk nasabah baru yang ingin menabung di Bank Sampah'),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Text(
+              const Text(
                 'Nasabah Baru',
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
               ),
-              Text(
-                  'Diperuntukkan untuk nasabah baru yang ingin menabung di Bank Sampah'),
+              const Text(
+                'Diperuntukkan untuk nasabah baru yang ingin menabung di Bank Sampah',
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Center(
+                child: SizedBox(
+                  width: 280,
+                  height: 55,
+                  child: TextButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xFF7FB77E))),
+                      onPressed: () {},
+                      child: const Text(
+                        'Registrasi Nasabah Baru',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ),
+              ),
+              const SizedBox(
+                height: 80,
+              ),
+              const Text(
+                'Nasabah Baru',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+              ),
+              const Text(
+                'Diperuntukkan untuk nasabah baru yang ingin menabung di Bank Sampah',
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Center(
+                child: SizedBox(
+                  width: 280,
+                  height: 55,
+                  child: TextButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xFF7FB77E))),
+                      onPressed: () {},
+                      child: const Text(
+                        'Tabung Sampah',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ),
+              ),
             ],
           ),
         ),
