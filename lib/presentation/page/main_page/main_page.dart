@@ -24,7 +24,7 @@ class _MainPageState extends State<MainPage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
             child: PageView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: pageController,
               onPageChanged: (value) => setState(() {
                 selectedPage = value;
