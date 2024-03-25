@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waste_app/presentation/page/customers_page/new_customers.dart';
 
 class CustomersPage extends StatelessWidget {
   const CustomersPage({super.key});
@@ -40,7 +41,12 @@ class CustomersPage extends StatelessWidget {
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
                               const Color(0xFF7FB77E))),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NewCustomer()));
+                      },
                       child: const Text(
                         'Registrasi Nasabah Baru',
                         style: TextStyle(

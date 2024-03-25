@@ -33,7 +33,7 @@ class _WasteAppTextFieldsState extends State<WasteAppTextFields> {
         decoration: InputDecoration(
           labelText: widget.labelText,
           labelStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 13,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
