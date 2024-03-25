@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-class WasteDetection extends StatelessWidget {
-  const WasteDetection({super.key});
+class WasteDetection extends StatefulWidget {
+  WasteDetection({super.key});
+
+  @override
+  State<WasteDetection> createState() => _WasteDetectionState();
+}
+
+class _WasteDetectionState extends State<WasteDetection> {
+  XFile? xfile;
 
   @override
   Widget build(BuildContext context) {
