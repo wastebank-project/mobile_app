@@ -18,15 +18,44 @@ class NewCustomer extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 80),
-            const Text('Nama'),
+            const Text(
+              'Nama',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
             WasteAppTextFieldsCustomer(
-                hintText: 'Tulis nama nasabah baru disini',
-                controller: nameController)
+              hintText: 'Tulis nama nasabah baru disini',
+              controller: nameController,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            const Text(
+              'Alamat',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+            WasteAppTextFieldsCustomer(
+              hintText: 'Tulis Alamat Nasabah Baru',
+              controller: addressController,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            const Text(
+              'Nomor Telepon',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+            Container(
+              child: WasteAppTextFieldsCustomer(
+                hintText: '+628XXXXXXXXXX',
+                controller: phoneNumberController,
+                textInputTypeNumber: true,
+              ),
+            )
           ],
         ),
       ),

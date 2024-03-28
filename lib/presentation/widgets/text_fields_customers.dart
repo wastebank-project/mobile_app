@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 class WasteAppTextFieldsCustomer extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
-
+  final bool textInputTypeNumber;
   const WasteAppTextFieldsCustomer({
     Key? key,
     required this.hintText,
     required this.controller,
+    this.textInputTypeNumber = false,
   }) : super(key: key);
 
   @override
@@ -22,24 +23,30 @@ class _WasteAppTextFieldsCustomerState
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color(0xffeeeeee),
+        color: const Color(0xffeeeeee),
       ),
-      child: TextField(
-        controller: widget.controller,
-        decoration: InputDecoration(
-          hintText: widget.hintText,
-          labelStyle: const TextStyle(
-            fontSize: 13,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-              color: Colors.white,
+      child: SizedBox(
+        child: TextField(
+          controller: widget.controller,
+          keyboardType: widget.textInputTypeNumber
+              ? TextInputType.number
+              : TextInputType.text,
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            hintStyle: TextStyle(
+              fontSize: 12,
+              color: Colors.grey.shade500,
             ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.white),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: Colors.white,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.white),
+            ),
           ),
         ),
       ),
