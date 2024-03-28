@@ -13,21 +13,27 @@ class NewCustomer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Registrasi Nasabah Baru',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 80),
+            const Text(
+              'Registrasi Nasabah',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 30),
             const Text(
               'Nama',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 10),
             WasteAppTextFieldsCustomer(
@@ -53,11 +59,26 @@ class NewCustomer extends StatelessWidget {
               controller: phoneNumberController,
               textInputTypeNumber: true,
             ),
-            // const SizedBox(height: 80),
-            // AddressWidgetTextField(
-            //   hintText: 'Alamat',
-            //   controller: addressController,
-            // )
+            const SizedBox(height: 50),
+            Center(
+              child: SizedBox(
+                width: 350,
+                height: 55,
+                child: TextButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0xFFF2994A))),
+                  onPressed: () {},
+                  child: const Text(
+                    'Registrasi Nasabah Baru',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

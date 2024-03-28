@@ -45,7 +45,7 @@ class _WasteDetectionState extends State<WasteDetection> {
                   child: ElevatedButton.icon(
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFF7FB77E))),
+                            MaterialStateProperty.all(const Color(0xFFF2994A))),
                     onPressed: () {},
                     icon: const Icon(Icons.camera_alt, color: Colors.white),
                     label: const Text(
@@ -65,7 +65,7 @@ class _WasteDetectionState extends State<WasteDetection> {
                   child: ElevatedButton.icon(
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFF7FB77E))),
+                            MaterialStateProperty.all(const Color(0xFFF2994A))),
                     onPressed: () {},
                     icon: const Icon(Icons.file_upload_outlined,
                         color: Colors.white),
