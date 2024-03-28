@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:waste_app/presentation/widgets/address_widget_textfield.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 
+// ignore: must_be_immutable
 class NewCustomer extends StatelessWidget {
   NewCustomer({super.key});
 
@@ -27,35 +29,35 @@ class NewCustomer extends StatelessWidget {
               'Nama',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 10),
             WasteAppTextFieldsCustomer(
               hintText: 'Tulis nama nasabah baru disini',
               controller: nameController,
             ),
-            const SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 30),
             const Text(
               'Alamat',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
-            WasteAppTextFieldsCustomer(
-              hintText: 'Tulis Alamat Nasabah Baru',
-              controller: addressController,
-            ),
-            const SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 10),
+            AddressWidgetTextField(
+                hintText: 'Alamat Nasabah Baru', controller: addressController),
+            const SizedBox(height: 30),
             const Text(
               'Nomor Telepon',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
-            Container(
-              child: WasteAppTextFieldsCustomer(
-                hintText: '+628XXXXXXXXXX',
-                controller: phoneNumberController,
-                textInputTypeNumber: true,
-              ),
-            )
+            const SizedBox(height: 10),
+            WasteAppTextFieldsCustomer(
+              hintText: '08XXXXXXXXXX',
+              controller: phoneNumberController,
+              textInputTypeNumber: true,
+            ),
+            // const SizedBox(height: 80),
+            // AddressWidgetTextField(
+            //   hintText: 'Alamat',
+            //   controller: addressController,
+            // )
           ],
         ),
       ),

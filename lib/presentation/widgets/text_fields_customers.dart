@@ -25,27 +25,27 @@ class _WasteAppTextFieldsCustomerState
         borderRadius: BorderRadius.circular(10),
         color: const Color(0xffeeeeee),
       ),
-      child: SizedBox(
-        child: TextField(
-          controller: widget.controller,
-          keyboardType: widget.textInputTypeNumber
-              ? TextInputType.number
-              : TextInputType.text,
-          decoration: InputDecoration(
-            hintText: widget.hintText,
-            hintStyle: TextStyle(
-              fontSize: 12,
-              color: Colors.grey.shade500,
+      child: TextField(
+        controller: widget.controller,
+        keyboardType: widget.textInputTypeNumber
+            ? TextInputType.number
+            : TextInputType.text,
+        decoration: InputDecoration(
+          hintText: widget.hintText,
+          hintStyle: TextStyle(
+            fontSize: 12,
+            color: Colors.grey.shade500,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+              color: Colors.white,
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: Colors.white,
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.white),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+              color: Colors.white,
             ),
           ),
         ),
