@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class WasteAppTextFieldsCustomer extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   final bool textInputTypeNumber;
+  final bool lengthLimit;
+
   const WasteAppTextFieldsCustomer({
     Key? key,
     required this.hintText,
     required this.controller,
     this.textInputTypeNumber = false,
+    this.lengthLimit = false,
   }) : super(key: key);
 
   @override
@@ -27,6 +31,11 @@ class _WasteAppTextFieldsCustomerState
       ),
       child: TextField(
         controller: widget.controller,
+        inputFormatters: [
+          widget.lengthLimit
+              ? LengthLimitingTextInputFormatter(12)
+              : LengthLimitingTextInputFormatter(null)
+        ],
         keyboardType: widget.textInputTypeNumber
             ? TextInputType.number
             : TextInputType.text,

@@ -58,6 +58,7 @@ class NewCustomer extends StatelessWidget {
               hintText: '08XXXXXXXXXX',
               controller: phoneNumberController,
               textInputTypeNumber: true,
+              lengthLimit: true,
             ),
             const SizedBox(height: 50),
             Center(
