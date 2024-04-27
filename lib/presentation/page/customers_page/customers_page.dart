@@ -40,7 +40,7 @@ class CustomersPage extends StatelessWidget {
                   child: TextButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFFF2994A))),
+                            MaterialStateProperty.all(const Color(0xFF7FB77E))),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -77,7 +77,7 @@ class CustomersPage extends StatelessWidget {
                   child: TextButton(
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
-                              const Color(0xFFF2994A))),
+                              const Color(0xFF7FB77E))),
                       onPressed: () {},
                       child: const Text(
                         'Tabung Sampah',
