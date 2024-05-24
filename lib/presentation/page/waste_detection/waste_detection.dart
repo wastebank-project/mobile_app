@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waste_app/domain/ml.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:waste_app/domain/zoomable_view.dart';
 
 class WasteDetection extends StatefulWidget {
   WasteDetection({super.key});
@@ -60,11 +61,11 @@ class _WasteDetectionState extends State<WasteDetection> {
       builder:
           (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasError) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: Text('Error loading preferences')),
           );
         } else if (snapshot.hasData) {
@@ -92,15 +93,28 @@ class _WasteDetectionState extends State<WasteDetection> {
                       height: 10,
                     ),
                     Center(
-                      child: Container(
-                        width: 400,
-                        height: 400,
-                        child: _imageFile != null
-                            ? Image.file(_imageFile!)
-                            : Image.asset(
-                                'assets/png/placeholder.png',
-                                fit: BoxFit.cover,
+                      child: GestureDetector(
+                        onTap: () {
+                          if (_imageFile != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ZoomableImageView(imageFile: _imageFile!),
                               ),
+                            );
+                          }
+                        },
+                        child: Container(
+                          width: 400,
+                          height: 400,
+                          child: _imageFile != null
+                              ? Image.file(_imageFile!)
+                              : Image.asset(
+                                  'assets/png/placeholder.png',
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),
