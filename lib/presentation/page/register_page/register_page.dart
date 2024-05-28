@@ -20,123 +20,128 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                const SizedBox(height: 120),
+                const SizedBox(height: 130),
                 const Text(
-                  "Welcome to WasteApp",
-                  style: TextStyle(fontSize: 16),
+                  "Selamat Datang di WasteApp",
+                  style: TextStyle(fontSize: 14),
                 ),
                 // const SizedBox(height: 5),
                 const Text(
-                  "Register",
+                  "Daftar Akun",
                   style: TextStyle(
                       color: Color(0xFF7FB77E),
-                      fontSize: 42,
-                      fontWeight: FontWeight.w600),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(height: 70),
+                const SizedBox(height: 30),
+                const Text("Username"),
+                const SizedBox(height: 3),
                 WasteAppTextFields(
-                  labelText: 'Name',
+                  hintText: 'Ketik Username anda',
                   controller: nameController,
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
+                const Text("E-mail"),
+                const SizedBox(height: 3),
                 WasteAppTextFields(
-                  labelText: 'E-Mail',
+                  hintText: 'Ketik e-mail anda',
                   controller: emailController,
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
+                const Text("Password"),
+                const SizedBox(height: 3),
                 WasteAppTextFields(
-                  labelText: 'Password',
+                  hintText: 'Ketik Password anda',
                   controller: passwordController,
                   obscureText: true,
                   suffixIcon: true,
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
+                const Text("Konfirmasi Password"),
+                const SizedBox(height: 3),
                 WasteAppTextFields(
-                  labelText: 'Confirm Password',
+                  hintText: 'Ketik ulang Password anda',
                   controller: confPassword,
                   obscureText: true,
                   suffixIcon: true,
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
               ],
             ),
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                        text: "Sudah punya akun?",
-                        style:
-                            TextStyle(color: Color(0xFF7FB77E), fontSize: 11),
-                        children: [
-                          TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation,
-                                              secondaryAnimation) =>
-                                          LoginScreen(),
-                                      transitionsBuilder: (context, animation,
-                                          secondaryAnimation, child) {
-                                        const begin = Offset(1.0, 0.0);
-                                        const end = Offset.zero;
-                                        const curve = Curves.easeInOut;
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                RichText(
+                  text: TextSpan(
+                      text: "Sudah punya akun?",
+                      style: const TextStyle(
+                          color: Color(0xFF7FB77E), fontSize: 11),
+                      children: [
+                        TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const LoginScreen(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.easeInOut;
 
-                                        var tween = Tween(
-                                                begin: begin, end: end)
-                                            .chain(CurveTween(curve: curve));
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
 
-                                        var offsetAnimation =
-                                            animation.drive(tween);
+                                      var offsetAnimation =
+                                          animation.drive(tween);
 
-                                        return SlideTransition(
-                                          position: offsetAnimation,
-                                          child: child,
-                                        );
-                                      },
-                                      transitionDuration:
-                                          const Duration(milliseconds: 1000),
-                                    ),
-                                  );
-                                },
-                              text: ' Login Sekarang',
-                              style: TextStyle(fontWeight: FontWeight.bold))
-                        ]),
-                  ),
-                  SizedBox(height: 80),
-                  TextButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF7FB77E)),
-                      shape: MaterialStateProperty.all(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                    transitionDuration:
+                                        const Duration(milliseconds: 1000),
+                                  ),
+                                );
+                              },
+                            text: ' Login Sekarang',
+                            style: TextStyle(fontWeight: FontWeight.bold))
+                      ]),
+                ),
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(const Color(0xFF7FB77E)),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
                         ),
                       ),
-                      minimumSize: MaterialStateProperty.all(
-                          Size(350, 50)), // Set your custom width and height
                     ),
-                    child: const Text("Register",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600)),
+                    minimumSize: MaterialStateProperty.all(
+                        Size(350, 50)), // Set your custom width and height
                   ),
-                ],
-              ),
+                  child: const Text("Daftar",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600)),
+                ),
+              ],
             )
           ],
         ),

@@ -29,30 +29,35 @@ class _LoginScreenState extends State<LoginScreen> {
               children: <Widget>[
                 SizedBox(height: 200),
                 const Text(
-                  "Welcome to WasteApp",
-                  style: TextStyle(fontSize: 16),
+                  "Selamat datang di WasteApp",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-                SizedBox(height: 5),
                 const Text(
-                  "Login",
+                  "Masuk Akun",
                   style: TextStyle(
                       color: Color(0xFF7FB77E),
                       fontSize: 42,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w900),
                 ),
-                const SizedBox(height: 70),
+                const SizedBox(height: 50),
+                const Text("Username"),
+                const SizedBox(height: 3),
                 WasteAppTextFields(
-                  labelText: 'Email',
+                  hintText: 'Masukan Username anda',
                   controller: emailController,
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 30),
+                const Text("Password"),
+                const SizedBox(height: 3),
                 WasteAppTextFields(
-                  labelText: 'Password',
+                  hintText: 'Password',
                   controller: passwordController,
                   obscureText: true,
                   suffixIcon: true,
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 20),
               ],
             ),
             Container(
@@ -101,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(fontWeight: FontWeight.bold))
                         ]),
                   ),
-                  SizedBox(height: 80),
+                  SizedBox(height: 50),
                   TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -144,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       minimumSize: MaterialStateProperty.all(
                           Size(350, 50)), // Set your custom width and height
                     ),
-                    child: const Text("Login",
+                    child: const Text("Masuk",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,

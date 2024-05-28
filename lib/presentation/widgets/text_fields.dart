@@ -24,6 +24,7 @@ class _WasteAppTextFieldsState extends State<WasteAppTextFields> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color(0xffeeeeee),
@@ -33,7 +34,7 @@ class _WasteAppTextFieldsState extends State<WasteAppTextFields> {
         obscureText: widget.obscureText && !_obscureText,
         decoration: InputDecoration(
           hintText: widget.hintText,
-          hintStyle: TextStyle(fontSize: 12, color: Colors.grey),
+          hintStyle: TextStyle(fontSize: 13, color: Colors.grey),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
