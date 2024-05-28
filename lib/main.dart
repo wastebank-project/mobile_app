@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:waste_app/presentation/page/onboarding_page/onboarding_page.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:waste_app/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Poppins",
         useMaterial3: true,
       ),
-      home: Onboarding_Screen(),
+      home: SplashScreen(),
     );
   }
 }
