@@ -1,6 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:waste_app/presentation/page/login_page/login_screen.dart';
+import 'package:waste_app/presentation/page/welcoming_page/welcoming_page.dart';
 import 'package:waste_app/presentation/widgets/text_fields.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -19,6 +18,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const WelcomingPage(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0);
+                  const end = Offset.zero;
+                  const curve = Curves.easeInOut;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+
+                  var offsetAnimation = animation.drive(tween);
+
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                },
+                transitionDuration: const Duration(milliseconds: 1000),
+              ),
+            );
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
@@ -27,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                const SizedBox(height: 130),
+                const SizedBox(height: 50),
                 const Text(
                   "Selamat Datang di WasteApp",
                   style: TextStyle(fontSize: 14),
@@ -72,54 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: true,
                   suffixIcon: true,
                 ),
-                const SizedBox(height: 20),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                RichText(
-                  text: TextSpan(
-                      text: "Sudah punya akun?",
-                      style: const TextStyle(
-                          color: Color(0xFF7FB77E), fontSize: 11),
-                      children: [
-                        TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animation,
-                                            secondaryAnimation) =>
-                                        const LoginScreen(),
-                                    transitionsBuilder: (context, animation,
-                                        secondaryAnimation, child) {
-                                      const begin = Offset(1.0, 0.0);
-                                      const end = Offset.zero;
-                                      const curve = Curves.easeInOut;
-
-                                      var tween = Tween(begin: begin, end: end)
-                                          .chain(CurveTween(curve: curve));
-
-                                      var offsetAnimation =
-                                          animation.drive(tween);
-
-                                      return SlideTransition(
-                                        position: offsetAnimation,
-                                        child: child,
-                                      );
-                                    },
-                                    transitionDuration:
-                                        const Duration(milliseconds: 1000),
-                                  ),
-                                );
-                              },
-                            text: ' Login Sekarang',
-                            style: TextStyle(fontWeight: FontWeight.bold))
-                      ]),
-                ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 60),
                 TextButton(
                   onPressed: () {},
                   style: ButtonStyle(
@@ -132,8 +115,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    minimumSize: MaterialStateProperty.all(
-                        Size(350, 50)), // Set your custom width and height
+                    minimumSize: MaterialStateProperty.all(const Size(
+                        350, 50)), // Set your custom width and height
                   ),
                   child: const Text("Daftar",
                       style: TextStyle(
@@ -142,7 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontWeight: FontWeight.w600)),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
