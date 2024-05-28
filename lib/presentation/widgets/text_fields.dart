@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class WasteAppTextFields extends StatefulWidget {
-  final String labelText;
   final TextEditingController controller;
   final bool obscureText;
   final bool suffixIcon;
 
+  final hintText;
+
   const WasteAppTextFields({
     Key? key,
-    required this.labelText,
+    required this.hintText,
     required this.controller,
     this.obscureText = false,
     this.suffixIcon = false,
@@ -31,10 +32,8 @@ class _WasteAppTextFieldsState extends State<WasteAppTextFields> {
         controller: widget.controller,
         obscureText: widget.obscureText && !_obscureText,
         decoration: InputDecoration(
-          labelText: widget.labelText,
-          labelStyle: const TextStyle(
-            fontSize: 13,
-          ),
+          hintText: widget.hintText,
+          hintStyle: TextStyle(fontSize: 12, color: Colors.grey),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
