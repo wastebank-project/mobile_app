@@ -74,7 +74,7 @@ class _Onboarding_ScreenState extends State<Onboarding_Screen> {
                           child: Column(
                             children: [
                               const Text(
-                                  "Selamatkan Bumi! \nMulai dari sekarang!",
+                                  "Mari menabung dengan sampah disekitar kita!",
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.w500),
