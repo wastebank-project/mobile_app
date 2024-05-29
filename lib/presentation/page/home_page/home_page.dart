@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:waste_app/presentation/page/home_page/methods/related_articles.dart';
 import 'package:waste_app/presentation/widgets/images_slider.dart';
 
 class HomePage extends StatelessWidget {
@@ -44,7 +43,7 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'BudiArieHambali',
+                              'Faishalyb',
                               style: TextStyle(
                                 fontSize: 28,
                                 color: Colors.white,
@@ -57,27 +56,35 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
+                    children: <Widget>[
+                      const Text(
                         'Artikel',
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 16),
                       ),
-                      Text(
-                        'Lihat semua',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Color(0xff7ABA78),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const MoreArticles();
+                          }));
+                        },
+                        child: const Text(
+                          'Lihat Semua',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Color(0xff7ABA78),
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   SizedBox(
-                    height: 140,
+                    height: 135,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
