@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waste_app/presentation/page/home_page/methods/related_articles.dart';
+import 'package:waste_app/presentation/page/home_page/methods/more_articles.dart';
 import 'package:waste_app/presentation/widgets/images_slider.dart';
 
 class HomePage extends StatelessWidget {
@@ -181,6 +181,9 @@ class HomePage extends StatelessWidget {
                   const Text(
                     'Galeri',
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   const ImageSlider(),
                   const SizedBox(

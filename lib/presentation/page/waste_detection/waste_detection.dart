@@ -7,7 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/zoomable_view.dart';
 
 class WasteDetection extends StatefulWidget {
-  WasteDetection({super.key});
+  const WasteDetection({super.key});
 
   @override
   State<WasteDetection> createState() => _WasteDetectionState();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:waste_app/presentation/widgets/image_view.dart';
 
 class ImageSlider extends StatefulWidget {
   const ImageSlider({super.key});
@@ -25,16 +26,25 @@ class _ImageSliderState extends State<ImageSlider> {
         CarouselSlider.builder(
           itemCount: images.length,
           itemBuilder: (BuildContext context, int index, _) {
-            return Padding(
-              padding: const EdgeInsets.all(5),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  images[index],
-                  fit: BoxFit.cover,
-                ),
-              ),
-            );
+            return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ImageView(imagePath: images[index]),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      images[index],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ));
           },
           options: CarouselOptions(
             aspectRatio: 16 / 9,
