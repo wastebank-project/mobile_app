@@ -21,16 +21,13 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
-            child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: pageController,
-              onPageChanged: (value) => setState(() {
-                selectedPage = value;
-              }),
-              children: [HomePage(), WasteDetection(), CustomersPage()],
-            ),
+          PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: pageController,
+            onPageChanged: (value) => setState(() {
+              selectedPage = value;
+            }),
+            children: [HomePage(), WasteDetection(), CustomersPage()],
           ),
           BottomNavbar(
               items: [
