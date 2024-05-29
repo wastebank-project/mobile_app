@@ -25,9 +25,15 @@ class _ImageSliderState extends State<ImageSlider> {
         CarouselSlider.builder(
           itemCount: images.length,
           itemBuilder: (BuildContext context, int index, _) {
-            return Image.asset(
-              images[index],
-              fit: BoxFit.cover,
+            return Padding(
+              padding: const EdgeInsets.all(5),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(
+                  images[index],
+                  fit: BoxFit.cover,
+                ),
+              ),
             );
           },
           options: CarouselOptions(

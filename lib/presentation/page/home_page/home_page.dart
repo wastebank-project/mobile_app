@@ -26,7 +26,36 @@ class HomePage extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Image.asset('assets/png/bg1.png'),
+                  Stack(
+                    children: [
+                      Image.asset('assets/png/bg1.png'),
+                      const Positioned(
+                        left: 40,
+                        bottom: 20,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Selamat Datang,',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            Text(
+                              'BudiArieHambali',
+                              style: TextStyle(
+                                fontSize: 28,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -52,29 +81,89 @@ class HomePage extends StatelessWidget {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset('assets/png/bg2.png')),
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset('assets/png/bg2.png')),
+                            ),
+                            const Positioned(
+                              bottom: 17,
+                              left: 20,
+                              child: Text(
+                                'Manfaat Recycle \nuntuk Rumah Tangga',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset('assets/png/bg2.png')),
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset('assets/png/bg2.png')),
+                            ),
+                            const Positioned(
+                              bottom: 17,
+                              left: 20,
+                              child: Text(
+                                'Manfaat Recycle \nuntuk Rumah Tangga',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset('assets/png/bg2.png')),
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset('assets/png/bg2.png')),
+                            ),
+                            const Positioned(
+                              bottom: 17,
+                              left: 20,
+                              child: Text(
+                                'Manfaat Recycle \nuntuk Rumah Tangga',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset('assets/png/bg2.png')),
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset('assets/png/bg2.png')),
+                            ),
+                            const Positioned(
+                              bottom: 17,
+                              left: 20,
+                              child: Text(
+                                'Manfaat Recycle \nuntuk Rumah Tangga',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -88,7 +177,7 @@ class HomePage extends StatelessWidget {
                   ),
                   const ImageSlider(),
                   const SizedBox(
-                    height: 100,
+                    height: 70,
                   ),
                 ],
               ),
