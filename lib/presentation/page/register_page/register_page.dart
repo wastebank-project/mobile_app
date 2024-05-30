@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/login_page/login_screen.dart';
 import 'package:waste_app/presentation/page/welcoming_page/welcoming_page.dart';
@@ -29,8 +28,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           confPassword.text,
           usernameController.text,
         );
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Registration successful')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Registration successful')));
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),

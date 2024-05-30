@@ -3,7 +3,8 @@ import 'package:waste_app/presentation/page/home_page/methods/more_articles.dart
 import 'package:waste_app/presentation/widgets/images_slider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.username});
+  final String username;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +29,13 @@ class HomePage extends StatelessWidget {
                   Stack(
                     children: [
                       Image.asset('assets/png/bg1.png'),
-                      const Positioned(
+                      Positioned(
                         left: 30,
                         bottom: 20,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
+                            const Text(
                               'Selamat Datang,',
                               style: TextStyle(
                                 fontSize: 18,
@@ -43,8 +44,8 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Hambali',
-                              style: TextStyle(
+                              username,
+                              style: const TextStyle(
                                 fontSize: 28,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,

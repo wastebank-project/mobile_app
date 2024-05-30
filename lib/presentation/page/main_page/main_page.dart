@@ -6,7 +6,8 @@ import 'package:waste_app/presentation/widgets/bottom_navbar.dart';
 import 'package:waste_app/presentation/widgets/bottom_navbar_item.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({super.key, required this.username});
+  final String username;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -27,7 +28,11 @@ class _MainPageState extends State<MainPage> {
             onPageChanged: (value) => setState(() {
               selectedPage = value;
             }),
-            children: [HomePage(), WasteDetection(), CustomersPage()],
+            children: [
+              HomePage(username: widget.username),
+              WasteDetection(),
+              CustomersPage()
+            ],
           ),
           BottomNavbar(
               items: [
