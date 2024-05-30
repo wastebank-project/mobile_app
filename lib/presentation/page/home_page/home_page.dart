@@ -13,12 +13,12 @@ class HomePage extends StatelessWidget {
           children: [
             Image.asset('assets/png/bg.png'),
             Padding(
-              padding: const EdgeInsets.fromLTRB(25, 40, 25, 0),
+              padding: const EdgeInsets.fromLTRB(25, 35, 25, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    maxRadius: 50,
+                    maxRadius: 45,
                     backgroundColor: Colors.transparent,
                     child: Image.asset('assets/png/Logo only.png'),
                   ),
@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       Image.asset('assets/png/bg1.png'),
                       const Positioned(
-                        left: 40,
+                        left: 30,
                         bottom: 20,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Faishalyb',
+                              'Hambali',
                               style: TextStyle(
                                 fontSize: 28,
                                 color: Colors.white,

@@ -130,6 +130,7 @@ class MoreArticles extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 35)
           ],
         ),
       ),

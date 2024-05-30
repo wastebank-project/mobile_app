@@ -69,14 +69,14 @@ class WelcomingPage extends StatelessWidget {
                     fontSize: 15,
                     fontWeight: FontWeight.w600)),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           TextButton(
             onPressed: () {
               Navigator.pushReplacement(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
-                      RegisterScreen(),
+                      const RegisterScreen(),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     const begin = Offset(1.0, 0.0);

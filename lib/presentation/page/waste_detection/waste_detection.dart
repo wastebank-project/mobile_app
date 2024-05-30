@@ -71,7 +71,7 @@ class _WasteDetectionState extends State<WasteDetection> {
         } else if (snapshot.hasData) {
           return Scaffold(
             body: Padding(
-              padding: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.fromLTRB(25, 100, 25, 0),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,43 +120,69 @@ class _WasteDetectionState extends State<WasteDetection> {
                     const SizedBox(height: 10),
                     Center(
                       child: SizedBox(
-                        width: 250,
-                        height: 40,
-                        child: ElevatedButton.icon(
+                        width: 171,
+                        height: 45,
+                        child: OutlinedButton.icon(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color(0xFFF2994A))),
+                            backgroundColor:
+                                MaterialStateProperty.all(Color(0xff7ABA78)),
+                            side: MaterialStateProperty.all(
+                              const BorderSide(
+                                color: Color(0xff7ABA78),
+                                width: 2,
+                              ),
+                            ),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
                           onPressed: () async {
                             await _takePicture();
                           },
-                          icon:
-                              const Icon(Icons.camera_alt, color: Colors.white),
+                          icon: const Icon(Icons.camera_alt_sharp,
+                              color: Colors.white),
                           label: const Text(
-                            'Ambil foto',
-                            style: TextStyle(color: Colors.white),
+                            'Ambil Foto',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     Center(
                       child: SizedBox(
-                        width: 250,
-                        height: 40,
-                        child: ElevatedButton.icon(
+                        width: 171,
+                        height: 45,
+                        child: OutlinedButton.icon(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color(0xFFF2994A))),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(
+                              const BorderSide(
+                                color: Color(0xff7ABA78),
+                                width: 2,
+                              ),
+                            ),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
                           onPressed: () async {
                             await _pickImage();
                           },
                           icon: const Icon(Icons.file_upload_outlined,
-                              color: Colors.white),
+                              color: Color(0xff7ABA78)),
                           label: const Text(
                             'Pilih foto',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Color(0xff7ABA78),
+                            ),
                           ),
                         ),
                       ),
@@ -167,7 +193,7 @@ class _WasteDetectionState extends State<WasteDetection> {
             ),
           );
         } else {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: Text('Failed to load preferences')),
           );
         }
