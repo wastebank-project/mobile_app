@@ -26,7 +26,7 @@ class Authentication {
       return response;
     } else {
       // Handle error
-      throw Exception('Failed to register user: ${response.body}');
+      throw Exception(response.body);
     }
   }
 
@@ -45,7 +45,7 @@ class Authentication {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Failed to login User: ${response.body}');
+      throw Exception(response.body);
     }
   }
 }

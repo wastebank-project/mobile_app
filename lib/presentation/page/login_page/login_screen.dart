@@ -16,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final Authentication _authentication = Authentication();
+  String? _errorMessage;
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
@@ -33,8 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       } catch (e) {
         // Handle login error
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Login failed: $e')));
+        setState(() {
+          _errorMessage = e.toString().replaceFirst('Exception: ', '');
+        });
       }
     }
   }
@@ -113,7 +115,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscureText: true,
                     suffixIcon: true,
                   ),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 10),
+                  if (_errorMessage != null)
+                    Text(
+                      _errorMessage!,
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  const SizedBox(height: 40),
                   TextButton(
                     onPressed: () {
                       _login();

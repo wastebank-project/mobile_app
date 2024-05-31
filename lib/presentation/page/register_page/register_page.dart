@@ -17,6 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confPassword = TextEditingController();
+  String? _errorMessage;
 
   final Authentication _authentication = Authentication();
   Future<void> _register() async {
@@ -32,11 +33,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SnackBar(content: Text('Registration successful')));
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       } catch (e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Registration failed: $e')));
+        setState(() {
+          _errorMessage = e.toString().replaceFirst('Exception:', '');
+        });
       }
     }
   }
@@ -130,7 +132,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     obscureText: true,
                     suffixIcon: true,
                   ),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 10),
+                  if (_errorMessage != null)
+                    Text(
+                      _errorMessage!,
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  const SizedBox(height: 40),
                   TextButton(
                     onPressed: () {
                       _register();
