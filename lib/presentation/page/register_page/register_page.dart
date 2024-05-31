@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/login_page/login_screen.dart';
 import 'package:waste_app/presentation/page/welcoming_page/welcoming_page.dart';
@@ -21,6 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final Authentication _authentication = Authentication();
   Future<void> _register() async {
+    EasyLoading.show(status: 'Loading');
     if (_formKey.currentState!.validate()) {
       try {
         final response = await _authentication.registerUser(
@@ -41,6 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         });
       }
     }
+    EasyLoading.dismiss();
   }
 
   @override

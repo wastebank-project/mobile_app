@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/main_page/main_page.dart';
 import 'package:waste_app/presentation/page/welcoming_page/welcoming_page.dart';
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
+      EasyLoading.show(status: 'Loading');
       try {
         final response = await _authentication.loginUser(
           usernameController.text,
@@ -38,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _errorMessage = e.toString().replaceFirst('Exception: ', '');
         });
       }
+      EasyLoading.dismiss();
     }
   }
 
