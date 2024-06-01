@@ -121,22 +121,45 @@ class _WasteDetectionState extends State<WasteDetection> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     if (_predictions.isNotEmpty)
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           const Text(
                             'Sampah terdeteksi:',
                           ),
-                          Text(
-                            _predictions.join('\n'),
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                          const SizedBox(height: 5),
+                          Container(
+                            decoration:
+                                const BoxDecoration(color: Color(0XFFF6F4BD)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                _predictions.join('\n'),
+                                style: const TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  'Rekomendasi Pengolahan >',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
                         ],
                       ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     Center(
                       child: SizedBox(
                         width: 171,
@@ -171,7 +194,7 @@ class _WasteDetectionState extends State<WasteDetection> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     Center(
                       child: SizedBox(
                         width: 171,
