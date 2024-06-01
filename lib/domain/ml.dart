@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart'; // Add this line
+import 'package:path_provider/path_provider.dart';
 
 class MLService {
   Future<File> detectTrash(File inputImageFile) async {
@@ -8,8 +9,7 @@ class MLService {
       // Send image to the API using form-data
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse(
-            'https://machinelearning-api-6znke3vbka-uc.a.run.app/predict'),
+        Uri.parse('https://machinelearning-api-6znke3vbka-uc.a.run.app/image'),
       );
       request.files.add(
         await http.MultipartFile.fromPath('image', inputImageFile.path),
@@ -18,7 +18,6 @@ class MLService {
       // Send the request and receive the response
       var response = await request.send();
       if (response.statusCode == 200) {
-        // Save the image to a temporary file
         var responseData = await response.stream.toBytes();
         var tempDir = await getTemporaryDirectory();
         File tempFile = File('${tempDir.path}/detected_image.png');
@@ -34,5 +33,50 @@ class MLService {
       // Handle connection or other errors
       throw Exception('Error: $e');
     }
+  }
+
+  Future<List<Prediction>> detectText(File inputFile) async {
+    try {
+      var uri = Uri.parse(
+        'https://machinelearning-api-6znke3vbka-uc.a.run.app/text',
+      );
+
+      var request = http.MultipartRequest('POST', uri);
+      request.files.add(
+        await http.MultipartFile.fromPath('image', inputFile.path),
+      );
+
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        var responseData = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseData);
+        var predictions = jsonResponse['predictions'] as List;
+        List<Prediction> predictionList = predictions
+            .map((prediction) => Prediction(
+                  label: prediction['label'] as String,
+                  score: prediction['score'] as double,
+                ))
+            .toList();
+
+        return predictionList;
+      } else {
+        throw Exception(
+            'Failed to process text. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+}
+
+class Prediction {
+  final String label;
+  final double score;
+
+  Prediction({required this.label, required this.score});
+
+  @override
+  String toString() {
+    return '$label (${(score * 100).toStringAsFixed(2)}%)';
   }
 }

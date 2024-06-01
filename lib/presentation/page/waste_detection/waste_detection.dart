@@ -16,6 +16,7 @@ class WasteDetection extends StatefulWidget {
 class _WasteDetectionState extends State<WasteDetection> {
   File? _imageFile;
   final MLService mlService = MLService();
+  List<Prediction> _predictions = [];
 
   Future<void> _takePicture() async {
     final ImagePicker _picker = ImagePicker();
@@ -44,8 +45,11 @@ class _WasteDetectionState extends State<WasteDetection> {
     try {
       // Use MLService to detect trash and get the processed image
       File detectedImage = await mlService.detectTrash(inputImageFile);
+      List<Prediction> predictions = await mlService.detectText(inputImageFile);
+
       setState(() {
         _imageFile = detectedImage;
+        _predictions = predictions;
       });
     } catch (e) {
       // Handle errors from MLService
@@ -118,6 +122,21 @@ class _WasteDetectionState extends State<WasteDetection> {
                       ),
                     ),
                     const SizedBox(height: 10),
+                    if (_predictions.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Sampah terdeteksi:',
+                          ),
+                          Text(
+                            _predictions.join('\n'),
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    const SizedBox(height: 10),
                     Center(
                       child: SizedBox(
                         width: 171,
@@ -187,6 +206,7 @@ class _WasteDetectionState extends State<WasteDetection> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 100)
                   ],
                 ),
               ),
