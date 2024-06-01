@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waste_app/domain/ml.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/zoomable_view.dart';
+import 'package:waste_app/presentation/page/waste_detection/methods/models.dart';
+import 'package:waste_app/presentation/page/waste_detection/methods/recomendation.dart';
 
 class WasteDetection extends StatefulWidget {
   const WasteDetection({super.key});
@@ -146,7 +148,17 @@ class _WasteDetectionState extends State<WasteDetection> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return RecomendationScreen(
+                                      recommendations: Models.fromLabels(
+                                          _predictions
+                                              .map((p) => p.label)
+                                              .toList()),
+                                    );
+                                  }));
+                                },
                                 child: const Text(
                                   'Rekomendasi Pengolahan >',
                                   style: TextStyle(
