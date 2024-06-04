@@ -7,13 +7,14 @@ class BottomNavbarItem extends StatelessWidget {
   final String image;
   final String selectedImage;
 
-  const BottomNavbarItem(
-      {super.key,
-      required this.index,
-      required this.isSelected,
-      required this.title,
-      required this.image,
-      required this.selectedImage});
+  const BottomNavbarItem({
+    super.key,
+    required this.index,
+    required this.isSelected,
+    required this.title,
+    required this.image,
+    required this.selectedImage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +22,18 @@ class BottomNavbarItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          width: 35,
-          height: 35,
+          width: 40,
+          height: 40,
           child: Image.asset(isSelected ? selectedImage : image),
-        ),
-        SizedBox(
-          height: 2,
         ),
         Text(
           title,
           style: TextStyle(
-              fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white),
-        )
+            fontSize: 11,
+            fontWeight: FontWeight.bold,
+            color: Colors.green.shade900,
+          ),
+        ),
       ],
     );
   }

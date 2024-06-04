@@ -15,11 +15,9 @@ class MyApp extends StatelessWidget {
       builder: EasyLoading.init(),
       title: 'WasteApp',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF7FB77E)),
         fontFamily: "Poppins",
-        useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

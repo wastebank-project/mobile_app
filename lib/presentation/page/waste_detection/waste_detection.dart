@@ -76,8 +76,17 @@ class _WasteDetectionState extends State<WasteDetection> {
           );
         } else if (snapshot.hasData) {
           return Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              centerTitle: true,
+            ),
             body: Padding(
-              padding: const EdgeInsets.fromLTRB(25, 100, 25, 0),
+              padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
