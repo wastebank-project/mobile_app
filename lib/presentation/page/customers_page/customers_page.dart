@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/list_customers.dart';
 import 'package:waste_app/presentation/page/customers_page/methods/new_customers.dart';
 
 class CustomersPage extends StatelessWidget {
@@ -133,14 +134,13 @@ class CustomersPage extends StatelessWidget {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const NewCustomerScreen(),
+                                        builder: (context) => ListCustomers(),
                                       ));
                                 },
-                                icon: const Icon(Icons.person_add_alt_1_rounded,
+                                icon: const Icon(Icons.people_sharp,
                                     color: Colors.white),
                                 label: const Text(
-                                  'Daftar Nasabah Baru                   >',
+                                  'Nasabah                                            >',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 19,
@@ -152,7 +152,7 @@ class CustomersPage extends StatelessWidget {
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Text(
-                              'Diperuntukkan untuk nasabah baru yang ingin menabung di bank sampah',
+                              'Berisi detail data nasabah bank sampah yang sudah terdaftar ',
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,

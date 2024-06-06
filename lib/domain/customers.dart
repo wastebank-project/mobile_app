@@ -27,4 +27,17 @@ class Customer {
       throw Exception(response.body);
     }
   }
+
+  Future<List<dynamic>> getCustomer() async {
+    final url = Uri.parse('$baseUrl/nasabah');
+    final headers = {'Content-Type': 'application/json'};
+
+    final response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception(response.body);
+    }
+  }
 }
