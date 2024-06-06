@@ -57,7 +57,7 @@ class _ImageSliderState extends State<ImageSlider> {
           ),
         ),
         SizedBox(
-          height: 40,
+          height: 30,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
@@ -65,7 +65,8 @@ class _ImageSliderState extends State<ImageSlider> {
               (index) => _buildDot(index),
             ),
           ),
-        )
+        ),
+        const SizedBox(height: 30),
       ],
     );
   }

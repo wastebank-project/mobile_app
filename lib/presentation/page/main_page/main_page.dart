@@ -31,8 +31,10 @@ class _MainPageState extends State<MainPage> {
             }),
             children: [
               HomePage(username: widget.username),
+              HomePage(username: widget.username),
               const WasteDetection(),
               const CustomersPage(),
+              HomePage(username: widget.username),
             ],
           ),
           BottomNavbar(
@@ -67,8 +69,8 @@ class _MainPageState extends State<MainPage> {
                   index: 4,
                   isSelected: selectedPage == 4,
                   title: 'Profil',
-                  image: 'assets/png/profil_hitam.png',
-                  selectedImage: 'assets/png/profil.png'),
+                  image: 'assets/png/beranda_hitam.png',
+                  selectedImage: 'assets/png/beranda.png'),
             ],
             onTap: (Index) {
               selectedPage = Index;
