@@ -14,9 +14,9 @@ class WelcomingPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          SizedBox(height: 180),
+          const SizedBox(height: 180),
           Image.asset("assets/png/WasteApp.png"),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           const Center(
             child: Column(
               children: [

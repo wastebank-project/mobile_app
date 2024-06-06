@@ -3,6 +3,8 @@ import 'package:waste_app/domain/customers.dart';
 import 'package:waste_app/presentation/page/customers_page/methods/detail_customers.dart';
 
 class ListCustomers extends StatefulWidget {
+  const ListCustomers({super.key});
+
   @override
   _ListCustomersState createState() => _ListCustomersState();
 }
@@ -16,10 +18,16 @@ class _ListCustomersState extends State<ListCustomers> {
     futureNasabah = Customer().getCustomer();
   }
 
+  Future<void> _refreshCustomerList() async {
+    setState(() {
+      futureNasabah = Customer().getCustomer();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Nasabah List')),
+      appBar: AppBar(title: Text('Daftar Nasabah')),
       body: FutureBuilder<List<dynamic>>(
         future: futureNasabah,
         builder: (context, snapshot) {
@@ -30,22 +38,29 @@ class _ListCustomersState extends State<ListCustomers> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text('No nasabah found'));
           } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final nasabah = snapshot.data![index];
-                return ListTile(
-                  title: Text(nasabah['name']),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailCustomer(nasabah: nasabah),
-                      ),
-                    );
-                  },
-                );
-              },
+            return RefreshIndicator(
+              onRefresh: _refreshCustomerList,
+              child: ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  final nasabah = snapshot.data![index];
+                  return ListTile(
+                    title: Text(nasabah['name']),
+                    onTap: () async {
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailCustomer(nasabah: nasabah),
+                        ),
+                      );
+                      if (result == true) {
+                        _refreshCustomerList();
+                      }
+                    },
+                  );
+                },
+              ),
             );
           }
         },

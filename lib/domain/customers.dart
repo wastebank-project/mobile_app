@@ -40,4 +40,15 @@ class Customer {
       throw Exception(response.body);
     }
   }
+
+  Future<void> deleteCustomer(String id) async {
+    final url = Uri.parse('$baseUrl/nasabah/$id');
+    final headers = {'Content-Type': 'application/json'};
+
+    final response = await http.delete(url, headers: headers);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to delete customer');
+    }
+  }
 }

@@ -76,15 +76,7 @@ class _WasteDetectionState extends State<WasteDetection> {
           );
         } else if (snapshot.hasData) {
           return Scaffold(
-            appBar: AppBar(
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              centerTitle: true,
-            ),
+            appBar: AppBar(),
             body: Padding(
               padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
               child: SingleChildScrollView(
