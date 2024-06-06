@@ -22,16 +22,16 @@ class BottomNavbarItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          width: 40,
-          height: 40,
+          width: 35,
+          height: 25,
           child: Image.asset(isSelected ? selectedImage : image),
         ),
         Text(
           title,
           style: TextStyle(
-            fontSize: 11,
+            fontSize: 10,
             fontWeight: FontWeight.bold,
-            color: Colors.green.shade900,
+            color: isSelected ? Colors.green : Color(0xff4F4F4F),
           ),
         ),
       ],

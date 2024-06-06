@@ -20,7 +20,12 @@ class BottomNavbar extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         height: 60,
-        decoration: BoxDecoration(color: Colors.green.shade100),
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 20,
+          ),
+        ]),
         child: Stack(
           children: [
             Row(
