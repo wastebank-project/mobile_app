@@ -102,6 +102,7 @@ class DetailCustomer extends StatelessWidget {
         builder: (context) => EditCustomerScreen(nasabah: nasabah),
       ),
     );
+    // Buat Refresh list
     if (result == true) {
       Navigator.pop(context, true);
     }

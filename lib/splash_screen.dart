@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:waste_app/presentation/page/main_page/main_page.dart';
 import 'package:waste_app/presentation/page/onboarding_page/onboarding_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -15,10 +17,33 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    Future.delayed(const Duration(seconds: 4), () {
+    checkLoginStatus();
+  }
+
+  void checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? authToken = prefs.getString('authToken');
+
+    // Check if authToken is available
+    if (authToken != null) {
+      String? username = prefs
+          .getString('username'); // Retrieve username from shared preferences
+      // Navigate to home screen if user is already logged in
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const Onboarding_Screen()));
-    });
+        MaterialPageRoute(
+            builder: (_) => MainPage(
+                  username:
+                      username ?? 'username', // Pass the username to MainPage
+                )),
+      );
+    } else {
+      // Navigate to onboarding screen if user is not logged in
+      Future.delayed(const Duration(seconds: 4), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Onboarding_Screen()),
+        );
+      });
+    }
   }
 
   @override

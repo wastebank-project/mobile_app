@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/main_page/main_page.dart';
 import 'package:waste_app/presentation/page/welcoming_page/welcoming_page.dart';
@@ -27,13 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
           usernameController.text,
           passwordController.text,
         );
-        final String username = response['username'];
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Login successful')));
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MainPage(username: username)),
-        );
+        // Handle login response
+        handleLoginResponse(response);
       } catch (e) {
         // Handle login error
         setState(() {
@@ -42,6 +38,20 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       EasyLoading.dismiss();
     }
+  }
+
+  void handleLoginResponse(Map<String, dynamic> response) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('authToken', response['accessToken']);
+    prefs.setString('refreshToken', response['refreshToken']);
+    // Optionally, you can save other user information like username and email
+    prefs.setString('username', response['username']);
+    prefs.setString('email', response['email']);
+    // Navigate to the home screen
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+          builder: (_) => MainPage(username: response['username'])),
+    );
   }
 
   @override
