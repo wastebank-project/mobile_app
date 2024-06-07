@@ -95,6 +95,18 @@ class DetailCustomer extends StatelessWidget {
     EasyLoading.dismiss();
   }
 
+  void _editCustomer(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditCustomerScreen(nasabah: nasabah),
+      ),
+    );
+    if (result == true) {
+      Navigator.pop(context, true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,11 +164,7 @@ class DetailCustomer extends StatelessWidget {
                     width: 150,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EditCustomerScreen(nasabah: nasabah)));
+                        _editCustomer(context);
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
