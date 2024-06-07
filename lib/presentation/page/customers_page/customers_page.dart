@@ -70,12 +70,25 @@ class CustomersPage extends StatelessWidget {
                                 },
                                 icon: const Icon(Icons.person_add_alt_1_rounded,
                                     color: Colors.white),
-                                label: const Text(
-                                  'Daftar Nasabah Baru                   >',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w700),
+                                label: const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Daftar Nasabah Baru',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Text(
+                                      '>',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -139,12 +152,25 @@ class CustomersPage extends StatelessWidget {
                                 },
                                 icon: const Icon(Icons.people_sharp,
                                     color: Colors.white),
-                                label: const Text(
-                                  'Nasabah                                            >',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w700),
+                                label: const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Nasabah',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Text(
+                                      '>',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -210,7 +236,7 @@ class CustomersPage extends StatelessWidget {
                                 icon: const Icon(Icons.person_add_alt_1_rounded,
                                     color: Colors.white),
                                 label: const Text(
-                                  'Daftar Nasabah Baru                   >',
+                                  'Daftar Nasabah Baru',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 19,
