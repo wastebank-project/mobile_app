@@ -51,4 +51,27 @@ class Customer {
       throw Exception('Failed to delete customer');
     }
   }
+
+  Future<http.Response> updateCustomer(
+    String id,
+    String name,
+    String address,
+    String phoneNumber,
+  ) async {
+    final url = Uri.parse('$baseUrl/nasabah/$id');
+    final headers = {'Content-Type': 'application/json'};
+    final body = jsonEncode({
+      'name': name,
+      'address': address,
+      'phoneNumber': phoneNumber,
+    });
+
+    final response = await http.put(url, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      throw Exception('Failed to update customer');
+    }
+  }
 }

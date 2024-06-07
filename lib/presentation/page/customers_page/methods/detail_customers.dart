@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/customers.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/edit_customers.dart';
 
 class DetailCustomer extends StatelessWidget {
   final Map<String, dynamic> nasabah;
@@ -30,7 +31,7 @@ class DetailCustomer extends StatelessWidget {
           ),
           actions: [
             SizedBox(
-              width: 145,
+              width: 120,
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(true);
@@ -53,8 +54,9 @@ class DetailCustomer extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(width: 5),
             SizedBox(
-              width: 145,
+              width: 120,
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(false);
@@ -149,7 +151,13 @@ class DetailCustomer extends StatelessWidget {
                   SizedBox(
                     width: 150,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    EditCustomerScreen(nasabah: nasabah)));
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                           const Color(0xFF7ABA78),
