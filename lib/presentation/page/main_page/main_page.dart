@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:waste_app/presentation/page/customers_page/customers_page.dart';
 import 'package:waste_app/presentation/page/home_page/home_page.dart';
+import 'package:waste_app/presentation/page/profile_page/profile_page.dart';
+import 'package:waste_app/presentation/page/saving_page/saving_page_screen.dart';
 import 'package:waste_app/presentation/page/waste_detection/waste_detection.dart';
 import 'package:waste_app/presentation/widgets/bottom_navbar.dart';
 import 'package:waste_app/presentation/widgets/bottom_navbar_item.dart';
@@ -31,10 +33,10 @@ class _MainPageState extends State<MainPage> {
             }),
             children: [
               HomePage(username: widget.username),
-              HomePage(username: widget.username),
+              const SavingPageScreen(),
               const WasteDetection(),
               const CustomersPage(),
-              HomePage(username: widget.username),
+              ProfilePage(username: widget.username)
             ],
           ),
           BottomNavbar(
@@ -69,8 +71,8 @@ class _MainPageState extends State<MainPage> {
                   index: 4,
                   isSelected: selectedPage == 4,
                   title: 'Profil',
-                  image: 'assets/png/beranda_hitam.png',
-                  selectedImage: 'assets/png/beranda.png'),
+                  image: 'assets/png/profil_hitam.png',
+                  selectedImage: 'assets/png/profil.png'),
             ],
             onTap: (Index) {
               selectedPage = Index;

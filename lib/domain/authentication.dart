@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Authentication {
   static const String baseUrl = 'https://backend-banksampah-api.vercel.app';
@@ -47,5 +48,32 @@ class Authentication {
     } else {
       throw Exception(response.body);
     }
+  }
+
+  Future<void> logoutUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('accessToken');
+
+    if (accessToken != null) {
+      final url = Uri.parse('$baseUrl/auth/logout');
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      };
+      final response = await http.post(url, headers: headers);
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to log out');
+      }
+
+      await prefs.remove('accessToken');
+      await prefs.remove('username');
+      await prefs.remove('email');
+    }
+  }
+
+  Future<String?> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('accessToken');
   }
 }
