@@ -50,7 +50,11 @@ class _LoginScreenState extends State<LoginScreen> {
     // Navigate to the home screen
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-          builder: (_) => MainPage(username: response['username'])),
+        builder: (_) => MainPage(
+          username: response['username'],
+          email: response['email'],
+        ),
+      ),
     );
   }
 

@@ -28,12 +28,13 @@ class _SplashScreenState extends State<SplashScreen>
     if (authToken != null) {
       String? username = prefs
           .getString('username'); // Retrieve username from shared preferences
+      String? email = prefs.getString('email');
       // Navigate to home screen if user is already logged in
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
             builder: (_) => MainPage(
-                  username:
-                      username ?? 'username', // Pass the username to MainPage
+                  username: username ?? 'username',
+                  email: email ?? 'email', // Pass the username to MainPage
                 )),
       );
     } else {

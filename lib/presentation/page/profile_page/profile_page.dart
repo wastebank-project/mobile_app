@@ -4,8 +4,13 @@ import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/login_page/login_screen.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key, required this.username});
+  const ProfilePage({
+    super.key,
+    required this.username,
+    required this.email,
+  });
   final String username;
+  final String email;
 
   Future<void> _logout(BuildContext context) async {
     EasyLoading.show(status: 'Logging out...');
@@ -54,10 +59,10 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Center(
+                  Center(
                     child: Text(
-                      'email',
-                      style: TextStyle(
+                      email,
+                      style: const TextStyle(
                         fontSize: 14,
                       ),
                     ),

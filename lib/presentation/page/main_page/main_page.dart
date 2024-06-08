@@ -9,8 +9,13 @@ import 'package:waste_app/presentation/widgets/bottom_navbar_item.dart';
 import 'package:waste_app/presentation/widgets/floating_action_button.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key, required this.username});
+  const MainPage({
+    super.key,
+    required this.username,
+    required this.email,
+  });
   final String username;
+  final String email;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -36,7 +41,10 @@ class _MainPageState extends State<MainPage> {
               const SavingPageScreen(),
               const WasteDetection(),
               const CustomersPage(),
-              ProfilePage(username: widget.username)
+              ProfilePage(
+                username: widget.username,
+                email: widget.email,
+              )
             ],
           ),
           BottomNavbar(
