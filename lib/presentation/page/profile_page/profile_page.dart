@@ -12,19 +12,94 @@ class ProfilePage extends StatelessWidget {
   final String username;
   final String email;
 
-  Future<void> _logout(BuildContext context) async {
-    EasyLoading.show(status: 'Logging out...');
-    try {
-      await Authentication().logoutUser();
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-        (route) => false,
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to log out: $e')),
-      );
+  void _logout(BuildContext context) async {
+    bool? confirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          icon: const Icon(
+            Icons.warning_amber,
+            size: 50,
+          ),
+          iconColor: Colors.red,
+          title: const Text(
+            'KELUAR APLIKASI',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
+          content: const Text(
+            'Apakah anda yakin untuk keluar Aplikasi?',
+            style: TextStyle(fontSize: 15),
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            SizedBox(
+              width: 120,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color(0xffE66776),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                child: const Text(
+                  'Keluar',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 5),
+            SizedBox(
+              width: 120,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                style: ButtonStyle(
+                  side: MaterialStateProperty.all(
+                      const BorderSide(color: Colors.black, width: 2.5)),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  )),
+                ),
+                child: const Text(
+                  'Batal',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      EasyLoading.show(status: 'Logging out...');
+      try {
+        await Authentication().logoutUser();
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          (route) => false,
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to log out: $e')),
+        );
+      }
     }
     EasyLoading.dismiss();
   }
