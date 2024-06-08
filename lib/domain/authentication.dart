@@ -52,7 +52,7 @@ class Authentication {
 
   Future<void> logoutUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? accessToken = prefs.getString('accessToken');
+    String? accessToken = prefs.getString('authToken');
 
     if (accessToken != null) {
       final url = Uri.parse('$baseUrl/auth/logout');
@@ -72,8 +72,28 @@ class Authentication {
     }
   }
 
-  Future<String?> getToken() async {
+  Future<void> updateUserProfile(String email, String username) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('accessToken');
+    String? accessToken = prefs.getString('authToken');
+
+    if (accessToken != null) {
+      final url = Uri.parse('$baseUrl/users/me');
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      };
+      final body = jsonEncode({
+        'username': username,
+        'email': email,
+      });
+
+      final response = await http.put(url, headers: headers, body: body);
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to update user details: ${response.body}');
+      }
+    } else {
+      throw Exception('No access token found');
+    }
   }
 }
