@@ -30,12 +30,17 @@ class _SplashScreenState extends State<SplashScreen>
           .getString('username'); // Retrieve username from shared preferences
       String? email = prefs.getString('email');
       // Navigate to home screen if user is already logged in
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (_) => MainPage(
-                  username: username ?? 'username',
-                  email: email ?? 'email', // Pass the username to MainPage
-                )),
+      Future.delayed(
+        const Duration(seconds: 3),
+        () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+                builder: (_) => MainPage(
+                      username: username ?? 'username',
+                      email: email ?? 'email', // Pass the username to MainPage
+                    )),
+          );
+        },
       );
     } else {
       // Navigate to onboarding screen if user is not logged in
