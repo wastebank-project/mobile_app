@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/authentication.dart';
+import 'package:waste_app/presentation/page/login_page/login_screen.dart';
 
 class EditProfile extends StatefulWidget {
   final String username;
@@ -37,7 +38,12 @@ class _EditProfileState extends State<EditProfile> {
           emailController.text,
           usernameController.text,
         );
-        Navigator.pop(context, true);
+        await Authentication().logoutUser();
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          (route) => false,
+        );
       } catch (e) {
         setState(() {
           _errorMessage = e.toString().replaceFirst('Exception:', '');
