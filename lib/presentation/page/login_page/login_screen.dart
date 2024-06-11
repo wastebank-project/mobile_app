@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waste_app/domain/authentication.dart';
-import 'package:waste_app/presentation/page/main_page/main_page.dart';
 import 'package:waste_app/presentation/page/welcoming_page/welcoming_page.dart';
 import 'package:waste_app/presentation/widgets/text_fields.dart';
 
@@ -19,44 +16,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   final Authentication _authentication = Authentication();
   String? _errorMessage;
-
-  Future<void> _login() async {
-    if (_formKey.currentState!.validate()) {
-      EasyLoading.show(status: 'Loading');
-      try {
-        final response = await _authentication.loginUser(
-          usernameController.text,
-          passwordController.text,
-        );
-        // Handle login response
-        handleLoginResponse(response);
-      } catch (e) {
-        // Handle login error
-        setState(() {
-          _errorMessage = e.toString().replaceFirst('Exception: ', '');
-        });
-      }
-      EasyLoading.dismiss();
-    }
-  }
-
-  void handleLoginResponse(Map<String, dynamic> response) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('authToken', response['accessToken']);
-    prefs.setString('refreshToken', response['refreshToken']);
-    // Optionally, you can save other user information like username and email
-    prefs.setString('username', response['username']);
-    prefs.setString('email', response['email']);
-    // Navigate to the home screen
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => MainPage(
-          username: response['username'],
-          email: response['email'],
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,8 +102,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   const SizedBox(height: 40),
                   TextButton(
-                    onPressed: () {
-                      _login();
+                    onPressed: () async {
+                      await _authentication.login(
+                          formKey: _formKey,
+                          usernameController: usernameController,
+                          passwordController: passwordController,
+                          context: context,
+                          setErrorMessage: (message) {
+                            setState(() {
+                              _errorMessage = message;
+                            });
+                          });
                     },
                     style: ButtonStyle(
                       backgroundColor:

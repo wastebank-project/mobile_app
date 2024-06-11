@@ -39,6 +39,8 @@ class _EditProfileState extends State<EditProfile> {
           usernameController.text,
         );
         await Authentication().logoutUser();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Update Sukses')));
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const LoginScreen()),

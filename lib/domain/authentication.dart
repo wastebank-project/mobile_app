@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:waste_app/presentation/page/main_page/main_page.dart';
 
 class Authentication {
   static const String baseUrl = 'https://backend-banksampah-api.vercel.app';
@@ -50,10 +53,54 @@ class Authentication {
     }
   }
 
-  Future<void> logoutUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? accessToken = prefs.getString('authToken');
+  Future<void> login(
+      {required GlobalKey<FormState> formKey,
+      required TextEditingController usernameController,
+      required TextEditingController passwordController,
+      required BuildContext context,
+      required Function(String) setErrorMessage}) async {
+    if (formKey.currentState!.validate()) {
+      EasyLoading.show(status: 'Loading');
+      try {
+        final response = await loginUser(
+          usernameController.text,
+          passwordController.text,
+        );
+        // Handle login response
+        await handleLoginResponse(response, context);
+      } catch (e) {
+        // Handle login error
+        setErrorMessage(e.toString().replaceFirst('Exception: ', ''));
+      }
+      EasyLoading.dismiss();
+    }
+  }
 
+  Future<void> handleLoginResponse(
+      Map<String, dynamic> response, BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('accessToken', response['accessToken']);
+    prefs.setString('refreshToken', response['refreshToken']);
+    // Optionally, you can save other user information like username and email
+    prefs.setString('username', response['username']);
+    prefs.setString('email', response['email']);
+    // Save the access token expiration time
+    int accessTokenExpiration =
+        DateTime.now().millisecondsSinceEpoch + (2 * 60 * 1000); // 2 minutes
+    prefs.setInt('accessTokenExpiration', accessTokenExpiration);
+    // Navigate to the home screen
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => MainPage(
+          username: response['username'],
+          email: response['email'],
+        ),
+      ),
+    );
+  }
+
+  Future<void> logoutUser() async {
+    String? accessToken = await getAccessToken();
     if (accessToken != null) {
       final url = Uri.parse('$baseUrl/auth/logout');
       final headers = {
@@ -66,16 +113,19 @@ class Authentication {
         throw Exception('Failed to log out');
       }
 
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('accessToken');
+      await prefs.remove('refreshToken');
+      await prefs.remove('accessTokenExpiration');
       await prefs.remove('username');
       await prefs.remove('email');
+    } else {
+      throw Exception('No access token found');
     }
   }
 
   Future<void> updateUserProfile(String email, String username) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? accessToken = prefs.getString('authToken');
-
+    String? accessToken = await getAccessToken();
     if (accessToken != null) {
       final url = Uri.parse('$baseUrl/users/me');
       final headers = {
@@ -94,6 +144,49 @@ class Authentication {
       }
     } else {
       throw Exception('No access token found');
+    }
+  }
+
+  Future<String?> getAccessToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('accessToken');
+    int? expirationTime = prefs.getInt('accessTokenExpiration');
+
+    if (accessToken != null && expirationTime != null) {
+      int currentTime = DateTime.now().millisecondsSinceEpoch;
+      if (currentTime >= expirationTime) {
+        accessToken = await refreshToken();
+      }
+    } else {
+      accessToken = await refreshToken();
+    }
+    return accessToken;
+  }
+
+  Future<String> refreshToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? refreshToken = prefs.getString('refreshToken');
+
+    if (refreshToken != null) {
+      final url = Uri.parse('$baseUrl/auth/token');
+      final headers = {'Content-Type': 'application/json'};
+      final body = jsonEncode({'token': refreshToken});
+
+      final response = await http.post(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        final newTokens = jsonDecode(response.body);
+        await prefs.setString('accessToken', newTokens['accessToken']);
+        // Assume the new access token is valid for another 2 minutes
+        int accessTokenExpiration =
+            DateTime.now().millisecondsSinceEpoch + (2 * 60 * 1000);
+        await prefs.setInt('accessTokenExpiration', accessTokenExpiration);
+        return newTokens['accessToken'];
+      } else {
+        throw Exception('Failed to refresh token');
+      }
+    } else {
+      throw Exception('No refresh token found');
     }
   }
 }
