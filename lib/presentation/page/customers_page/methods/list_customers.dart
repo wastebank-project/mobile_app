@@ -15,12 +15,18 @@ class _ListCustomersState extends State<ListCustomers> {
   @override
   void initState() {
     super.initState();
-    futureNasabah = Customer().getCustomer();
+    futureNasabah = _fetchAndSortCustomers();
+  }
+
+  Future<List<dynamic>> _fetchAndSortCustomers() async {
+    List<dynamic> customers = await Customer().getCustomer();
+    customers.sort((a, b) => a['name'].compareTo(b['name']));
+    return customers;
   }
 
   Future<void> _refreshCustomerList() async {
     setState(() {
-      futureNasabah = Customer().getCustomer();
+      futureNasabah = _fetchAndSortCustomers();
     });
   }
 

@@ -115,44 +115,6 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
     overlay.insert(_overlayEntry!);
   }
 
-  // Showing dropdown menu for waste types
-  void _showDropDownWaste(BuildContext context, RenderBox renderBox) {
-    final overlay = Overlay.of(context);
-    final size = renderBox.size;
-    final offset = renderBox.localToGlobal(Offset.zero);
-
-    _overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        left: offset.dx,
-        top: offset.dy + size.height,
-        width: size.width,
-        child: Material(
-          elevation: 4.0,
-          child: Container(
-            constraints: const BoxConstraints(maxHeight: 300),
-            child: ListView(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              children: wasteTypes.map((String wasteType) {
-                return ListTile(
-                  title: Text(wasteType),
-                  onTap: () {
-                    setState(() {
-                      wasteTypeController.text = wasteType;
-                    });
-                    _overlayEntry?.remove();
-                    _overlayEntry = null;
-                  },
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      ),
-    );
-    overlay.insert(_overlayEntry!);
-  }
-
 // FUNGSI UNTUK OVERLAY DROPDOWN WHEN PREVIOUS PAGE
   @override
   void dispose() {
