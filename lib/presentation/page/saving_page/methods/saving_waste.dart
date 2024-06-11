@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waste_app/presentation/widgets/address_widget_textfield.dart';
+import 'package:waste_app/presentation/widgets/date_picker.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 
 class SavingWasteScreen extends StatefulWidget {
@@ -12,8 +12,10 @@ class SavingWasteScreen extends StatefulWidget {
 class _SavingWasteScreenState extends State<SavingWasteScreen> {
   // final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController wasteTypeIdController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+
   String? _errorMessage;
 
   @override
@@ -51,6 +53,8 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
               'Tanggal',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
+            WasteAppDatePicker(
+                hintText: 'DD/MM/YYYY', controller: dateController),
             const SizedBox(height: 10),
             const SizedBox(height: 30),
             const Text(
@@ -60,7 +64,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
             const SizedBox(height: 10),
             WasteAppTextFieldsCustomer(
               hintText: '08XXXXXXXXXX',
-              controller: phoneNumberController,
+              controller: amountController,
               textInputTypeNumber: true,
               lengthLimit: true,
             ),
