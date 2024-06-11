@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:waste_app/presentation/widgets/date_picker.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:waste_app/presentation/widgets/waste_types.dart';
 
 class SavingWasteScreen extends StatefulWidget {
   const SavingWasteScreen({super.key});
@@ -24,12 +25,20 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
 
   List<String> names = [];
   List<String> wasteTypes = [];
+  List<Map<String, dynamic>> wasteItems = []; // List to store waste items
+
+  void addWasteItem() {
+    setState(() {
+      wasteItems.add({'wasteType': '', 'amount': ''});
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     fetchName();
     fetchWasteTypes();
+    wasteItems.add({'wasteType': '', 'amount': ''}); // Start with one row
   }
 
 // MENDAPATKAN NAMA BASED ON GET /NASABAH
@@ -159,7 +168,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               'Tabung Sampah',
@@ -209,87 +218,27 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Builder(
-                  builder: (context) {
-                    return GestureDetector(
-                      onTap: () {
-                        RenderBox renderBox =
-                            context.findRenderObject() as RenderBox;
-                        _showDropDownWaste(context, renderBox);
-                      },
-                      child: AbsorbPointer(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: const Color(0xffeeeeee),
-                          ),
-                          child: SizedBox(
-                            width: 230,
-                            child: TextField(
-                              controller: wasteTypeController,
-                              decoration: InputDecoration(
-                                hintText: 'Pilih Sampah',
-                                hintStyle: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey.shade500,
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                // const SizedBox(width: 20),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xffeeeeee),
-                  ),
-                  child: SizedBox(
-                    width: 70,
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: 'Berat',
-                        hintStyle: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade500,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const Text('Kg')
-              ],
+            for (int i = 0; i < wasteItems.length; i++)
+              WasteItemRow(
+                index: i,
+                wasteTypes: wasteTypes,
+                onWasteTypeChanged: (value) {
+                  setState(() {
+                    wasteItems[i]['wasteType'] = value;
+                  });
+                },
+                onAmountChanged: (value) {
+                  setState(() {
+                    wasteItems[i]['amount'] = value;
+                  });
+                },
+              ),
+            TextButton(
+              onPressed: addWasteItem,
+              child: const Text(
+                '+ Tambah Sampah',
+                style: TextStyle(color: Colors.green),
+              ),
             ),
             if (_errorMessage != null)
               Text(
@@ -319,6 +268,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 50)
           ],
         ),
       ),
