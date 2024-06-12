@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:waste_app/presentation/page/saving_page/result/savingSuccess.dart';
 import 'package:waste_app/presentation/widgets/date_picker.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +23,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
   OverlayEntry? _overlayEntry;
 
   List<String> names = [];
-  List<String> wasteTypes = [];
+  List<Map<String, String>> wasteTypes = [];
   List<Map<String, dynamic>> wasteItems = [];
   Map<int, int> itemTotals = {};
 
@@ -71,6 +72,18 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
     return total;
   }
 
+// MEMBERSIHKAN FORM
+  void _clearForm() {
+    setState(() {
+      nameController.clear();
+      dateController.clear();
+      wasteItems.clear();
+      wasteItems.add({'wasteType': '', 'amount': ''});
+      itemTotals.clear();
+      _errorMessage = null;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -105,8 +118,13 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       setState(() {
-        wasteTypes = data.map((e) => e['name'] as String).toList();
-        wasteTypes.sort();
+        wasteTypes = data
+            .map((e) => {
+                  'id': e['id'] as String,
+                  'name': e['name'] as String,
+                })
+            .toList();
+        wasteTypes.sort((a, b) => a['name']!.compareTo(b['name']!));
       });
     } else {
       setState(() {
@@ -159,6 +177,49 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
     _overlayEntry?.remove();
     _overlayEntry = null;
     super.dispose();
+  }
+
+  Future<void> _submitDeposits() async {
+    EasyLoading.show(status: 'Loading...');
+    if (nameController.text.isEmpty || dateController.text.isEmpty) {
+      setState(() {
+        _errorMessage = 'Tolong isi Semua Data!';
+      });
+      return;
+    }
+
+    List<Map<String, dynamic>> deposits = wasteItems.map((item) {
+      final selectedWasteType = wasteTypes
+          .firstWhere((wasteType) => wasteType['name'] == item['wasteType']);
+      return {
+        'wasteTypeId': selectedWasteType['id'],
+        'amount': int.parse(item['amount']),
+      };
+    }).toList();
+
+    final response = await http.post(
+      Uri.parse('https://backend-banksampah-api.vercel.app/tabung'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': nameController.text,
+        'date': dateController.text,
+        'deposits': deposits,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SavingSuccess(),
+          ));
+      _clearForm();
+    } else {
+      setState(() {
+        _errorMessage = 'Failed to save deposits';
+      });
+    }
+    EasyLoading.dismiss();
   }
 
   @override
@@ -236,7 +297,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
             for (int i = 0; i < wasteItems.length; i++)
               WasteItemRow(
                 index: i,
-                wasteTypes: wasteTypes,
+                wasteTypes: wasteTypes.map((e) => e['name']!).toList(),
                 onWasteTypeChanged: (value) {
                   setState(() {
                     wasteItems[i]['wasteType'] = value;
@@ -314,7 +375,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(const Color(0xFFF2994A))),
-                  onPressed: () {},
+                  onPressed: _submitDeposits,
                   child: const Text(
                     'Tabung',
                     style: TextStyle(

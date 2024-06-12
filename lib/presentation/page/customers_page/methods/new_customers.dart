@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/customers.dart';
-import 'package:waste_app/presentation/page/customers_page/result/new_customers_success.dart';
-import 'package:waste_app/presentation/page/main_page/main_page.dart';
 import 'package:waste_app/presentation/widgets/address_widget_textfield.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 
