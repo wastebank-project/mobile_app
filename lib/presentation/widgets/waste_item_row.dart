@@ -136,7 +136,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
                       color: const Color(0xffeeeeee),
                     ),
                     child: SizedBox(
-                      width: 230,
+                      width: 200,
                       child: TextField(
                         controller: wasteTypeController,
                         decoration: InputDecoration(
@@ -171,7 +171,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
               color: const Color(0xffeeeeee),
             ),
             child: SizedBox(
-              width: 70,
+              width: 60,
               child: TextField(
                 controller: amountController,
                 keyboardType: TextInputType.number,
@@ -196,7 +196,10 @@ class _WasteItemRowState extends State<WasteItemRow> {
                 ),
                 onChanged: (value) {
                   widget.onAmountChanged(value);
-                  widget.onTotalChanged(widget.index, calculateTotal());
+                  widget.onTotalChanged(
+                    widget.index,
+                    calculateTotal(),
+                  );
                 },
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:waste_app/presentation/widgets/date_picker.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 import 'package:http/http.dart' as http;
@@ -208,15 +209,15 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
               'Tanggal',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 10),
             WasteAppDatePicker(
                 hintText: 'DD/MM/YYYY', controller: dateController),
-            const SizedBox(height: 10),
             const SizedBox(height: 30),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 190,
+                  width: 195,
                   child: Text(
                     'Jenis Sampah',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -232,7 +233,6 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
             for (int i = 0; i < wasteItems.length; i++)
               WasteItemRow(
                 index: i,
@@ -257,24 +257,23 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                   onPressed: addWasteItem,
                   child: const Text(
                     '+ Tambah Sampah',
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 10,
+                    ),
                   ),
                 ),
                 TextButton(
                   onPressed: deleteLastWasteItem,
                   child: const Text(
                     '- Hapus Sampah',
-                    style: TextStyle(color: Colors.red),
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 10,
+                    ),
                   ),
-                ),
+                )
               ],
-            ),
-            SizedBox(
-              width: 50,
-              child: Text(
-                '${calculateOverallTotal()}',
-                textAlign: TextAlign.center,
-              ),
             ),
             if (_errorMessage != null)
               Text(
@@ -285,10 +284,32 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                 ),
               ),
             const SizedBox(height: 50),
-            Center(
+            const SizedBox(height: 50)
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        height: 115,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Text(
+                'Total = Rp. ${calculateOverallTotal()}',
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 17, 25, 0),
               child: SizedBox(
                 width: 350,
-                height: 55,
+                height: 45,
                 child: TextButton(
                   style: ButtonStyle(
                       backgroundColor:
@@ -304,7 +325,6 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 50)
           ],
         ),
       ),

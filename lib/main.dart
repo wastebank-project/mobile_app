@@ -16,6 +16,11 @@ class MyApp extends StatelessWidget {
       title: 'WasteApp',
       theme: ThemeData(
         fontFamily: "Poppins",
+        appBarTheme: const AppBarTheme(
+          backgroundColor:
+              Colors.transparent, // Explicitly set AppBar background to white
+          scrolledUnderElevation: 0, // Disable color change on scroll
+        ),
       ),
       home: const SplashScreen(),
     );
