@@ -30,6 +30,8 @@ class _WasteItemRowState extends State<WasteItemRow> {
 
   List<String> wasteTypes = [];
   List<Map<String, dynamic>> wasteItems = [];
+  Map<String, int> wasteTypePrices = {}; // Map to store waste type and prices
+  String selectedWasteType = ''; // Variable to store the selected waste type
 
   void addWasteItem() {
     setState(() {
@@ -53,10 +55,23 @@ class _WasteItemRowState extends State<WasteItemRow> {
       setState(() {
         wasteTypes = data.map((e) => e['name'] as String).toList();
         wasteTypes.sort();
+        wasteTypePrices = Map.fromIterable(
+          data,
+          key: (e) => e['name'] as String,
+          value: (e) => e['pricePerKg'] as int,
+        );
       });
     } else {
       setState(() {});
     }
+  }
+
+  int calculateTotal() {
+    if (!wasteTypePrices.containsKey(selectedWasteType)) return 0;
+
+    int amount =
+        int.tryParse(amountController.text) ?? 0; // Handle invalid input
+    return wasteTypePrices[selectedWasteType]! * amount;
   }
 
   // Showing dropdown menu for waste types
@@ -82,6 +97,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
                   title: Text(wasteType),
                   onTap: () {
                     setState(() {
+                      selectedWasteType = wasteType;
                       wasteTypeController.text = wasteType;
                     });
                     _overlayEntry?.remove();
@@ -126,7 +142,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
                       color: const Color(0xffeeeeee),
                     ),
                     child: SizedBox(
-                      width: 230,
+                      width: 200,
                       child: TextField(
                         controller: wasteTypeController,
                         decoration: InputDecoration(
@@ -148,6 +164,13 @@ class _WasteItemRowState extends State<WasteItemRow> {
                             ),
                           ),
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedWasteType =
+                                value; // Update selected waste type
+                            widget.onWasteTypeChanged(value);
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -155,7 +178,6 @@ class _WasteItemRowState extends State<WasteItemRow> {
               );
             },
           ),
-          // const SizedBox(width: 20),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -164,9 +186,10 @@ class _WasteItemRowState extends State<WasteItemRow> {
             child: SizedBox(
               width: 70,
               child: TextField(
+                controller: amountController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  hintText: 'Berat',
+                  hintText: 'KG',
                   hintStyle: TextStyle(
                     fontSize: 12,
                     color: Colors.grey.shade500,
@@ -184,10 +207,17 @@ class _WasteItemRowState extends State<WasteItemRow> {
                     ),
                   ),
                 ),
+                onChanged: widget.onAmountChanged,
               ),
             ),
           ),
-          const Text('Kg')
+          SizedBox(
+            width: 50,
+            child: Text(
+              '${calculateTotal()}',
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );

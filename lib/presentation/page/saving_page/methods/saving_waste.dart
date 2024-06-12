@@ -14,11 +14,8 @@ class SavingWasteScreen extends StatefulWidget {
 }
 
 class _SavingWasteScreenState extends State<SavingWasteScreen> {
-  // final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-  TextEditingController wasteTypeController = TextEditingController();
-  TextEditingController amountController = TextEditingController();
 
   String? _errorMessage;
   OverlayEntry? _overlayEntry;
@@ -26,6 +23,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
   List<String> names = [];
   List<String> wasteTypes = [];
   List<Map<String, dynamic>> wasteItems = []; // List to store waste items
+  Map<String, int> wasteTypePrices = {}; // Map to store waste type and prices
 
   void addWasteItem() {
     setState(() {
@@ -33,12 +31,14 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
     });
   }
 
+// HAPUS ITEM SAMPAH
   void deleteWasteItem(int index) {
     setState(() {
       wasteItems.removeAt(index);
     });
   }
 
+// HAPUS ITEM SAMPAH TERAKHIR
   void deleteLastWasteItem() {
     if (wasteItems.isNotEmpty) {
       setState(() {
@@ -189,9 +189,25 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                 hintText: 'DD/MM/YYYY', controller: dateController),
             const SizedBox(height: 10),
             const SizedBox(height: 30),
-            const Text(
-              'Jenis Sampah',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: 190,
+                  child: Text(
+                    'Jenis Sampah',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Text(
+                  'Berat',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Harga',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             for (int i = 0; i < wasteItems.length; i++)
