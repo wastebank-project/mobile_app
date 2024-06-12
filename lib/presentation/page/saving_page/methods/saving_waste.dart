@@ -4,7 +4,7 @@ import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:waste_app/presentation/widgets/waste_types.dart';
+import 'package:waste_app/presentation/widgets/waste_item_row.dart';
 
 class SavingWasteScreen extends StatefulWidget {
   const SavingWasteScreen({super.key});
@@ -31,6 +31,20 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
     setState(() {
       wasteItems.add({'wasteType': '', 'amount': ''});
     });
+  }
+
+  void deleteWasteItem(int index) {
+    setState(() {
+      wasteItems.removeAt(index);
+    });
+  }
+
+  void deleteLastWasteItem() {
+    if (wasteItems.isNotEmpty) {
+      setState(() {
+        wasteItems.removeLast();
+      });
+    }
   }
 
   @override
@@ -194,13 +208,26 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                     wasteItems[i]['amount'] = value;
                   });
                 },
+                onDelete: deleteWasteItem,
               ),
-            TextButton(
-              onPressed: addWasteItem,
-              child: const Text(
-                '+ Tambah Sampah',
-                style: TextStyle(color: Colors.green),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: addWasteItem,
+                  child: const Text(
+                    '+ Tambah Sampah',
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+                TextButton(
+                  onPressed: deleteLastWasteItem,
+                  child: const Text(
+                    '- Hapus Sampah',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ],
             ),
             if (_errorMessage != null)
               Text(

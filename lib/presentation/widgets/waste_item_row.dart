@@ -7,6 +7,7 @@ class WasteItemRow extends StatefulWidget {
   final List<String> wasteTypes;
   final Function(String) onWasteTypeChanged;
   final Function(String) onAmountChanged;
+  final Function(int) onDelete;
 
   const WasteItemRow({
     super.key,
@@ -14,6 +15,7 @@ class WasteItemRow extends StatefulWidget {
     required this.wasteTypes,
     required this.onWasteTypeChanged,
     required this.onAmountChanged,
+    required this.onDelete,
   });
 
   @override
@@ -24,7 +26,6 @@ class _WasteItemRowState extends State<WasteItemRow> {
   TextEditingController wasteTypeController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
-  String? _errorMessage;
   OverlayEntry? _overlayEntry;
 
   List<String> wasteTypes = [];
@@ -54,9 +55,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
         wasteTypes.sort();
       });
     } else {
-      setState(() {
-        _errorMessage = 'Failed to load data';
-      });
+      setState(() {});
     }
   }
 
