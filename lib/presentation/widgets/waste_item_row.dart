@@ -8,6 +8,7 @@ class WasteItemRow extends StatefulWidget {
   final Function(String) onWasteTypeChanged;
   final Function(String) onAmountChanged;
   final Function(int) onDelete;
+  final Function(int, int) onTotalChanged;
 
   const WasteItemRow({
     super.key,
@@ -16,6 +17,7 @@ class WasteItemRow extends StatefulWidget {
     required this.onWasteTypeChanged,
     required this.onAmountChanged,
     required this.onDelete,
+    required this.onTotalChanged,
   });
 
   @override
@@ -29,15 +31,8 @@ class _WasteItemRowState extends State<WasteItemRow> {
   OverlayEntry? _overlayEntry;
 
   List<String> wasteTypes = [];
-  List<Map<String, dynamic>> wasteItems = [];
   Map<String, int> wasteTypePrices = {}; // Map to store waste type and prices
   String selectedWasteType = ''; // Variable to store the selected waste type
-
-  void addWasteItem() {
-    setState(() {
-      wasteItems.add({'wasteType': '', 'amount': ''});
-    });
-  }
 
   @override
   void initState() {
@@ -45,7 +40,6 @@ class _WasteItemRowState extends State<WasteItemRow> {
     fetchWasteTypes();
   }
 
-// MENDAPATKAN WASTE TYPE
   Future<void> fetchWasteTypes() async {
     final response = await http
         .get(Uri.parse('https://backend-banksampah-api.vercel.app/wastetypes'));
@@ -74,7 +68,6 @@ class _WasteItemRowState extends State<WasteItemRow> {
     return wasteTypePrices[selectedWasteType]! * amount;
   }
 
-  // Showing dropdown menu for waste types
   void _showDropDownWaste(BuildContext context, RenderBox renderBox) {
     final overlay = Overlay.of(context);
     final size = renderBox.size;
@@ -99,6 +92,8 @@ class _WasteItemRowState extends State<WasteItemRow> {
                     setState(() {
                       selectedWasteType = wasteType;
                       wasteTypeController.text = wasteType;
+                      widget.onWasteTypeChanged(wasteType);
+                      widget.onTotalChanged(widget.index, calculateTotal());
                     });
                     _overlayEntry?.remove();
                     _overlayEntry = null;
@@ -113,7 +108,6 @@ class _WasteItemRowState extends State<WasteItemRow> {
     overlay.insert(_overlayEntry!);
   }
 
-// FUNGSI UNTUK OVERLAY DROPDOWN WHEN PREVIOUS PAGE
   @override
   void dispose() {
     _overlayEntry?.remove();
@@ -142,7 +136,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
                       color: const Color(0xffeeeeee),
                     ),
                     child: SizedBox(
-                      width: 200,
+                      width: 230,
                       child: TextField(
                         controller: wasteTypeController,
                         decoration: InputDecoration(
@@ -164,13 +158,6 @@ class _WasteItemRowState extends State<WasteItemRow> {
                             ),
                           ),
                         ),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedWasteType =
-                                value; // Update selected waste type
-                            widget.onWasteTypeChanged(value);
-                          });
-                        },
                       ),
                     ),
                   ),
@@ -189,7 +176,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
                 controller: amountController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  hintText: 'KG',
+                  hintText: 'Berat',
                   hintStyle: TextStyle(
                     fontSize: 12,
                     color: Colors.grey.shade500,
@@ -207,7 +194,10 @@ class _WasteItemRowState extends State<WasteItemRow> {
                     ),
                   ),
                 ),
-                onChanged: widget.onAmountChanged,
+                onChanged: (value) {
+                  widget.onAmountChanged(value);
+                  widget.onTotalChanged(widget.index, calculateTotal());
+                },
               ),
             ),
           ),

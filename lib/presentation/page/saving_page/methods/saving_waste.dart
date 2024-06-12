@@ -22,29 +22,52 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
 
   List<String> names = [];
   List<String> wasteTypes = [];
-  List<Map<String, dynamic>> wasteItems = []; // List to store waste items
-  Map<String, int> wasteTypePrices = {}; // Map to store waste type and prices
+  List<Map<String, dynamic>> wasteItems = [];
+  Map<int, int> itemTotals = {};
 
+// PENAMBAHAN WASTE ITEM ROW
   void addWasteItem() {
     setState(() {
       wasteItems.add({'wasteType': '', 'amount': ''});
     });
   }
 
-// HAPUS ITEM SAMPAH
+// PENGHAPUSAN WASTE ITEM
   void deleteWasteItem(int index) {
     setState(() {
       wasteItems.removeAt(index);
+      itemTotals.remove(index);
+      calculateOverallTotal();
     });
   }
 
-// HAPUS ITEM SAMPAH TERAKHIR
+// HAPUS WASTE ITEM TERAKHIR
   void deleteLastWasteItem() {
     if (wasteItems.isNotEmpty) {
       setState(() {
+        int lastIndex = wasteItems.length - 1;
         wasteItems.removeLast();
+        itemTotals.remove(lastIndex);
+        calculateOverallTotal();
       });
     }
+  }
+
+// PENJUMLAHAN PERITEM
+  void updateItemTotal(int index, int total) {
+    setState(() {
+      itemTotals[index] = total;
+      calculateOverallTotal();
+    });
+  }
+
+// PENJUMLAHAN SUM TOTAL ITEM
+  int calculateOverallTotal() {
+    int total = 0;
+    itemTotals.forEach((_, value) {
+      total += value;
+    });
+    return total;
   }
 
   @override
@@ -225,6 +248,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                   });
                 },
                 onDelete: deleteWasteItem,
+                onTotalChanged: updateItemTotal,
               ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -244,6 +268,13 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              width: 50,
+              child: Text(
+                '${calculateOverallTotal()}',
+                textAlign: TextAlign.center,
+              ),
             ),
             if (_errorMessage != null)
               Text(
