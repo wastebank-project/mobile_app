@@ -260,6 +260,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                     child: WasteAppTextFieldsCustomer(
                       hintText: 'Nama Nasabah',
                       controller: nameController,
+                      suffixIcon: true,
                     ),
                   ),
                 );
@@ -272,7 +273,9 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
             ),
             const SizedBox(height: 10),
             WasteAppDatePicker(
-                hintText: 'DD/MM/YYYY', controller: dateController),
+              hintText: 'DD/MM/YYYY',
+              controller: dateController,
+            ),
             const SizedBox(height: 30),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

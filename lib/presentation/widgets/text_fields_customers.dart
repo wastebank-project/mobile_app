@@ -6,6 +6,7 @@ class WasteAppTextFieldsCustomer extends StatefulWidget {
   final TextEditingController controller;
   final bool textInputTypeNumber;
   final bool lengthLimit;
+  final bool suffixIcon;
 
   const WasteAppTextFieldsCustomer({
     Key? key,
@@ -13,6 +14,7 @@ class WasteAppTextFieldsCustomer extends StatefulWidget {
     required this.controller,
     this.textInputTypeNumber = false,
     this.lengthLimit = false,
+    this.suffixIcon = false,
   }) : super(key: key);
 
   @override
@@ -40,6 +42,8 @@ class _WasteAppTextFieldsCustomerState
             ? TextInputType.number
             : TextInputType.text,
         decoration: InputDecoration(
+          suffixIcon:
+              widget.suffixIcon ? const Icon(Icons.arrow_drop_down) : null,
           hintText: widget.hintText,
           hintStyle: TextStyle(
             fontSize: 12,

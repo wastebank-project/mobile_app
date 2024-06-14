@@ -51,6 +51,7 @@ class _WasteAppDatePickerState extends State<WasteAppDatePicker> {
             fontSize: 12,
             color: Colors.grey.shade500,
           ),
+          suffixIcon: const Icon(Icons.calendar_month),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(

@@ -141,6 +141,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
                         controller: wasteTypeController,
                         decoration: InputDecoration(
                           hintText: 'Pilih Sampah',
+                          suffixIcon: const Icon(Icons.arrow_drop_down),
                           hintStyle: TextStyle(
                             fontSize: 12,
                             color: Colors.grey.shade500,

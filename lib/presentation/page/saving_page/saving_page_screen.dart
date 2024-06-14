@@ -82,13 +82,10 @@ class SavingPageScreen extends StatelessWidget {
                                           fontSize: 19,
                                           fontWeight: FontWeight.w700),
                                     ),
-                                    Text(
-                                      '>',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 40,
-                                          fontWeight: FontWeight.w700),
-                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_sharp,
+                                      color: Colors.white,
+                                    )
                                   ],
                                 ),
                               ),
@@ -165,13 +162,10 @@ class SavingPageScreen extends StatelessWidget {
                                           fontSize: 19,
                                           fontWeight: FontWeight.w700),
                                     ),
-                                    Text(
-                                      '>',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 40,
-                                          fontWeight: FontWeight.w700),
-                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_sharp,
+                                      color: Colors.white,
+                                    )
                                   ],
                                 ),
                               ),
@@ -235,14 +229,24 @@ class SavingPageScreen extends StatelessWidget {
                                             const NewCustomerScreen(),
                                       ));
                                 },
-                                icon: const Icon(Icons.person_add_alt_1_rounded,
+                                icon: const Icon(Icons.history,
                                     color: Colors.white),
-                                label: const Text(
-                                  'Daftar Nasabah Baru',
-                                  style: TextStyle(
+                                label: const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Riwayat Tabung',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_sharp,
                                       color: Colors.white,
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w700),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
@@ -250,7 +254,7 @@ class SavingPageScreen extends StatelessWidget {
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Text(
-                              'Diperuntukkan untuk nasabah baru yang ingin menabung di bank sampah',
+                              'Melihat riwayat tabung nasabah',
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
