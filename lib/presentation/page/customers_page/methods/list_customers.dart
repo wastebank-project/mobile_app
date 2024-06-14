@@ -51,7 +51,22 @@ class _ListCustomersState extends State<ListCustomers> {
                 itemBuilder: (context, index) {
                   final nasabah = snapshot.data![index];
                   return ListTile(
-                    title: Text(nasabah['name']),
+                    title: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Container(
+                        height: 80,
+                        decoration: const BoxDecoration(
+                          color: Color(0xffF6F4BD),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 25, 0, 15),
+                          child: Text(nasabah['name']),
+                        ),
+                      ),
+                    ),
                     onTap: () async {
                       final result = await Navigator.push(
                         context,

@@ -41,6 +41,19 @@ class Customer {
     }
   }
 
+  Future<List<dynamic>> getBalance() async {
+    final url = Uri.parse('$baseUrl/saldo');
+    final headers = {'Content-Type': 'application/json'};
+
+    final response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
   Future<void> deleteCustomer(String id) async {
     final url = Uri.parse('$baseUrl/nasabah/$id');
     final headers = {'Content-Type': 'application/json'};

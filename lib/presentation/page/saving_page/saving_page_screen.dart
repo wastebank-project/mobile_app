@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:waste_app/presentation/page/customers_page/methods/list_customers.dart';
 import 'package:waste_app/presentation/page/customers_page/methods/new_customers.dart';
+import 'package:waste_app/presentation/page/saving_page/methods/customers_balance.dart';
 import 'package:waste_app/presentation/page/saving_page/methods/saving_waste.dart';
 
 class SavingPageScreen extends StatelessWidget {
@@ -148,7 +148,8 @@ class SavingPageScreen extends StatelessWidget {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ListCustomers(),
+                                        builder: (context) =>
+                                            const CustomersBalance(),
                                       ));
                                 },
                                 icon: const Icon(Icons.monetization_on_outlined,
