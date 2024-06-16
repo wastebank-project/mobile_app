@@ -10,7 +10,7 @@ class SavingPageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(25, 90, 25, 0),
+        padding: const EdgeInsets.fromLTRB(25, 75, 25, 0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

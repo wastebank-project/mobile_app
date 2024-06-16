@@ -25,6 +25,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
     EasyLoading.show(status: 'Loading');
     if (_formKey.currentState!.validate()) {
       try {
+        // ignore: unused_local_variable
         final response = await _customer.registerCusomer(
           nameController.text,
           addressController.text,

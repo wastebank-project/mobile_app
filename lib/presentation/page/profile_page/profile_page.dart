@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/login_page/login_screen.dart';
@@ -111,9 +112,16 @@ class ProfilePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Image.asset(
-              'assets/png/save1.png',
-              opacity: const AlwaysStoppedAnimation(.6),
+            Positioned(
+              top: -40,
+              bottom: 450,
+              left: 0,
+              right: 0,
+              child: Image.asset(
+                'assets/png/save1.png',
+                opacity: const AlwaysStoppedAnimation(.6),
+                fit: BoxFit.cover,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 100, 25, 0),
@@ -121,7 +129,7 @@ class ProfilePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(
-                    height: 100,
+                    height: 80,
                   ),
                   Center(
                     child: Image.asset('assets/png/profile_picture.png'),

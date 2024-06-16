@@ -25,6 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     EasyLoading.show(status: 'Loading');
     if (_formKey.currentState!.validate()) {
       try {
+        // ignore: unused_local_variable
         final response = await _authentication.registerUser(
           emailController.text,
           passwordController.text,
