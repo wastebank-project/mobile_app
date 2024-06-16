@@ -6,6 +6,18 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key, required this.username});
   final String username;
 
+// FUNGSI GREETING BY TIME
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Selamat Pagi!';
+    } else if (hour < 17) {
+      return 'Selamat Siang!';
+    } else {
+      return 'Selamat Malam!';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +47,9 @@ class HomePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            const Text(
-                              'Selamat Datang,',
-                              style: TextStyle(
+                            Text(
+                              _getGreeting(),
+                              style: const TextStyle(
                                 fontSize: 18,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w300,
