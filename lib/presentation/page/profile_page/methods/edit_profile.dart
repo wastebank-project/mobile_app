@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/login_page/login_screen.dart';
+import 'package:waste_app/presentation/widgets/text_fields.dart';
 
 class EditProfile extends StatefulWidget {
   final String username;
@@ -58,45 +59,44 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Edit Profile'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+      appBar: AppBar(),
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextFormField(
-                controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a username';
-                  }
-                  return null;
-                },
+              const Text(
+                'Edit Profil',
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              TextFormField(
+              const SizedBox(height: 50),
+              const Text('Username'),
+              const SizedBox(height: 10),
+              WasteAppTextFields(
+                hintText: 'Username',
+                controller: usernameController,
+              ),
+              const SizedBox(height: 30),
+              const Text('Email'),
+              const SizedBox(height: 10),
+              WasteAppTextFields(
+                hintText: 'Email',
                 controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an email';
-                  }
-                  return null;
-                },
               ),
               if (_errorMessage != null)
                 Text(
                   _errorMessage!,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
-              SizedBox(height: 20),
+              const SizedBox(height: 100),
               ElevatedButton(
                 onPressed: _updateProfile,
-                child: Text('Update Profile'),
+                child: const Text('Update Profile'),
               ),
             ],
           ),

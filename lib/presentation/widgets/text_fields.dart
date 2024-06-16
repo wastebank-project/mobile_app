@@ -4,8 +4,7 @@ class WasteAppTextFields extends StatefulWidget {
   final TextEditingController controller;
   final bool obscureText;
   final bool suffixIcon;
-
-  final hintText;
+  final String hintText;
 
   const WasteAppTextFields({
     Key? key,
@@ -27,14 +26,14 @@ class _WasteAppTextFieldsState extends State<WasteAppTextFields> {
       height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color(0xffeeeeee),
+        color: const Color(0xffeeeeee),
       ),
-      child: TextField(
+      child: TextFormField(
         controller: widget.controller,
         obscureText: widget.obscureText && !_obscureText,
         decoration: InputDecoration(
           hintText: widget.hintText,
-          hintStyle: TextStyle(fontSize: 13, color: Colors.grey),
+          hintStyle: const TextStyle(fontSize: 13, color: Colors.grey),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
@@ -43,7 +42,7 @@ class _WasteAppTextFieldsState extends State<WasteAppTextFields> {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: Colors.white),
           ),
           suffixIcon: widget.suffixIcon
               ? IconButton(
