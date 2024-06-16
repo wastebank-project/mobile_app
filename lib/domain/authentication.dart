@@ -140,7 +140,35 @@ class Authentication {
       final response = await http.put(url, headers: headers, body: body);
 
       if (response.statusCode != 200) {
-        throw Exception('Failed to update user details: ${response.body}');
+        throw Exception(response.body);
+      }
+    } else {
+      throw Exception('No access token found');
+    }
+  }
+
+  Future<void> updateUserPassword(
+    String currentPassword,
+    String newPassword,
+    String confirmNewPassword,
+  ) async {
+    String? accessToken = await getAccessToken();
+    if (accessToken != null) {
+      final url = Uri.parse('$baseUrl/users/me/password');
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      };
+      final body = jsonEncode({
+        'currentPassword': currentPassword,
+        'newPassword': newPassword,
+        'confirmNewPassword': confirmNewPassword,
+      });
+
+      final response = await http.put(url, headers: headers, body: body);
+
+      if (response.statusCode != 200) {
+        throw Exception(response.body);
       }
     } else {
       throw Exception('No access token found');
