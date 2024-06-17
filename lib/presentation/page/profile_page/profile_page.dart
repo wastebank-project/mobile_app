@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/login_page/login_screen.dart';
+import 'package:waste_app/presentation/page/profile_page/methods/about.dart';
 import 'package:waste_app/presentation/page/profile_page/methods/edit_password.dart';
 import 'package:waste_app/presentation/page/profile_page/methods/edit_profile.dart';
 
@@ -267,7 +268,13 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AboutScreen(),
+                            ));
+                      },
                       icon: const Icon(
                         Icons.system_update_tv_rounded,
                         color: Color(0xff0A6847),
