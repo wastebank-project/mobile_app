@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl/intl.dart';
 import 'package:waste_app/presentation/page/saving_page/result/savingSuccess.dart';
 import 'package:waste_app/presentation/widgets/date_picker.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
@@ -25,7 +26,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
   List<String> names = [];
   List<Map<String, String>> wasteTypes = [];
   List<Map<String, dynamic>> wasteItems = [];
-  Map<int, int> itemTotals = {};
+  Map<int, double> itemTotals = {}; // Change to double
 
 // PENAMBAHAN WASTE ITEM ROW
   void addWasteItem() {
@@ -56,7 +57,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
   }
 
 // PENJUMLAHAN PERITEM
-  void updateItemTotal(int index, int total) {
+  void updateItemTotal(int index, double total) {
     setState(() {
       itemTotals[index] = total;
       calculateOverallTotal();
@@ -64,8 +65,8 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
   }
 
 // PENJUMLAHAN SUM TOTAL ITEM
-  int calculateOverallTotal() {
-    int total = 0;
+  double calculateOverallTotal() {
+    double total = 0;
     itemTotals.forEach((_, value) {
       total += value;
     });
@@ -193,7 +194,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
           .firstWhere((wasteType) => wasteType['name'] == item['wasteType']);
       return {
         'wasteTypeId': selectedWasteType['id'],
-        'amount': int.parse(item['amount']),
+        'amount': double.parse(item['amount']), // Handle as double
       };
     }).toList();
 
@@ -224,6 +225,9 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final NumberFormat formatter =
+        NumberFormat('#,##0', 'id_ID'); // FORMAT RIBUAN PEMISAH
+
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -281,7 +285,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 195,
+                  width: 180,
                   child: Text(
                     'Jenis Sampah',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -291,9 +295,12 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                   'Berat',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  'Harga',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                SizedBox(
+                  width: 60,
+                  child: Text(
+                    'Harga',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             ),
@@ -352,44 +359,52 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 0,
-        height: 115,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Text(
-                'Total = Rp. ${calculateOverallTotal()}',
-                textAlign: TextAlign.right,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25, 17, 25, 0),
-              child: SizedBox(
-                width: 350,
-                height: 45,
-                child: TextButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFFF2994A))),
-                  onPressed: _submitDeposits,
-                  child: const Text(
-                    'Tabung',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+          ),
+        ]),
+        child: BottomAppBar(
+          elevation: 0,
+          height: 115,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  'Rp${formatter.format(calculateOverallTotal())}', // IMPLEMENTASI
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 11, 25, 0),
+                child: SizedBox(
+                  width: 350,
+                  height: 45,
+                  child: TextButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(const Color(0xFFF2994A))),
+                    onPressed: _submitDeposits,
+                    child: const Text(
+                      'Tabung',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
