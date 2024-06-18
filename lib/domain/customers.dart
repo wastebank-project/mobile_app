@@ -1,15 +1,14 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class Customer {
-  static const String baseUrl = 'https://backend-banksampah-api.vercel.app';
-
   Future<http.Response> registerCusomer(
     String name,
     String address,
     String phoneNumber,
   ) async {
-    final url = Uri.parse('$baseUrl/nasabah');
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/nasabah');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'name': name,
@@ -29,7 +28,7 @@ class Customer {
   }
 
   Future<List<dynamic>> getCustomer() async {
-    final url = Uri.parse('$baseUrl/nasabah');
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/nasabah');
     final headers = {'Content-Type': 'application/json'};
 
     final response = await http.get(url, headers: headers);
@@ -42,7 +41,7 @@ class Customer {
   }
 
   Future<List<dynamic>> getBalance() async {
-    final url = Uri.parse('$baseUrl/saldo');
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/saldo');
     final headers = {'Content-Type': 'application/json'};
 
     final response = await http.get(url, headers: headers);
@@ -55,7 +54,7 @@ class Customer {
   }
 
   Future<void> deleteCustomer(String id) async {
-    final url = Uri.parse('$baseUrl/nasabah/$id');
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/nasabah/$id');
     final headers = {'Content-Type': 'application/json'};
 
     final response = await http.delete(url, headers: headers);
@@ -71,7 +70,7 @@ class Customer {
     String address,
     String phoneNumber,
   ) async {
-    final url = Uri.parse('$baseUrl/nasabah/$id');
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/nasabah/$id');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'name': name,

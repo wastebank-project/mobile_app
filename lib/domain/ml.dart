@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
@@ -9,7 +10,7 @@ class MLService {
       // Send image to the API using form-data
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('https://machinelearning-api-6znke3vbka-uc.a.run.app/image'),
+        Uri.parse('${dotenv.env['BASE_ML_BACKEND']}/image'),
       );
       request.files.add(
         await http.MultipartFile.fromPath('image', inputImageFile.path),
@@ -38,7 +39,7 @@ class MLService {
   Future<List<Prediction>> detectText(File inputFile) async {
     try {
       var uri = Uri.parse(
-        'https://machinelearning-api-6znke3vbka-uc.a.run.app/text',
+        '${dotenv.env['BASE_ML_BACKEND']}/text',
       );
 
       var request = http.MultipartRequest('POST', uri);

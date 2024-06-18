@@ -1,20 +1,19 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waste_app/presentation/page/main_page/main_page.dart';
 
 class Authentication {
-  static const String baseUrl = 'https://backend-banksampah-api.vercel.app';
-
   Future<http.Response> registerUser(
     String email,
     String password,
     String confirmPassword,
     String username,
   ) async {
-    final url = Uri.parse('$baseUrl/auth/register');
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/auth/register');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'email': email,
@@ -36,7 +35,7 @@ class Authentication {
 
   Future<Map<String, dynamic>> loginUser(
       String username, String password) async {
-    final url = Uri.parse('$baseUrl/auth/login');
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/auth/login');
     final headers = {'Content-Type': 'application/json'};
 
     final body = jsonEncode({
@@ -102,7 +101,7 @@ class Authentication {
   Future<void> logoutUser() async {
     String? accessToken = await getAccessToken();
     if (accessToken != null) {
-      final url = Uri.parse('$baseUrl/auth/logout');
+      final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/auth/logout');
       final headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $accessToken',
@@ -127,7 +126,7 @@ class Authentication {
   Future<void> updateUserProfile(String email, String username) async {
     String? accessToken = await getAccessToken();
     if (accessToken != null) {
-      final url = Uri.parse('$baseUrl/users/me');
+      final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/users/me');
       final headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $accessToken',
@@ -154,7 +153,8 @@ class Authentication {
   ) async {
     String? accessToken = await getAccessToken();
     if (accessToken != null) {
-      final url = Uri.parse('$baseUrl/users/me/password');
+      final url =
+          Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/users/me/password');
       final headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $accessToken',
@@ -196,7 +196,7 @@ class Authentication {
     String? refreshToken = prefs.getString('refreshToken');
 
     if (refreshToken != null) {
-      final url = Uri.parse('$baseUrl/auth/token');
+      final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/auth/token');
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({'token': refreshToken});
 

@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/splash_screen.dart';
 
 Future<void> main() async {
+  //SECURE WITH .ENV
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await dotenv.load(fileName: '.env');

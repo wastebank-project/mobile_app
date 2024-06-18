@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:waste_app/presentation/page/saving_page/result/savingSuccess.dart';
@@ -95,8 +96,8 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
 
 // MENDAPATKAN NAMA BASED ON GET /NASABAH
   Future<void> fetchName() async {
-    final response = await http
-        .get(Uri.parse('https://backend-banksampah-api.vercel.app/nasabah'));
+    final response =
+        await http.get(Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/nasabah'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
@@ -114,7 +115,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
 // MENDAPATKAN WASTE TYPE
   Future<void> fetchWasteTypes() async {
     final response = await http
-        .get(Uri.parse('https://backend-banksampah-api.vercel.app/wastetypes'));
+        .get(Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/wastetypes'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
@@ -199,7 +200,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
     }).toList();
 
     final response = await http.post(
-      Uri.parse('https://backend-banksampah-api.vercel.app/tabung'),
+      Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/tabung'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'name': nameController.text,

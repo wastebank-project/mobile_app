@@ -66,7 +66,6 @@ class _ImageSliderState extends State<ImageSlider> {
             ),
           ),
         ),
-        const SizedBox(height: 30),
       ],
     );
   }

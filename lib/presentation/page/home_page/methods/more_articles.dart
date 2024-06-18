@@ -18,13 +18,6 @@ class MoreArticles extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // const Padding(
-            //   padding: EdgeInsets.all(8.0),
-            //   child: Text(
-            //     'Artikel Terkait',
-            //     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 26),
-            //   ),
-            // ),
             Stack(
               children: [
                 Padding(
