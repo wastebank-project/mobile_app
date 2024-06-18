@@ -24,6 +24,10 @@ class MyApp extends StatelessWidget {
       title: 'WasteApp',
       theme: ThemeData(
         fontFamily: "Poppins",
+        bottomAppBarTheme: const BottomAppBarTheme(
+          elevation: 0,
+          color: Colors.transparent, // Globally disable BottomAppBar shadows
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor:
               Colors.transparent, // Explicitly set AppBar background to white
