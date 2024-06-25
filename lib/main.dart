@@ -33,6 +33,10 @@ class MyApp extends StatelessWidget {
               Colors.transparent, // Explicitly set AppBar background to white
           scrolledUnderElevation: 0, // Disable color change on scroll
         ),
+        bottomSheetTheme: const BottomSheetThemeData(
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
       ),
       home: const SplashScreen(),
     );

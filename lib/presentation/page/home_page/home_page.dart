@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const ImageSlider(),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   const Text(
                     'Tanya Gemini',
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
@@ -99,6 +99,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[

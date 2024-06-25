@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -45,103 +47,90 @@ class _TanyaGeminiState extends State<TanyaGemini> {
               data: answer,
               selectable: true,
             ),
-            // Text(answer),
-            const SizedBox(height: 25),
+            const SizedBox(height: 100),
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 130,
-        decoration: const BoxDecoration(
-          color: Colors.white, // Ensure the container is transparent
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12, // Slight shadow for better visibility
-              blurRadius: 10,
-              spreadRadius: 5,
-            ),
-          ],
-        ),
-        child: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 310,
-                child: TextField(
-                  controller: questionController,
-                  decoration: InputDecoration(
-                    hintText: 'Masukkan pertanyaan saja atau dengan gambar',
-                    hintStyle:
-                        const TextStyle(fontSize: 11, color: Colors.grey),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    suffixIcon: IconButton(
-                      onPressed: () async {
-                        ImagePicker()
-                            .pickImage(source: ImageSource.gallery)
-                            .then(
-                          (value) {
-                            setState(() {
-                              image = value;
-                            });
-                          },
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.add_photo_alternate_outlined,
-                      ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Expanded for responsive TextField
+            Expanded(
+              child: TextField(
+                controller: questionController,
+                decoration: InputDecoration(
+                  // Reduce padding inside TextField
+                  contentPadding: const EdgeInsets.all(10),
+                  hintText: 'Pertanyaan saja atau dengan gambar',
+                  hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () async {
+                      ImagePicker().pickImage(source: ImageSource.gallery).then(
+                        (value) {
+                          setState(() {
+                            image = value;
+                          });
+                        },
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.add_photo_alternate_outlined,
                     ),
                   ),
                 ),
               ),
-              SizedBox(
-                child: IconButton(
-                  onPressed: () async {
-                    EasyLoading.show(status: 'Loading...');
-                    setState(() {
-                      answer = ''; // CLEAR JAWABAN SEBELUMNYA
-                    });
-                    try {
-                      GenerativeModel model = GenerativeModel(
-                        model: 'gemini-1.5-flash-latest',
-                        apiKey: dotenv.env['API_KEY']!,
-                      );
+            ),
+            SizedBox(
+              width: 30,
+              child: IconButton(
+                onPressed: () async {
+                  EasyLoading.show(status: 'Loading...');
+                  setState(() {
+                    answer = ''; // Clear previous answer
+                  });
+                  try {
+                    GenerativeModel model = GenerativeModel(
+                      model: 'gemini-1.5-flash-latest',
+                      apiKey: dotenv.env['API_KEY']!,
+                    );
 
-                      final result = await model.generateContent([
-                        Content.multi([
-                          TextPart(questionController.text),
-                          if (image != null)
-                            DataPart(
-                              'image/jpeg',
-                              File(image!.path).readAsBytesSync(),
-                            ),
-                        ]),
-                      ]);
+                    final result = await model.generateContent([
+                      Content.multi([
+                        TextPart(questionController.text),
+                        if (image != null)
+                          DataPart(
+                            'image/jpeg',
+                            File(image!.path).readAsBytesSync(),
+                          ),
+                      ]),
+                    ]);
 
-                      // Simulasi GeneratedText menjadi perteks
-                      final generatedText = result.text.toString();
-                      for (int i = 0; i < generatedText.length; i++) {
-                        await Future.delayed(const Duration(milliseconds: 10));
-                        setState(() {
-                          answer += generatedText[i];
-                        });
-                      }
-                    } catch (e) {
-                      print("Error generating content: $e");
-                    } finally {
-                      EasyLoading.dismiss();
+                    // Simulate generated text as per text
+                    final generatedText = result.text.toString();
+                    for (int i = 0; i < generatedText.length; i++) {
+                      await Future.delayed(const Duration(milliseconds: 10));
+                      setState(() {
+                        answer += generatedText[i];
+                      });
                     }
-                  },
-                  icon: const Icon(
-                    Icons.send,
-                    color: Colors.green,
-                  ),
+                  } catch (e) {
+                    print("Error generating content: $e");
+                  } finally {
+                    EasyLoading.dismiss();
+                  }
+                },
+                icon: const Icon(
+                  Icons.send,
+                  color: Colors.green,
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
