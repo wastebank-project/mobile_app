@@ -16,25 +16,20 @@ class FloatingIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 20, // Adjust positioning
-      left: (MediaQuery.of(context).size.width / 2.17) -
-          (iconSize / 2), // Center alignment
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          padding:
-              const EdgeInsets.all(20), // Adjust padding to control button size
-          backgroundColor: color,
-          elevation: 15, // Add shadow
-          shadowColor:
-              Colors.black.withOpacity(1), // Customize shadow color if needed
-        ),
-        child: Icon(
-          iconData,
-          size: iconSize, // Use the passed iconSize
-          color: Colors.white, // Adjust color as needed
-        ),
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding:
+            const EdgeInsets.all(10), // Adjust padding to control button size
+        backgroundColor: color,
+        elevation: 15, // Add shadow
+        shadowColor:
+            Colors.black.withOpacity(1), // Customize shadow color if needed
+      ),
+      child: Icon(
+        iconData,
+        size: iconSize, // Use the passed iconSize
+        color: Colors.white, // Adjust color as needed
       ),
     );
   }

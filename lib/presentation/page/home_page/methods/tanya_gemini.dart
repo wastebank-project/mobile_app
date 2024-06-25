@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:waste_app/presentation/widgets/floating_action_button.dart';
 
 class TanyaGemini extends StatefulWidget {
   const TanyaGemini({super.key});
@@ -52,42 +53,54 @@ class _TanyaGeminiState extends State<TanyaGemini> {
         ),
       ),
       bottomSheet: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 20),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Expanded for responsive TextField
+            // EXPAND FOR TEXTFIELD
             Expanded(
-              child: TextField(
-                controller: questionController,
-                decoration: InputDecoration(
-                  // Reduce padding inside TextField
-                  contentPadding: const EdgeInsets.all(10),
-                  hintText: 'Pertanyaan saja atau dengan gambar',
-                  hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  suffixIcon: IconButton(
-                    onPressed: () async {
-                      ImagePicker().pickImage(source: ImageSource.gallery).then(
-                        (value) {
-                          setState(() {
-                            image = value;
-                          });
-                        },
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.add_photo_alternate_outlined,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.white,
+                ),
+                child: TextField(
+                  controller: questionController,
+                  decoration: InputDecoration(
+                    // MENGURANGI PADDING DALAM TEXTFIELD
+                    contentPadding: const EdgeInsets.all(10),
+                    hintText: 'Pertanyaan saja atau dengan gambar',
+                    hintStyle:
+                        const TextStyle(fontSize: 12, color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () async {
+                        ImagePicker()
+                            .pickImage(source: ImageSource.gallery)
+                            .then(
+                          (value) {
+                            setState(() {
+                              image = value;
+                            });
+                          },
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.add_photo_alternate_outlined,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
+            const SizedBox(
+              width: 5,
+            ),
             SizedBox(
-              width: 30,
-              child: IconButton(
+              width: 45,
+              child: FloatingIconButton(
+                iconData: Icons.send,
                 onPressed: () async {
                   EasyLoading.show(status: 'Loading...');
                   setState(() {
@@ -124,10 +137,8 @@ class _TanyaGeminiState extends State<TanyaGemini> {
                     EasyLoading.dismiss();
                   }
                 },
-                icon: const Icon(
-                  Icons.send,
-                  color: Colors.green,
-                ),
+                color: Colors.green,
+                iconSize: 25,
               ),
             ),
           ],

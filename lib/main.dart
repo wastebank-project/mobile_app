@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           scrolledUnderElevation: 0, // Disable color change on scroll
         ),
         bottomSheetTheme: const BottomSheetThemeData(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           elevation: 0,
         ),
       ),

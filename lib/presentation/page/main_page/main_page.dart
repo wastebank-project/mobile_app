@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:waste_app/presentation/page/customers_page/customers_page.dart';
 import 'package:waste_app/presentation/page/home_page/home_page.dart';
 import 'package:waste_app/presentation/page/profile_page/profile_page.dart';
@@ -91,17 +92,22 @@ class _MainPageState extends State<MainPage> {
             selectedIndex: 0,
             iconSize: 100,
           ),
-          FloatingIconButton(
-            iconSize: 40, // Adjust icon size
-            iconData: Icons.qr_code_scanner_rounded,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const WasteDetection(),
-                  ));
-            },
-            color: const Color(0xff7ABA78),
+          Positioned(
+            bottom: 10,
+            left: (MediaQuery.of(context).size.width - 69) /
+                2, // Calculation for horizontal centering
+            child: FloatingIconButton(
+              iconSize: 50, // Adjust icon size
+              iconData: Icons.qr_code_scanner_rounded,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const WasteDetection(),
+                    ));
+              },
+              color: const Color(0xff7ABA78),
+            ),
           ),
         ],
       ),
