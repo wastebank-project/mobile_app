@@ -1,7 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:waste_app/presentation/page/home_page/methods/more_articles.dart';
 import 'package:waste_app/presentation/page/home_page/methods/tanya_gemini.dart';
 import 'package:waste_app/presentation/widgets/images_slider.dart';
+
+final Uri _url1 = Uri.parse(
+    'https://www.linkedin.com/pulse/8-jenis-sampah-yang-bisa-didaur-ulang-dan-berpotensi-cuan-tanuwijaya/');
+
+final Uri _url2 = Uri.parse(
+    'https://infografis.sindonews.com/photo/14035/mengenal-7-jenis-sampah-plastik-yang-bisa-didaur-ulang-1645814962');
+
+final Uri _url3 = Uri.parse(
+    'https://radarjogja.jawapos.com/news/653103476/manfaat-daur-ulang-sampah-untuk-lingkungan-dan-ekonomi');
+
+final Uri _url4 = Uri.parse(
+    'https://dlh.semarangkota.go.id/3-upaya-daur-ulang-sampah-menjadi-barang-layak-jual/');
+
+final Uri _url5 = Uri.parse('uri');
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key, required this.username});
@@ -130,89 +147,119 @@ class HomePage extends StatelessWidget {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: ClipRRect(
+                        GestureDetector(
+                          onTap: () {
+                            _launchUrl1();
+                          },
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset('assets/png/bg2.png')),
-                            ),
-                            const Positioned(
-                              bottom: 17,
-                              left: 20,
-                              child: Text(
-                                'Manfaat Recycle \nuntuk Rumah Tangga',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500),
+                                  child:
+                                      Image.asset('assets/png/saving_bg1.png'),
+                                ),
                               ),
-                            ),
-                          ],
+                              const Positioned(
+                                bottom: 15,
+                                left: 15,
+                                right: 5,
+                                child: Text(
+                                  'Jenis Sampah yang Didaur Ulang\ndan Berpotensi Cuan',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset('assets/png/bg2.png')),
-                            ),
-                            const Positioned(
-                              bottom: 17,
-                              left: 20,
-                              child: Text(
-                                'Manfaat Recycle \nuntuk Rumah Tangga',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500),
+                        GestureDetector(
+                          onTap: () {
+                            _launchUrl2();
+                          },
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset('assets/png/bg2.png')),
                               ),
-                            ),
-                          ],
+                              const Positioned(
+                                bottom: 15,
+                                left: 15,
+                                right: 15,
+                                child: Text(
+                                  '7 Jenis Sampah Plastik\nyang bisa Didaur Ulang ',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: ClipRRect(
+                        GestureDetector(
+                          onTap: () {
+                            _launchUrl3();
+                          },
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset('assets/png/bg2.png')),
-                            ),
-                            const Positioned(
-                              bottom: 17,
-                              left: 20,
-                              child: Text(
-                                'Manfaat Recycle \nuntuk Rumah Tangga',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500),
+                                  child:
+                                      Image.asset('assets/png/saving_bg2.png'),
+                                ),
                               ),
-                            ),
-                          ],
+                              const Positioned(
+                                bottom: 15,
+                                left: 15,
+                                right: 5,
+                                child: Text(
+                                  'Manfaat Daur Ulang Sampah\nuntuk Lingkungan dan Ekonomi',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: ClipRRect(
+                        GestureDetector(
+                          onTap: () {
+                            _launchUrl4();
+                          },
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset('assets/png/bg2.png')),
-                            ),
-                            const Positioned(
-                              bottom: 17,
-                              left: 20,
-                              child: Text(
-                                'Manfaat Recycle \nuntuk Rumah Tangga',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500),
+                                  child:
+                                      Image.asset('assets/png/saving_bg3.png'),
+                                ),
                               ),
-                            ),
-                          ],
+                              const Positioned(
+                                bottom: 15,
+                                left: 15,
+                                right: 5,
+                                child: Text(
+                                  '3 Upaya Daur Ulang Sampah Menjadi Barang Layak Jual',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -225,5 +272,29 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> _launchUrl1() async {
+  if (!await launchUrl(_url1)) {
+    throw Exception('Could not launch $_url1');
+  }
+}
+
+Future<void> _launchUrl2() async {
+  if (!await launchUrl(_url2)) {
+    throw Exception('Could not launch $_url2');
+  }
+}
+
+Future<void> _launchUrl3() async {
+  if (!await launchUrl(_url3)) {
+    throw Exception('Could not launch $_url3');
+  }
+}
+
+Future<void> _launchUrl4() async {
+  if (!await launchUrl(_url4)) {
+    throw Exception('Could not launch $_url4');
   }
 }

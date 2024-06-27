@@ -179,7 +179,7 @@ class ProfilePage extends StatelessWidget {
                                     username: username, email: email)));
                       },
                       icon: const Icon(
-                        Icons.system_update_tv_rounded,
+                        Icons.person,
                         color: Color(0xff0A6847),
                       ),
                       label: const Row(
@@ -200,7 +200,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   SizedBox(
                     height: 50,
                     child: OutlinedButton.icon(
@@ -229,7 +229,7 @@ class ProfilePage extends StatelessWidget {
                                     )));
                       },
                       icon: const Icon(
-                        Icons.system_update_tv_rounded,
+                        Icons.password,
                         color: Color(0xff0A6847),
                       ),
                       label: const Row(
@@ -250,7 +250,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   SizedBox(
                     height: 50,
                     child: OutlinedButton.icon(
@@ -276,7 +276,7 @@ class ProfilePage extends StatelessWidget {
                             ));
                       },
                       icon: const Icon(
-                        Icons.system_update_tv_rounded,
+                        Icons.verified,
                         color: Color(0xff0A6847),
                       ),
                       label: const Row(
