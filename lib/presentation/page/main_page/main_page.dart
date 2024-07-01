@@ -7,7 +7,7 @@ import 'package:waste_app/presentation/page/saving_page/saving_page_screen.dart'
 import 'package:waste_app/presentation/page/waste_detection/waste_detection.dart';
 import 'package:waste_app/presentation/widgets/bottom_navbar.dart';
 import 'package:waste_app/presentation/widgets/bottom_navbar_item.dart';
-import 'package:waste_app/presentation/widgets/floating_action_button.dart';
+import 'package:waste_app/presentation/widgets/floating_icon_button.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({

@@ -7,7 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:waste_app/presentation/widgets/floating_action_button.dart';
+import 'package:waste_app/presentation/widgets/floating_icon_button.dart';
 
 class TanyaGemini extends StatefulWidget {
   const TanyaGemini({super.key});

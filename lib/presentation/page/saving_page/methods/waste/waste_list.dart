@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:waste_app/domain/waste.dart';
+import 'package:waste_app/presentation/widgets/floating_icon_button.dart';
 
 class WasteList extends StatefulWidget {
   const WasteList({super.key});
@@ -83,19 +85,41 @@ class _WasteListState extends State<WasteList> {
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             20, 20, 0, 20),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              sampah['name'],
-                                              style: const TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  sampah['name'],
+                                                  style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                    'Rp${sampah['pricePerGram']} per kg')
+                                              ],
                                             ),
-                                            Text(
-                                                'Rp${sampah['pricePerGram']} per kg')
+                                            Row(
+                                              children: <Widget>[
+                                                IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(Icons.edit,
+                                                      color: Colors.green),
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -105,6 +129,19 @@ class _WasteListState extends State<WasteList> {
                               );
                             },
                           ),
+          ),
+        ],
+      ),
+      bottomSheet: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(40),
+            child: FloatingIconButton(
+                iconData: Icons.add,
+                onPressed: () {},
+                color: Colors.green,
+                iconSize: 50),
           ),
         ],
       ),
