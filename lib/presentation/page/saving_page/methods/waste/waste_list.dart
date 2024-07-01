@@ -1,32 +1,35 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:waste_app/domain/customers.dart';
+import 'package:waste_app/domain/waste.dart';
 
-class CustomersBalance extends StatefulWidget {
-  const CustomersBalance({super.key});
+class WasteList extends StatefulWidget {
+  const WasteList({super.key});
 
   @override
-  _CustomersBalanceState createState() => _CustomersBalanceState();
+  _WasteListState createState() => _WasteListState();
 }
 
-class _CustomersBalanceState extends State<CustomersBalance> {
-  List<dynamic> customers = [];
+class _WasteListState extends State<WasteList> {
+  List<dynamic> wastes = [];
   bool isLoading = true;
   String? errorMessage;
 
   @override
   void initState() {
     super.initState();
-    _fetchAndSortCustomers();
+    _fetchAndSortWastes();
   }
 
-  Future<void> _fetchAndSortCustomers() async {
+  Future<void> _fetchAndSortWastes() async {
     try {
-      List<dynamic> fetchedCustomers = await Customer().getBalance();
-      fetchedCustomers.sort((a, b) => a['name'].compareTo(b['name']));
+      List<dynamic> fetchedWastes = await Waste().getWaste();
+      fetchedWastes = fetchedWastes.map((waste) {
+        waste['pricePerGram'] = waste['pricePerGram'] * 10;
+        return waste;
+      }).toList();
+      fetchedWastes.sort((a, b) => a['name'].compareTo(b['name']));
       setState(() {
-        customers = fetchedCustomers;
+        wastes = fetchedWastes;
         isLoading = false;
       });
     } catch (e) {
@@ -45,13 +48,10 @@ class _CustomersBalanceState extends State<CustomersBalance> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(25, 10, 25, 20),
+            padding: EdgeInsets.fromLTRB(25, 5, 0, 20),
             child: Text(
-              'Saldo Nasabah',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
+              'Daftar Jenis Sampah',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
           ),
           Expanded(
@@ -59,20 +59,21 @@ class _CustomersBalanceState extends State<CustomersBalance> {
                 ? Center(child: CircularProgressIndicator())
                 : errorMessage != null
                     ? Center(child: Text('Error: $errorMessage'))
-                    : customers.isEmpty
+                    : wastes.isEmpty
                         ? Center(child: Text('No nasabah found'))
                         : ListView.builder(
-                            itemCount: customers.length,
+                            itemCount: wastes.length,
                             itemBuilder: (context, index) {
-                              final nasabah = customers[index];
+                              final sampah = wastes[index];
                               return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
+                                  const SizedBox(height: 15),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        25, 15, 25, 0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 25),
                                     child: Container(
-                                      height: 65,
+                                      height: 85,
                                       decoration: const BoxDecoration(
                                         color: Color(0xffF6F4BD),
                                         borderRadius: BorderRadius.all(
@@ -81,27 +82,20 @@ class _CustomersBalanceState extends State<CustomersBalance> {
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            0, 15, 0, 15),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                            20, 20, 0, 20),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              nasabah['name'],
+                                              sampah['name'],
                                               style: const TextStyle(
                                                 fontSize: 17,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
                                             Text(
-                                              'Rp${nasabah['totalBalance']}',
-                                              style: const TextStyle(
-                                                fontSize: 15,
-                                              ),
-                                            ),
+                                                'Rp${sampah['pricePerGram']} per kg')
                                           ],
                                         ),
                                       ),

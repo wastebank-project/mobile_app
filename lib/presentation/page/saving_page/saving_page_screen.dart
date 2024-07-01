@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:waste_app/presentation/page/customers_page/methods/new/new_customers.dart';
 import 'package:waste_app/presentation/page/saving_page/methods/balance/customers_balance.dart';
 import 'package:waste_app/presentation/page/saving_page/methods/saving/saving_waste.dart';
+import 'package:waste_app/presentation/page/saving_page/methods/waste/waste_list.dart';
 
 class SavingPageScreen extends StatelessWidget {
   const SavingPageScreen({super.key});
@@ -225,8 +225,7 @@ class SavingPageScreen extends StatelessWidget {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const NewCustomerScreen(),
+                                        builder: (context) => const WasteList(),
                                       ));
                                 },
                                 icon: const Icon(Icons.recycling,
