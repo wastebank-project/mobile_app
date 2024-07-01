@@ -91,9 +91,9 @@ class _DetailHistoryState extends State<DetailHistory> {
               children: widget.nasabah['deposits']
                   .map<Widget>((deposit) => Row(
                         children: [
-                          Text('${deposit['amount']} Kg'),
+                          Text(
+                              '${deposit['amount']} kg ${wasteTypes[deposit['wasteTypeId']]}'),
                           const SizedBox(width: 50),
-                          Text('${wasteTypes[deposit['wasteTypeId']]}'),
                         ],
                       ))
                   .toList(),
@@ -107,7 +107,7 @@ class _DetailHistoryState extends State<DetailHistory> {
               ),
             ),
             const SizedBox(height: 5),
-            Text('Rp.${widget.nasabah['totalBalance']}'),
+            Text('Rp${widget.nasabah['totalBalance']}'),
             if (_errorMessage.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 20),

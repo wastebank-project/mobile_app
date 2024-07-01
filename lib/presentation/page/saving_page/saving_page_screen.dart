@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:waste_app/presentation/page/customers_page/methods/new/new_customers.dart';
-import 'package:waste_app/presentation/page/saving_page/methods/customers_balance.dart';
-import 'package:waste_app/presentation/page/saving_page/methods/saving_waste.dart';
+import 'package:waste_app/presentation/page/saving_page/methods/balance/customers_balance.dart';
+import 'package:waste_app/presentation/page/saving_page/methods/saving/saving_waste.dart';
 
 class SavingPageScreen extends StatelessWidget {
   const SavingPageScreen({super.key});
@@ -94,7 +94,7 @@ class SavingPageScreen extends StatelessWidget {
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Text(
-                              'Diperuntukkan untuk nasabah baru yang ingin menabung di bank sampah',
+                              'Diperuntukkan untuk nasabah yang ingin menabung di bank sampah',
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
@@ -229,14 +229,14 @@ class SavingPageScreen extends StatelessWidget {
                                             const NewCustomerScreen(),
                                       ));
                                 },
-                                icon: const Icon(Icons.history,
+                                icon: const Icon(Icons.recycling,
                                     color: Colors.white),
                                 label: const Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Riwayat Tabung',
+                                      'Jenis Sampah',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 19,
@@ -254,7 +254,7 @@ class SavingPageScreen extends StatelessWidget {
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Text(
-                              'Melihat riwayat tabung nasabah',
+                              'Pengelola dapat mengatur jenis sampah di sini',
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
