@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:waste_app/presentation/page/customers_page/methods/list_customers.dart';
-import 'package:waste_app/presentation/page/customers_page/methods/new_customers.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/detail/list_customers.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/history/list_history_customers.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/new/new_customers.dart';
 
 class CustomersPage extends StatelessWidget {
   const CustomersPage({super.key});
@@ -229,18 +230,30 @@ class CustomersPage extends StatelessWidget {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const NewCustomerScreen(),
+                                        builder: (context) => ListHistory(),
                                       ));
                                 },
-                                icon: const Icon(Icons.person_add_alt_1_rounded,
+                                icon: const Icon(Icons.history,
                                     color: Colors.white),
-                                label: const Text(
-                                  'Daftar Nasabah Baru',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w700),
+                                label: const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Riwayat Tabung',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Text(
+                                      '>',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -248,7 +261,7 @@ class CustomersPage extends StatelessWidget {
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Text(
-                              'Diperuntukkan untuk nasabah baru yang ingin menabung di bank sampah',
+                              'Berisi Detail Riwayat Tabung Nasabah',
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,

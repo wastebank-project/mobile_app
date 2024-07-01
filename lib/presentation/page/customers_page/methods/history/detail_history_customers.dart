@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/customers.dart';
-import 'package:waste_app/presentation/page/customers_page/methods/edit_customers.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/detail/edit_customers.dart';
 
-class DetailCustomer extends StatelessWidget {
+class DetailHistory extends StatelessWidget {
   final Map<String, dynamic> nasabah;
 
-  const DetailCustomer({Key? key, required this.nasabah}) : super(key: key);
+  const DetailHistory({Key? key, required this.nasabah}) : super(key: key);
 
   void _deleteCustomer(BuildContext context) async {
     bool? confirmed = await showDialog(
@@ -111,9 +111,7 @@ class DetailCustomer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Detail Nasabah'),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(25, 20, 25, 0),
         child: Column(
@@ -138,24 +136,45 @@ class DetailCustomer extends StatelessWidget {
             Text('${nasabah['name']}'),
             const SizedBox(height: 20),
             const Text(
-              'Alamat',
+              'Tanggal',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),
             const SizedBox(height: 5),
-            Text('${nasabah['address']}'),
+            Text('${nasabah['date']}'),
             const SizedBox(height: 20),
             const Text(
-              'Nomor Telepon',
+              'Debit',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),
             const SizedBox(height: 5),
-            Text('${nasabah['phoneNumber']}'),
+            Text('Rp.${nasabah['totalBalance']}'),
+            const SizedBox(height: 20),
+            const Text(
+              'Berat',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(height: 5),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: nasabah['deposits']
+                  .map<Widget>((deposit) => Row(
+                        children: [
+                          Text('${deposit['amount']}'),
+                          const SizedBox(width: 10),
+                          Text('${deposit['wasteTypeId']}'),
+                        ],
+                      ))
+                  .toList(),
+            ),
             const SizedBox(height: 75),
             Center(
               child: Row(

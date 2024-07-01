@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:waste_app/domain/customers.dart';
-import 'package:waste_app/presentation/page/customers_page/methods/detail_customers.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/detail/detail_customers.dart';
 
 class ListCustomers extends StatefulWidget {
   const ListCustomers({super.key});
