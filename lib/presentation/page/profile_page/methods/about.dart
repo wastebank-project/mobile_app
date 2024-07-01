@@ -88,10 +88,13 @@ class AboutScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomSheet: const Text(
-        '© 2024 Rancang Bangun Aplikasi Bank Sampah berbasis Mobile Menggunakan Metode Object Detection\n',
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 10, color: Colors.grey),
+      bottomSheet: const Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          '© 2024 Rancang Bangun Aplikasi Bank Sampah berbasis Mobile Menggunakan Metode Object Detection\n',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 10, color: Colors.grey),
+        ),
       ),
     );
   }

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:waste_app/domain/customers.dart';
 import 'package:waste_app/presentation/page/customers_page/methods/detail_customers.dart';
 
@@ -11,6 +13,8 @@ class ListCustomers extends StatefulWidget {
 
 class _ListCustomersState extends State<ListCustomers> {
   late Future<List<dynamic>> futureNasabah;
+  List<dynamic> _allNasabah = [];
+  List<dynamic> _filteredNasabah = [];
 
   @override
   void initState() {
@@ -21,6 +25,8 @@ class _ListCustomersState extends State<ListCustomers> {
   Future<List<dynamic>> _fetchAndSortCustomers() async {
     List<dynamic> customers = await Customer().getCustomer();
     customers.sort((a, b) => a['name'].compareTo(b['name']));
+    _allNasabah = customers;
+    _filteredNasabah = customers;
     return customers;
   }
 
@@ -30,61 +36,116 @@ class _ListCustomersState extends State<ListCustomers> {
     });
   }
 
+  void _filterCustomers(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        _filteredNasabah = _allNasabah;
+      } else {
+        _filteredNasabah = _allNasabah.where((customer) {
+          return customer['name'].toLowerCase().contains(query.toLowerCase());
+        }).toList();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Daftar Nasabah')),
-      body: FutureBuilder<List<dynamic>>(
-        future: futureNasabah,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No nasabah found'));
-          } else {
-            return RefreshIndicator(
-              onRefresh: _refreshCustomerList,
-              child: ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  final nasabah = snapshot.data![index];
-                  return ListTile(
-                    title: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: Container(
-                        height: 80,
-                        decoration: const BoxDecoration(
-                          color: Color(0xffF6F4BD),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 25, 0, 15),
-                          child: Text(nasabah['name']),
-                        ),
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 20, 20),
+              child: Text(
+                'Daftar Nasabah',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 20, 0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 10, 0),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Cari Nama Nasabah',
+                      suffixIcon: Icon(Icons.search),
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                        color: Colors.black45,
+                        fontSize: 15,
                       ),
                     ),
-                    onTap: () async {
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DetailCustomer(nasabah: nasabah),
-                        ),
-                      );
-                      if (result == true) {
-                        _refreshCustomerList();
-                      }
-                    },
-                  );
+                    onChanged: _filterCustomers,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 7),
+            Expanded(
+              child: FutureBuilder<List<dynamic>>(
+                future: futureNasabah,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No nasabah found'));
+                  } else {
+                    return RefreshIndicator(
+                      onRefresh: _refreshCustomerList,
+                      child: ListView.builder(
+                        itemCount: _filteredNasabah.length,
+                        itemBuilder: (context, index) {
+                          final nasabah = _filteredNasabah[index];
+                          return ListTile(
+                            title: Container(
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                color: Color(0xffF6F4BD),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(15, 15, 0, 15),
+                                child: Text(nasabah['name']),
+                              ),
+                            ),
+                            onTap: () async {
+                              final result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailCustomer(nasabah: nasabah),
+                                ),
+                              );
+                              if (result == true) {
+                                _refreshCustomerList();
+                              }
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  }
                 },
               ),
-            );
-          }
-        },
+            ),
+          ],
+        ),
       ),
     );
   }
