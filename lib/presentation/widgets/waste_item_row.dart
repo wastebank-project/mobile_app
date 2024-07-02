@@ -142,7 +142,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
                       color: const Color(0xffeeeeee),
                     ),
                     child: SizedBox(
-                      width: 200,
+                      width: 190,
                       child: TextField(
                         controller: wasteTypeController,
                         decoration: InputDecoration(
@@ -178,7 +178,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
               color: const Color(0xffeeeeee),
             ),
             child: SizedBox(
-              width: 60,
+              width: 90,
               child: TextField(
                 controller: amountController,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -212,7 +212,7 @@ class _WasteItemRowState extends State<WasteItemRow> {
             ),
           ),
           SizedBox(
-            width: 60,
+            width: 80,
             child: Text(
               'Rp${formatter.format(calculateTotal())}',
               textAlign: TextAlign.left,

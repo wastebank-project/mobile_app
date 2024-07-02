@@ -286,7 +286,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 180,
+                  width: 145,
                   child: Text(
                     'Jenis Sampah',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -297,7 +297,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: 60,
+                  width: 80,
                   child: Text(
                     'Harga',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -322,26 +322,41 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                 onDelete: deleteWasteItem,
                 onTotalChanged: updateItemTotal,
               ),
+            const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
-                  onPressed: addWasteItem,
-                  child: const Text(
-                    '+ Tambah Sampah',
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 10,
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    border: Border.all(color: Colors.green),
+                  ),
+                  child: TextButton(
+                    onPressed: addWasteItem,
+                    child: const Text(
+                      '+ Tambah Sampah',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 10,
+                      ),
                     ),
                   ),
                 ),
-                TextButton(
-                  onPressed: deleteLastWasteItem,
-                  child: const Text(
-                    '- Hapus Sampah',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 10,
+                const SizedBox(width: 10),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      border: Border.all(color: Colors.red)),
+                  child: TextButton(
+                    onPressed: deleteLastWasteItem,
+                    child: const Text(
+                      '- Hapus Sampah',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 10,
+                      ),
                     ),
                   ),
                 )
