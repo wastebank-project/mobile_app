@@ -16,7 +16,7 @@ class Models {
         "link": "https://youtu.be/5RF6xWmxCmA?si=gOLzPBl35Fbmg4At"
       },
     ],
-    "Botol Plastik": [
+    "BotolPlastik": [
       {
         "heading": "Pemanfaatan sampah botol plastik",
         "link": "https://youtu.be/qfOTfIVJw-s?si=pgZIjeE4pBZTgSHW"
@@ -26,7 +26,7 @@ class Models {
         "link": "https://youtu.be/dOoR-YFzFQo?si=58l0eVt2G_64f6rn"
       }
     ],
-    "Botol Kaca": [
+    "BotolKaca": [
       {
         "heading": "SETELAH NONTON PASTI SEMUA CARI BOTOL KACA BEKAS",
         "link": "https://youtu.be/mOiuMTP8HJM?si=0FSnH0xJLYAXGJ91",
@@ -36,7 +36,7 @@ class Models {
         "link": "https://youtu.be/ZEVq0oxL4_A?si=YKwHRB9TTXj19hZS",
       }
     ],
-    "Pecahan Kaca": [
+    "PecahanKaca": [
       {
         "heading": "Daur Ulang Limbah Pecahan Kaca Menjadi Pot Bunga",
         "link": "https://youtu.be/Ny8Af_ADvtg?si=Q54LgF5QksxmP55T"
@@ -46,7 +46,7 @@ class Models {
         "link": "https://youtu.be/QtQPEuja_1k?si=r6g7s9bBJN6gbjNx"
       },
     ],
-    "Tutup Galon": [
+    "TutupGalon": [
       {
         "heading": "DAUR ULANG TUTUP GALON BEKAS - BANK SAMPAH SARIMULYA",
         "link": "https://youtu.be/dNIEzFB9XD8?si=HBGMuF7Ap5QmYRZC"
@@ -67,7 +67,7 @@ class Models {
         "link": "https://youtu.be/7h7Xh-c4KJ0?si=Azj-IHXpyMeOKwcj"
       },
     ],
-    "Kemasan Plastik": [
+    "KemasanPlastik": [
       {
         "heading": "PENGOLAHAN SAMPAH PLASTIK KEMASAN SACHET",
         "link": "https://www.youtube.com/watch?v=kNpxiuLrAwQ"
@@ -78,7 +78,7 @@ class Models {
         "link": "https://www.youtube.com/watch?v=MJd3bo_XRaU"
       },
     ],
-    "Gelas Plastik": [
+    "GelasPlastik": [
       {
         "heading": "Pengolahan Sampah Anorganik Gelas Plastik",
         "link": "https://youtu.be/onfJudUu7UE?si=pFiEQxnYshpAuQU3"
@@ -99,7 +99,7 @@ class Models {
         "link": "https://youtu.be/ajEECRjRQEE?si=m-SYApqKE9JsjnKB"
       },
     ],
-    "Kantong Plastik": [
+    "KantongPlastik": [
       {
         "heading":
             "KEREN PARAH, DAUR ULANG KANTONG PLASTIK JADI 100% KANTONG PLASTIK LAGI !",
@@ -110,7 +110,7 @@ class Models {
         "link": "https://youtu.be/Rk0QurFdLK4?si=Ism_EB9_iMqtjWLB"
       },
     ],
-    "Kantong Semen": [
+    "KantongSemen": [
       {
         "heading":
             "GTK Creative Camp 2020 Daur ulang karung semen menjadi dompet",
@@ -132,7 +132,7 @@ class Models {
         "link": "https://www.youtube.com/watch?v=Q3qVajGnqp8"
       },
     ],
-    "Toples Kaca": [
+    "ToplesKaca": [
       {
         "heading":
             "DIY Lampu Dinding Modern Unik dan Mewah dari Botol Kaca dan Pipa PVC bekas",
@@ -143,7 +143,7 @@ class Models {
         "link": "https://www.youtube.com/watch?v=n4vlGT9-Zng"
       },
     ],
-    "Kertas Bekas": [
+    "KertasBekas": [
       {
         "heading": "Cara Daur Ulang Kertas Bekas Dirumah",
         "link": "https://www.youtube.com/watch?v=Z1DER7uUvu8"
