@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:waste_app/domain/waste.dart';
+import 'package:waste_app/presentation/page/saving_page/methods/waste/add_waste.dart';
+import 'package:waste_app/presentation/page/saving_page/methods/waste/edit_waste.dart';
 import 'package:waste_app/presentation/widgets/floating_icon_button.dart';
 
 class WasteList extends StatefulWidget {
@@ -26,7 +28,7 @@ class _WasteListState extends State<WasteList> {
     try {
       List<dynamic> fetchedWastes = await Waste().getWaste();
       fetchedWastes = fetchedWastes.map((waste) {
-        waste['pricePerGram'] = waste['pricePerGram'] * 10;
+        waste['pricePerGram'] = waste['pricePerGram'];
         return waste;
       }).toList();
       fetchedWastes.sort((a, b) => a['name'].compareTo(b['name']));
@@ -40,6 +42,17 @@ class _WasteListState extends State<WasteList> {
         isLoading = false;
       });
     }
+  }
+
+  void _updateWasteList(Map<String, dynamic> updatedWaste) {
+    setState(() {
+      int index =
+          wastes.indexWhere((waste) => waste['id'] == updatedWaste['id']);
+      if (index != -1) {
+        wastes[index] = updatedWaste;
+        wastes.sort((a, b) => a['name'].compareTo(b['name']));
+      }
+    });
   }
 
   @override
@@ -79,8 +92,7 @@ class _WasteListState extends State<WasteList> {
                                       decoration: const BoxDecoration(
                                         color: Color(0xffF6F4BD),
                                         borderRadius: BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
+                                            Radius.circular(10)),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
@@ -101,23 +113,35 @@ class _WasteListState extends State<WasteList> {
                                                   ),
                                                 ),
                                                 Text(
-                                                    'Rp${sampah['pricePerGram']} per kg')
+                                                    'Rp${sampah['pricePerGram']}/ons')
                                               ],
                                             ),
                                             Row(
                                               children: <Widget>[
                                                 IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () async {
+                                                    final updatedWaste =
+                                                        await Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EditWaste(
+                                                                sampah: sampah),
+                                                      ),
+                                                    );
+                                                    if (updatedWaste != null) {
+                                                      _updateWasteList(
+                                                          updatedWaste);
+                                                    }
+                                                  },
                                                   icon: const Icon(Icons.edit,
                                                       color: Colors.green),
                                                 ),
                                                 IconButton(
                                                   onPressed: () {},
-                                                  icon: const Icon(
-                                                    Icons.delete,
-                                                    color: Colors.red,
-                                                  ),
-                                                )
+                                                  icon: const Icon(Icons.delete,
+                                                      color: Colors.red),
+                                                ),
                                               ],
                                             ),
                                           ],
@@ -137,11 +161,20 @@ class _WasteListState extends State<WasteList> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(40),
-            child: FloatingIconButton(
+            child: SizedBox(
+              width: 60,
+              child: FloatingIconButton(
                 iconData: Icons.add,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddWaste()));
+                },
                 color: Colors.green,
-                iconSize: 50),
+                iconSize: 40,
+              ),
+            ),
           ),
         ],
       ),
