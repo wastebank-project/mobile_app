@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/waste.dart';
 import 'package:waste_app/presentation/page/saving_page/methods/waste/add_waste.dart';
 import 'package:waste_app/presentation/page/saving_page/methods/waste/edit_waste.dart';
@@ -53,6 +52,98 @@ class _WasteListState extends State<WasteList> {
         wastes.sort((a, b) => a['name'].compareTo(b['name']));
       }
     });
+  }
+
+  void _deleteWaste(BuildContext context, Map<String, dynamic> waste) async {
+    bool? confirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          icon: const Icon(
+            Icons.warning_amber,
+            size: 50,
+          ),
+          iconColor: Colors.red,
+          title: const Text(
+            'PENGHAPUSAN SAMPAH',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
+          content: const Text(
+            'Apakah anda yakin untuk menghapus sampah ini?',
+            style: TextStyle(fontSize: 15),
+          ),
+          actions: [
+            SizedBox(
+              width: 120,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color(0xffE66776),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                child: const Text(
+                  'Hapus Data',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 5),
+            SizedBox(
+              width: 120,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                style: ButtonStyle(
+                  side: MaterialStateProperty.all(
+                      const BorderSide(color: Colors.black, width: 2.5)),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  )),
+                ),
+                child: const Text(
+                  'Batal',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      EasyLoading.show(status: 'loading');
+      try {
+        await Waste().deleteWaste(waste['id']);
+        setState(() {
+          wastes.removeWhere((w) => w['id'] == waste['id']);
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Sampah berhasil dihapus')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete waste: $e')),
+        );
+      }
+      EasyLoading.dismiss();
+    }
   }
 
   @override
@@ -138,7 +229,10 @@ class _WasteListState extends State<WasteList> {
                                                       color: Colors.green),
                                                 ),
                                                 IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    _deleteWaste(
+                                                        context, sampah);
+                                                  },
                                                   icon: const Icon(Icons.delete,
                                                       color: Colors.red),
                                                 ),
