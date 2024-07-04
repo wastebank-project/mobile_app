@@ -81,10 +81,10 @@ class _CustomersBalanceState extends State<CustomersBalance> {
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            0, 15, 0, 15),
+                                            15, 15, 15, 15),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               nasabah['name'],

@@ -10,7 +10,7 @@ class MLService {
       // Send image to the API using form-data
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('${dotenv.env['BASE_ML_SSD']}/image'),
+        Uri.parse('${dotenv.env['BASE_ML_YOLO']}/image'),
       );
       request.files.add(
         await http.MultipartFile.fromPath('image', inputImageFile.path),
@@ -39,7 +39,7 @@ class MLService {
   Future<List<Prediction>> detectText(File inputFile) async {
     try {
       var uri = Uri.parse(
-        '${dotenv.env['BASE_ML_SSD']}/text',
+        '${dotenv.env['BASE_ML_YOLO']}/text',
       );
 
       var request = http.MultipartRequest('POST', uri);

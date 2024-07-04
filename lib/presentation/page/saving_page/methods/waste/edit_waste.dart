@@ -24,8 +24,8 @@ class _EditWasteState extends State<EditWaste> {
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.sampah['name'] ?? '');
-    priceController =
-        TextEditingController(text: widget.sampah['pricePerGram'] ?? '');
+    priceController = TextEditingController(
+        text: widget.sampah['pricePerGram']?.toString() ?? '');
   }
 
   Future<void> _updateWaste() async {
@@ -63,15 +63,14 @@ class _EditWasteState extends State<EditWaste> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Edit Jenis Sampah',
+                'Edit\nJenis Sampah',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
-                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
               const Text(
@@ -88,7 +87,7 @@ class _EditWasteState extends State<EditWaste> {
               ),
               const SizedBox(height: 30),
               const Text(
-                'Berat per ons',
+                'Harga @100gram(ons)',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
@@ -98,8 +97,6 @@ class _EditWasteState extends State<EditWaste> {
                 textInputTypeNumber: true,
                 lengthLimit: true,
               ),
-              const SizedBox(height: 30),
-              const SizedBox(height: 10),
               if (_errorMessage != null)
                 Text(
                   _errorMessage!,

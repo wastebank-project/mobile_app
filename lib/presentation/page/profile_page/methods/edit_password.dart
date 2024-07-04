@@ -114,10 +114,18 @@ class _EditPasswordState extends State<EditPassword> {
                   _errorMessage!,
                   style: const TextStyle(color: Colors.red),
                 ),
-              const SizedBox(height: 100),
-              ElevatedButton(
-                onPressed: _updatePassword,
-                child: const Text('Ubah Password'),
+              const SizedBox(height: 70),
+              Container(
+                decoration: BoxDecoration(
+                    color: const Color(0xff7ABA78),
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextButton(
+                  onPressed: _updatePassword,
+                  child: const Text(
+                    'Ubah Password',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ),
             ],
           ),

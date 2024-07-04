@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/waste.dart';
 import 'package:waste_app/presentation/page/saving_page/methods/waste/add_waste.dart';
@@ -248,13 +249,14 @@ class _WasteListState extends State<WasteList> {
                             },
                           ),
           ),
+          const SizedBox(height: 10)
         ],
       ),
       bottomSheet: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(40),
+            padding: const EdgeInsets.all(20),
             child: SizedBox(
               width: 60,
               child: FloatingIconButton(

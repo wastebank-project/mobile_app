@@ -116,7 +116,7 @@ class ProfilePage extends StatelessWidget {
           children: [
             Positioned(
               top: -40,
-              bottom: 450,
+              bottom: 500,
               left: 0,
               right: 0,
               child: Image.asset(
@@ -298,27 +298,30 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 100),
-                  SizedBox(
-                    width: 150,
-                    child: TextButton(
-                      onPressed: () {
-                        _logout(context);
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          const Color(0xffD96B78),
-                        ),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 50),
+                    child: SizedBox(
+                      width: 150,
+                      child: TextButton(
+                        onPressed: () {
+                          _logout(context);
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            const Color(0xffD96B78),
+                          ),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
-                      ),
-                      child: const Text(
-                        'Keluar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                        child: const Text(
+                          'Keluar',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),

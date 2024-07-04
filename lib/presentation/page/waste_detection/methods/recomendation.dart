@@ -25,16 +25,21 @@ class RecomendationScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                  'Berikut merupakan rekomendasi pengolahan dari masing-masing jenis sampah yang terdeteksi'),
               const SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: recommendations.map((rec) {
                   return Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.green)),
+                          border: Border.all(color: Colors.green, width: 2)),
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Column(

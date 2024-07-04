@@ -12,7 +12,7 @@ class SavingSuccess extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: Image.asset("assets/png/success.png"),
+            child: Image.asset("assets/png/berhasil_menabung.png"),
           ),
           const SizedBox(height: 20),
           const Center(

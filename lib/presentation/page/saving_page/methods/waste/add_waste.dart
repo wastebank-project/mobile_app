@@ -78,7 +78,7 @@ class _AddWasteState extends State<AddWaste> {
               ),
               const SizedBox(height: 30),
               const Text(
-                'Harga @100gram / ons',
+                'Harga @100gram (ons)',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),

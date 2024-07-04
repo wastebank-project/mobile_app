@@ -187,7 +187,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
       setState(() {
         _errorMessage = 'Tolong isi Semua Data!';
       });
-      return;
+      return EasyLoading.dismiss();
     }
 
     List<Map<String, dynamic>> deposits = wasteItems.map((item) {
@@ -286,15 +286,18 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 145,
+                  width: 180,
                   child: Text(
                     'Jenis Sampah',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(
-                  'Berat',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                SizedBox(
+                  width: 50,
+                  child: Text(
+                    'Berat',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
                 ),
                 SizedBox(
                   width: 80,
@@ -322,7 +325,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                 onDelete: deleteWasteItem,
                 onTotalChanged: updateItemTotal,
               ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -363,15 +366,17 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
               ],
             ),
             if (_errorMessage != null)
-              Text(
-                _errorMessage!,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.w500,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Text(
+                  _errorMessage!,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            const SizedBox(height: 50),
-            const SizedBox(height: 50)
+            const SizedBox(height: 150),
           ],
         ),
       ),
@@ -384,30 +389,43 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
         ]),
         child: BottomAppBar(
           elevation: 0,
-          height: 115,
+          height: 120,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Text(
-                  'Rp${formatter.format(calculateOverallTotal())}', // IMPLEMENTASI
-                  textAlign: TextAlign.right,
-                  style: const TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Total',
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Rp${formatter.format(calculateOverallTotal())}', // IMPLEMENTASI
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(25, 11, 25, 0),
-                child: SizedBox(
-                  width: 350,
-                  height: 45,
+              const SizedBox(height: 15),
+              Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xff7ABA78),
+                  ),
                   child: TextButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFFF2994A))),
                     onPressed: _submitDeposits,
                     child: const Text(
                       'Tabung',

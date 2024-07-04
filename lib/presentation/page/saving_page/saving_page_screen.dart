@@ -76,7 +76,7 @@ class SavingPageScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Tabung Sampah',
+                                      'Menabung Sampah',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 19,
@@ -92,7 +92,7 @@ class SavingPageScreen extends StatelessWidget {
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: Text(
                               'Diperuntukkan untuk nasabah yang ingin menabung di bank sampah',
                               style: TextStyle(
@@ -172,7 +172,7 @@ class SavingPageScreen extends StatelessWidget {
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: Text(
                               'Berisi detail data nasabah bank sampah yang sudah terdaftar ',
                               style: TextStyle(
@@ -251,7 +251,7 @@ class SavingPageScreen extends StatelessWidget {
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: Text(
                               'Pengelola dapat mengatur jenis sampah di sini',
                               style: TextStyle(

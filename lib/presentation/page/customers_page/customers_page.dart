@@ -69,7 +69,7 @@ class CustomersPage extends StatelessWidget {
                                             const NewCustomerScreen(),
                                       ));
                                 },
-                                icon: const Icon(Icons.person_add_alt_1_rounded,
+                                icon: const Icon(Icons.person_add,
                                     color: Colors.white),
                                 label: const Row(
                                   mainAxisAlignment:
@@ -82,22 +82,19 @@ class CustomersPage extends StatelessWidget {
                                           fontSize: 19,
                                           fontWeight: FontWeight.w700),
                                     ),
-                                    Text(
-                                      '>',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 40,
-                                          fontWeight: FontWeight.w700),
-                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_sharp,
+                                      color: Colors.white,
+                                    )
                                   ],
                                 ),
                               ),
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: Text(
-                              'Diperuntukkan untuk nasabah baru yang ingin menabung di bank sampah',
+                              'Diperuntukkan untuk nasabah baru yang ingin menabung di Bank Sampah',
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
@@ -148,10 +145,11 @@ class CustomersPage extends StatelessWidget {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ListCustomers(),
+                                        builder: (context) =>
+                                            const ListCustomers(),
                                       ));
                                 },
-                                icon: const Icon(Icons.people_sharp,
+                                icon: const Icon(Icons.group,
                                     color: Colors.white),
                                 label: const Row(
                                   mainAxisAlignment:
@@ -164,22 +162,19 @@ class CustomersPage extends StatelessWidget {
                                           fontSize: 19,
                                           fontWeight: FontWeight.w700),
                                     ),
-                                    Text(
-                                      '>',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 40,
-                                          fontWeight: FontWeight.w700),
-                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_sharp,
+                                      color: Colors.white,
+                                    )
                                   ],
                                 ),
                               ),
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: Text(
-                              'Berisi detail data nasabah bank sampah yang sudah terdaftar ',
+                              'Berisi detail data nasabah Bank Sampah yang sudah terdaftar',
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
@@ -230,7 +225,8 @@ class CustomersPage extends StatelessWidget {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ListHistory(),
+                                        builder: (context) =>
+                                            const ListHistory(),
                                       ));
                                 },
                                 icon: const Icon(Icons.history,
@@ -240,28 +236,25 @@ class CustomersPage extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Riwayat Tabung',
+                                      'Riwayat Menabung',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 19,
                                           fontWeight: FontWeight.w700),
                                     ),
-                                    Text(
-                                      '>',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 40,
-                                          fontWeight: FontWeight.w700),
-                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_sharp,
+                                      color: Colors.white,
+                                    )
                                   ],
                                 ),
                               ),
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: Text(
-                              'Berisi Detail Riwayat Tabung Nasabah',
+                              'Berisi detail Riwayat Menabung Nasabah',
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,

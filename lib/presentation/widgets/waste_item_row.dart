@@ -142,14 +142,15 @@ class _WasteItemRowState extends State<WasteItemRow> {
                       color: const Color(0xffeeeeee),
                     ),
                     child: SizedBox(
-                      width: 190,
+                      width: 185,
                       child: TextField(
+                        style: const TextStyle(fontSize: 14),
                         controller: wasteTypeController,
                         decoration: InputDecoration(
                           hintText: 'Pilih Sampah',
                           suffixIcon: const Icon(Icons.arrow_drop_down),
                           hintStyle: TextStyle(
-                            fontSize: 12,
+                            fontSize: 11,
                             color: Colors.grey.shade500,
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -172,13 +173,14 @@ class _WasteItemRowState extends State<WasteItemRow> {
               );
             },
           ),
+          const SizedBox(width: 5),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: const Color(0xffeeeeee),
             ),
             child: SizedBox(
-              width: 90,
+              width: 60,
               child: TextField(
                 controller: amountController,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -211,11 +213,14 @@ class _WasteItemRowState extends State<WasteItemRow> {
               ),
             ),
           ),
-          SizedBox(
-            width: 80,
-            child: Text(
-              'Rp${formatter.format(calculateTotal())}',
-              textAlign: TextAlign.left,
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: SizedBox(
+              width: 80,
+              child: Text(
+                'Rp${formatter.format(calculateTotal())}',
+                textAlign: TextAlign.left,
+              ),
             ),
           ),
         ],

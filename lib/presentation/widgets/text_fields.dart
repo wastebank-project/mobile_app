@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class WasteAppTextFields extends StatefulWidget {
   final TextEditingController controller;
   final bool obscureText;
   final bool suffixIcon;
+  final bool lengthLimit;
+
   final String hintText;
 
   const WasteAppTextFields({
@@ -12,6 +15,7 @@ class WasteAppTextFields extends StatefulWidget {
     required this.controller,
     this.obscureText = false,
     this.suffixIcon = false,
+    this.lengthLimit = false,
   }) : super(key: key);
 
   @override
@@ -30,6 +34,11 @@ class _WasteAppTextFieldsState extends State<WasteAppTextFields> {
       ),
       child: TextFormField(
         controller: widget.controller,
+        inputFormatters: [
+          widget.lengthLimit
+              ? LengthLimitingTextInputFormatter(20)
+              : LengthLimitingTextInputFormatter(null)
+        ],
         obscureText: widget.obscureText && !_obscureText,
         decoration: InputDecoration(
           hintText: widget.hintText,

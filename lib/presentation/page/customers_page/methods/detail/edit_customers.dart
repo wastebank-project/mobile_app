@@ -64,10 +64,10 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Edit Nasabah',
+                'Edit Data Nasabah',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,

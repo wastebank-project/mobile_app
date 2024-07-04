@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/customers.dart';
+import 'package:waste_app/presentation/page/customers_page/result/new_customers_success.dart';
 import 'package:waste_app/presentation/widgets/address_widget_textfield.dart';
+import 'package:waste_app/presentation/widgets/text_fields.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 
 // ignore: must_be_immutable
@@ -31,8 +33,10 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
           addressController.text,
           phoneNumberController.text,
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Registration Customer successful')));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const NewCustomerSuccess()));
       } catch (e) {
         setState(() {
           _errorMessage = e.toString().replaceFirst('Exception:', '');
@@ -51,7 +55,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Registrasi Nasabah',
@@ -70,9 +74,10 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              WasteAppTextFieldsCustomer(
+              WasteAppTextFields(
                 hintText: 'Tulis nama nasabah baru disini',
                 controller: nameController,
+                lengthLimit: true,
               ),
               const SizedBox(height: 30),
               const Text(
@@ -105,22 +110,24 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
                 ),
               const SizedBox(height: 50),
               Center(
-                child: SizedBox(
-                  width: 350,
-                  height: 55,
-                  child: TextButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFFF2994A))),
-                    onPressed: () {
-                      _registerCustomer();
-                    },
-                    child: const Text(
-                      'Registrasi Nasabah Baru',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFF7ABA78)),
+                  child: SizedBox(
+                    width: 350,
+                    height: 55,
+                    child: TextButton(
+                      onPressed: () {
+                        _registerCustomer();
+                      },
+                      child: const Text(
+                        'Registrasi Nasabah Baru',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
