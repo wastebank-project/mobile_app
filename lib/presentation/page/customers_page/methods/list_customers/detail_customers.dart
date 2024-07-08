@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/customers.dart';
-import 'package:waste_app/presentation/page/customers_page/methods/detail/edit_customers.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/list_customers/edit_customers.dart';
 
 class DetailCustomer extends StatelessWidget {
   final Map<String, dynamic> nasabah;

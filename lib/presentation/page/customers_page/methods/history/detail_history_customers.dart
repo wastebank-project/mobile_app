@@ -51,7 +51,7 @@ class _DetailHistoryState extends State<DetailHistory> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Detail Nasabah',
+              'Riwayat Menabung',
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,

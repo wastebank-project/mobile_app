@@ -83,22 +83,50 @@ class _WasteDetectionState extends State<WasteDetection> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Text(
-                      'Deteksi Sampah',
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w600,
+                    if (_predictions.isEmpty)
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Deteksi Sampah',
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Gunakan fitur Pindai untuk mendeteksi jenis dan jumlah sampah',
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      )
+                    else
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hasil Deteksi Sampah',
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Berikut adalah Hasil Deteksi Sampah yang sudah diunggah',
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      'Gunakan fitur Pindai untuk mendeteksi jenis dan jumlah sampah',
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     Center(
                       child: GestureDetector(
                         onTap: () {
@@ -145,104 +173,112 @@ class _WasteDetectionState extends State<WasteDetection> {
                               ),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return RecomendationScreen(
-                                      recommendations: Models.fromLabels(
-                                          _predictions
-                                              .map((p) => p.label)
-                                              .toList()),
-                                    );
-                                  }));
-                                },
-                                child: const Text(
-                                  'Rekomendasi Pengolahan >',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
                         ],
                       ),
                     const SizedBox(height: 20),
-                    Center(
-                      child: SizedBox(
-                        width: 171,
-                        height: 45,
-                        child: OutlinedButton.icon(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Color(0xff7ABA78)),
-                            side: MaterialStateProperty.all(
-                              const BorderSide(
-                                color: Color(0xff7ABA78),
-                                width: 2,
-                              ),
-                            ),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                    if (_predictions.isEmpty)
+                      Column(
+                        children: [
+                          Center(
+                            child: SizedBox(
+                              width: 171,
+                              height: 45,
+                              child: OutlinedButton.icon(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color(0xff7ABA78)),
+                                  side: MaterialStateProperty.all(
+                                    const BorderSide(
+                                      color: Color(0xff7ABA78),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  await _takePicture();
+                                },
+                                icon: const Icon(Icons.camera_alt_sharp,
+                                    color: Colors.white),
+                                label: const Text(
+                                  'Ambil Foto',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                          onPressed: () async {
-                            await _takePicture();
-                          },
-                          icon: const Icon(Icons.camera_alt_sharp,
-                              color: Colors.white),
-                          label: const Text(
-                            'Ambil Foto',
-                            style: TextStyle(
-                              color: Colors.white,
+                          const SizedBox(height: 15),
+                          Center(
+                            child: SizedBox(
+                              width: 171,
+                              height: 45,
+                              child: OutlinedButton.icon(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.transparent),
+                                  side: MaterialStateProperty.all(
+                                    const BorderSide(
+                                      color: Color(0xff7ABA78),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  await _pickImage();
+                                },
+                                icon: const Icon(Icons.file_upload_outlined,
+                                    color: Color(0xff7ABA78)),
+                                label: const Text(
+                                  'Pilih foto',
+                                  style: TextStyle(
+                                    color: Color(0xff7ABA78),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    else
+                      Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: const Color(0xff7ABA78),
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return RecomendationScreen(
+                                  recommendations: Models.fromLabels(
+                                      _predictions
+                                          .map((p) => p.label)
+                                          .toList()),
+                                );
+                              }));
+                            },
+                            child: const Text(
+                              'Rekomendasi Pengolahan',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Center(
-                      child: SizedBox(
-                        width: 171,
-                        height: 45,
-                        child: OutlinedButton.icon(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                            side: MaterialStateProperty.all(
-                              const BorderSide(
-                                color: Color(0xff7ABA78),
-                                width: 2,
-                              ),
-                            ),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                          ),
-                          onPressed: () async {
-                            await _pickImage();
-                          },
-                          icon: const Icon(Icons.file_upload_outlined,
-                              color: Color(0xff7ABA78)),
-                          label: const Text(
-                            'Pilih foto',
-                            style: TextStyle(
-                              color: Color(0xff7ABA78),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 100)
+                      )
                   ],
                 ),
               ),

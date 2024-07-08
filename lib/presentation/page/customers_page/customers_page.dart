@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waste_app/presentation/page/customers_page/methods/detail/list_customers.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/list_customers/list_customers.dart';
 import 'package:waste_app/presentation/page/customers_page/methods/history/list_history_customers.dart';
 import 'package:waste_app/presentation/page/customers_page/methods/new/new_customers.dart';
 

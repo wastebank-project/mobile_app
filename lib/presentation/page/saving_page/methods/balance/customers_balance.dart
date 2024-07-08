@@ -107,6 +107,8 @@ class _CustomersBalanceState extends State<CustomersBalance> {
                                       ),
                                     ),
                                   ),
+                                  if (index == customers.length - 1)
+                                    const SizedBox(height: 20)
                                 ],
                               );
                             },

@@ -68,7 +68,7 @@ class _TanyaGeminiState extends State<TanyaGemini> {
                   decoration: InputDecoration(
                     // MENGURANGI PADDING DALAM TEXTFIELD
                     contentPadding: const EdgeInsets.all(10),
-                    hintText: 'Pertanyaan saja atau dengan gambar',
+                    hintText: 'Tanyakan sesuatu mengenai sampah',
                     hintStyle:
                         const TextStyle(fontSize: 12, color: Colors.grey),
                     border: OutlineInputBorder(

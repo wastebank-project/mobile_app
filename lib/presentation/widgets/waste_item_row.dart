@@ -54,7 +54,15 @@ class _WasteItemRowState extends State<WasteItemRow> {
         wasteTypePrices = Map.fromIterable(
           data,
           key: (e) => e['name'] as String,
-          value: (e) => e['pricePerGram'] as int,
+          value: (e) {
+            if (e['pricePerGram'] is int) {
+              return e['pricePerGram'] as int;
+            } else if (e['pricePerGram'] is String) {
+              return int.tryParse(e['pricePerGram']) ?? 0;
+            } else {
+              return 0;
+            }
+          },
         );
       });
     } else {

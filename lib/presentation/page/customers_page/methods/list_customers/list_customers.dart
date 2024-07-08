@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:waste_app/domain/customers.dart';
-import 'package:waste_app/presentation/page/customers_page/methods/detail/detail_customers.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/list_customers/detail_customers.dart';
 
 class ListCustomers extends StatefulWidget {
   const ListCustomers({super.key});
@@ -118,7 +118,7 @@ class _ListCustomersState extends State<ListCustomers> {
                               ),
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(15, 15, 0, 15),
+                                    const EdgeInsets.fromLTRB(12, 12, 0, 0),
                                 child: Text(nasabah['name']),
                               ),
                             ),
