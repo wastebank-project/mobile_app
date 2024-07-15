@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
-import 'package:waste_app/presentation/page/saving_page/result/savingSuccess.dart';
+import 'package:waste_app/presentation/page/saving_page/result/saving_success.dart';
 import 'package:waste_app/presentation/widgets/date_picker.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 import 'package:http/http.dart' as http;
@@ -226,8 +226,8 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final NumberFormat formatter =
-        NumberFormat('#,##0', 'id_ID'); // FORMAT RIBUAN PEMISAH
+    final NumberFormat formatter = NumberFormat(
+        '#,##0', 'id_ID'); // FORMAT RIBUAN PEMISAH INDONESIA LOCALIZATION
 
     return Scaffold(
       appBar: AppBar(),

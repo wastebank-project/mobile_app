@@ -55,10 +55,10 @@ class _WasteItemRowState extends State<WasteItemRow> {
           data,
           key: (e) => e['name'] as String,
           value: (e) {
-            if (e['pricePerGram'] is int) {
-              return e['pricePerGram'] as int;
-            } else if (e['pricePerGram'] is String) {
-              return int.tryParse(e['pricePerGram']) ?? 0;
+            if (e['pricePer100Gram'] is int) {
+              return e['pricePer100Gram'] as int;
+            } else if (e['pricePer100Gram'] is String) {
+              return int.tryParse(e['pricePer100Gram']) ?? 0;
             } else {
               return 0;
             }
@@ -191,7 +191,8 @@ class _WasteItemRowState extends State<WasteItemRow> {
               width: 60,
               child: TextField(
                 controller: amountController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
                   hintText: 'KG',
                   hintStyle: TextStyle(

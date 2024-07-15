@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -43,7 +41,7 @@ class _TanyaGeminiState extends State<TanyaGemini> {
               ),
             ),
             const SizedBox(height: 20),
-            // MARKDOWN
+            // MARKDOWN GENERATOR
             MarkdownBody(
               data: answer,
               selectable: true,
@@ -56,7 +54,7 @@ class _TanyaGeminiState extends State<TanyaGemini> {
         padding: const EdgeInsets.fromLTRB(10, 5, 10, 20),
         child: Row(
           children: [
-            // EXPAND FOR TEXTFIELD
+            // EXPAND UNTUK TEXTFIELD
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -104,10 +102,11 @@ class _TanyaGeminiState extends State<TanyaGemini> {
                 onPressed: () async {
                   EasyLoading.show(status: 'Loading...');
                   setState(() {
-                    answer = ''; // Clear previous answer
+                    answer = ''; // MENGHAPUS JAWABAN SEBELUMNYA
                   });
                   try {
                     GenerativeModel model = GenerativeModel(
+                      // MODEL GEMINI 1.5 FLASH
                       model: 'gemini-1.5-flash-latest',
                       apiKey: dotenv.env['API_KEY']!,
                     );
@@ -123,7 +122,7 @@ class _TanyaGeminiState extends State<TanyaGemini> {
                       ]),
                     ]);
 
-                    // Simulate generated text as per text
+                    // GENERATED TEXT SATU PER SATU
                     final generatedText = result.text.toString();
                     for (int i = 0; i < generatedText.length; i++) {
                       await Future.delayed(const Duration(milliseconds: 10));

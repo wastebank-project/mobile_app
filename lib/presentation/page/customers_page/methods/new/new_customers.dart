@@ -23,6 +23,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
 
   final Customer _customer = Customer();
 
+// FUNGSI REGISTRASI NASABAH
   Future<void> _registerCustomer() async {
     EasyLoading.show(status: 'Loading');
     if (_formKey.currentState!.validate()) {
@@ -34,10 +35,12 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
           phoneNumberController.text,
         );
         Navigator.push(
+            // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(
                 builder: (context) => const NewCustomerSuccess()));
       } catch (e) {
+        // ERROR MESSAGE PENGECUALIAN EXCEPTION MENJADI ""
         setState(() {
           _errorMessage = e.toString().replaceFirst('Exception:', '');
         });

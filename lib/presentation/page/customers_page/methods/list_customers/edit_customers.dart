@@ -32,6 +32,7 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
         TextEditingController(text: widget.nasabah['phoneNumber'] ?? '');
   }
 
+// FUNGSI UPDATE NASABAH TERHADAP API
   Future<void> _updateCustomer() async {
     EasyLoading.show(status: 'Loading');
     if (_formKey.currentState!.validate()) {
@@ -42,9 +43,11 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
           addressController.text,
           phoneNumberController.text,
         );
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Customer data updated successfully')),
         );
+        // ignore: use_build_context_synchronously
         Navigator.pop(context, true);
       } catch (e) {
         setState(() {

@@ -33,8 +33,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           usernameController.text,
         );
         Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
           context,
-          MaterialPageRoute(builder: (context) => const RegisterSuccess()),
+          MaterialPageRoute(
+            builder: (context) => const RegisterSuccess(),
+          ),
         );
       } catch (e) {
         setState(() {
@@ -158,14 +161,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-                      minimumSize: MaterialStateProperty.all(const Size(
-                          350, 50)), // Set your custom width and height
+                      minimumSize: MaterialStateProperty.all(
+                        const Size(350, 50),
+                      ),
                     ),
-                    child: const Text("Daftar",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600)),
+                    child: const Text(
+                      "Daftar",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ],
               ),

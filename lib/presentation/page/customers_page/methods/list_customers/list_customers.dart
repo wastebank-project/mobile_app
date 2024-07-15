@@ -6,6 +6,7 @@ class ListCustomers extends StatefulWidget {
   const ListCustomers({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ListCustomersState createState() => _ListCustomersState();
 }
 
@@ -20,8 +21,10 @@ class _ListCustomersState extends State<ListCustomers> {
     futureNasabah = _fetchAndSortCustomers();
   }
 
+// MENGAMBIL DAN MENGURUTKAN DATA NASABAH
   Future<List<dynamic>> _fetchAndSortCustomers() async {
     List<dynamic> customers = await Customer().getCustomer();
+    // MENGURUTKAN BY NAME A-Z
     customers.sort((a, b) => a['name'].compareTo(b['name']));
     _allNasabah = customers;
     _filteredNasabah = customers;

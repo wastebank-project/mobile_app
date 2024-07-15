@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/waste.dart';
-import 'package:waste_app/presentation/page/saving_page/result/newWasteSuccess.dart';
+import 'package:waste_app/presentation/page/saving_page/result/new_waste_success.dart';
 import 'package:waste_app/presentation/widgets/text_fields.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 
@@ -19,18 +19,20 @@ class _AddWasteState extends State<AddWaste> {
   TextEditingController priceController = TextEditingController();
   String? _errorMessage;
 
-  final Waste _customer = Waste();
+  final Waste _waste = Waste();
 
+// MENAMBAHKAN JENIS SAMPAH
   Future<void> _newWaste() async {
     EasyLoading.show(status: 'Loading');
     if (_formKey.currentState!.validate()) {
       try {
         // ignore: unused_local_variable
-        final response = await _customer.newWaste(
+        final response = await _waste.newWaste(
           wasteTypeController.text,
           priceController.text,
         );
         Navigator.push(
+          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(
             builder: (context) => const NewWasteSuccess(),

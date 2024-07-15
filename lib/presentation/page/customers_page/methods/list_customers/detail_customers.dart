@@ -8,6 +8,7 @@ class DetailCustomer extends StatelessWidget {
 
   const DetailCustomer({Key? key, required this.nasabah}) : super(key: key);
 
+// HAPUS CUSTOMER
   void _deleteCustomer(BuildContext context) async {
     bool? confirmed = await showDialog(
       context: context,
@@ -80,13 +81,15 @@ class DetailCustomer extends StatelessWidget {
         );
       },
     );
-
+// FUNGSI PEMANGGILAN API TERHADAP KODE DIATAS
     if (confirmed == true) {
       EasyLoading.show(status: 'loading');
       try {
         await Customer().deleteCustomer(nasabah['id']);
+        // ignore: use_build_context_synchronously
         Navigator.pop(context, true);
       } catch (e) {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to delete customer: $e')),
         );
@@ -95,6 +98,7 @@ class DetailCustomer extends StatelessWidget {
     EasyLoading.dismiss();
   }
 
+// EDIT NASABAH
   void _editCustomer(BuildContext context) async {
     final result = await Navigator.push(
       context,
@@ -104,6 +108,7 @@ class DetailCustomer extends StatelessWidget {
     );
     // Buat Refresh list
     if (result == true) {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context, true);
     }
   }

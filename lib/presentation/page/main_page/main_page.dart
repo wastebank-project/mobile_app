@@ -30,6 +30,7 @@ class _MainPageState extends State<MainPage> {
       body: Stack(
         children: [
           PageView(
+            // PAGEVIEW MENONAKTIFKAN SCROLL
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
             onPageChanged: (value) => setState(() {
@@ -81,6 +82,7 @@ class _MainPageState extends State<MainPage> {
                   image: 'assets/png/profil_hitam.png',
                   selectedImage: 'assets/png/profil.png'),
             ],
+            // ignore: non_constant_identifier_names
             onTap: (Index) {
               selectedPage = Index;
               pageController.animateToPage(selectedPage,

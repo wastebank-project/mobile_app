@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:waste_app/domain/customers.dart';
 
 class CustomersBalance extends StatefulWidget {
   const CustomersBalance({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CustomersBalanceState createState() => _CustomersBalanceState();
 }
 
@@ -21,9 +21,11 @@ class _CustomersBalanceState extends State<CustomersBalance> {
     _fetchAndSortCustomers();
   }
 
+// MENGAMBIL DAN MENGURUTKAN NASABAH
   Future<void> _fetchAndSortCustomers() async {
     try {
       List<dynamic> fetchedCustomers = await Customer().getBalance();
+      // MENGURUTKAN NASABAH
       fetchedCustomers.sort((a, b) => a['name'].compareTo(b['name']));
       setState(() {
         customers = fetchedCustomers;
@@ -39,6 +41,8 @@ class _CustomersBalanceState extends State<CustomersBalance> {
 
   @override
   Widget build(BuildContext context) {
+    final NumberFormat formatter = NumberFormat(
+        '#,##0', 'id_ID'); // FORMAT RIBUAN PEMISAH INDONESIA LOCALIZATION
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -56,11 +60,11 @@ class _CustomersBalanceState extends State<CustomersBalance> {
           ),
           Expanded(
             child: isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : errorMessage != null
                     ? Center(child: Text('Error: $errorMessage'))
                     : customers.isEmpty
-                        ? Center(child: Text('No nasabah found'))
+                        ? const Center(child: Text('No nasabah found'))
                         : ListView.builder(
                             itemCount: customers.length,
                             itemBuilder: (context, index) {
@@ -97,7 +101,7 @@ class _CustomersBalanceState extends State<CustomersBalance> {
                                               width: 10,
                                             ),
                                             Text(
-                                              'Rp${nasabah['totalBalance']}',
+                                              'Rp${formatter.format(nasabah['totalBalance'])}',
                                               style: const TextStyle(
                                                 fontSize: 15,
                                               ),

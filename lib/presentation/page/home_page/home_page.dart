@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:waste_app/presentation/page/home_page/methods/more_articles.dart';
 import 'package:waste_app/presentation/page/home_page/methods/tanya_gemini.dart';
@@ -18,8 +16,6 @@ final Uri _url3 = Uri.parse(
 final Uri _url4 = Uri.parse(
     'https://dlh.semarangkota.go.id/3-upaya-daur-ulang-sampah-menjadi-barang-layak-jual/');
 
-final Uri _url5 = Uri.parse('uri');
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key, required this.username});
   final String username;
@@ -29,8 +25,10 @@ class HomePage extends StatelessWidget {
     final hour = DateTime.now().hour;
     if (hour < 12) {
       return 'Selamat Pagi!';
-    } else if (hour < 17) {
+    } else if (hour < 15) {
       return 'Selamat Siang!';
+    } else if (hour < 19) {
+      return 'Selamat Sore!';
     } else {
       return 'Selamat Malam!';
     }
