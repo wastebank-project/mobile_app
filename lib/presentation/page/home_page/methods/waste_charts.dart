@@ -80,10 +80,12 @@ class _WasteChartsState extends State<WasteCharts> {
                           PieChartData(
                             sections: List.generate(wasteData.length, (index) {
                               var data = wasteData[index];
+                              double value = data['totalAmount'].toDouble();
                               return PieChartSectionData(
-                                value: data['totalAmount'].toDouble(),
+                                value: value,
                                 color: _getColor(index),
                                 radius: 80,
+                                title: value.toStringAsFixed(1),
                                 titleStyle: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -230,7 +232,7 @@ class _WasteChartsState extends State<WasteCharts> {
                         var data = wasteData[index];
                         String wasteName =
                             wasteIdToName[data['wasteTypeId']] ?? 'Unknown';
-                        double amount = data['totalAmount'].toDouble();
+                        String amount = data['totalAmount'].toStringAsFixed(1);
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           child: Column(

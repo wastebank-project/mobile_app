@@ -289,10 +289,14 @@ class _HomePageState extends State<HomePage> {
                                       sections: List.generate(wasteData.length,
                                           (index) {
                                         var data = wasteData[index];
+                                        double value =
+                                            data['totalAmount'].toDouble();
+
                                         return PieChartSectionData(
-                                          value: data['totalAmount'].toDouble(),
+                                          value: value,
                                           color: _getColor(index),
                                           radius: 50,
+                                          title: value.toStringAsFixed(1),
                                           titleStyle: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
