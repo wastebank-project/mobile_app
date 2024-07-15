@@ -17,8 +17,10 @@ class NewCustomerScreen extends StatefulWidget {
 class _NewCustomerScreenState extends State<NewCustomerScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+
   String? _errorMessage;
 
   final Customer _customer = Customer();
@@ -31,6 +33,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
         // ignore: unused_local_variable
         final response = await _customer.registerCusomer(
           nameController.text,
+          emailController.text,
           addressController.text,
           phoneNumberController.text,
         );
@@ -84,6 +87,19 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
               ),
               const SizedBox(height: 30),
               const Text(
+                'Email',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              WasteAppTextFields(
+                hintText: 'Tulis nama nasabah baru disini',
+                controller: emailController,
+              ),
+              const SizedBox(height: 30),
+              const Text(
                 'Alamat',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
@@ -111,7 +127,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               Center(
                 child: Container(
                   decoration: BoxDecoration(
@@ -135,6 +151,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),

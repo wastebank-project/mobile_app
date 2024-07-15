@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 class Customer {
   Future<http.Response> registerCusomer(
     String name,
+    String email,
     String address,
     String phoneNumber,
   ) async {
@@ -12,6 +13,7 @@ class Customer {
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'name': name,
+      'email': email,
       'address': address,
       'phoneNumber': phoneNumber,
     });
@@ -67,6 +69,7 @@ class Customer {
   Future<http.Response> updateCustomer(
     String id,
     String name,
+    String email,
     String address,
     String phoneNumber,
   ) async {
@@ -74,6 +77,7 @@ class Customer {
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'name': name,
+      'email': email,
       'address': address,
       'phoneNumber': phoneNumber,
     });

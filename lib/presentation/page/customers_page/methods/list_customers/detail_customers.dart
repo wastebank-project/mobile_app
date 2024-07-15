@@ -141,6 +141,15 @@ class DetailCustomer extends StatelessWidget {
             Text('${nasabah['name']}'),
             const SizedBox(height: 20),
             const Text(
+              'Email',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Text('${nasabah['email']}'),
+            const SizedBox(height: 20),
+            const Text(
               'Alamat',
               style: TextStyle(
                 fontWeight: FontWeight.bold,

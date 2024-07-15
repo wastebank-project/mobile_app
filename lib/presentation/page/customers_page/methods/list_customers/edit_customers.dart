@@ -18,6 +18,7 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
   late TextEditingController nameController;
   late TextEditingController addressController;
   late TextEditingController phoneNumberController;
+  late TextEditingController emailController;
   String? _errorMessage;
 
   final Customer _customer = Customer();
@@ -30,6 +31,8 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
         TextEditingController(text: widget.nasabah['address'] ?? '');
     phoneNumberController =
         TextEditingController(text: widget.nasabah['phoneNumber'] ?? '');
+    emailController =
+        TextEditingController(text: widget.nasabah['email'] ?? '');
   }
 
 // FUNGSI UPDATE NASABAH TERHADAP API
@@ -42,6 +45,7 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
           nameController.text,
           addressController.text,
           phoneNumberController.text,
+          emailController.text,
         );
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
@@ -92,6 +96,19 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
               ),
               const SizedBox(height: 30),
               const Text(
+                'Email',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              WasteAppTextFieldsCustomer(
+                hintText: 'Tulis nama nasabah disini',
+                controller: emailController,
+              ),
+              const SizedBox(height: 30),
+              const Text(
                 'Alamat',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
@@ -120,7 +137,7 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -177,6 +194,7 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
                   ],
                 ),
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),
