@@ -81,7 +81,7 @@ class Waste {
     }
   }
 
-  Future<List<dynamic>> getStock() async {
+  Future<List<dynamic>> getSellStock() async {
     final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/stoksampahkeluar');
     final headers = {'Content-Type': 'application/json'};
 

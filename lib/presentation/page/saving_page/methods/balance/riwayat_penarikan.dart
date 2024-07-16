@@ -1,51 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:waste_app/domain/waste.dart';
+import 'package:waste_app/domain/customers.dart';
 
-class WasteHistory extends StatefulWidget {
-  const WasteHistory({super.key});
+class LiquidHistory extends StatefulWidget {
+  const LiquidHistory({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _WasteHistoryState createState() => _WasteHistoryState();
+  _LiquidHistoryState createState() => _LiquidHistoryState();
 }
 
-class _WasteHistoryState extends State<WasteHistory> {
-  List<dynamic> wastes = [];
-  Map<String, String> wasteIdToName = {};
+class _LiquidHistoryState extends State<LiquidHistory> {
+  List<dynamic> customers = [];
+  Map<String, String> customerIdToName = {};
   bool isLoading = true;
   String? errorMessage;
 
   @override
   void initState() {
     super.initState();
-    _fetchAndSortWaste();
+    _fetchAndSortCustomer();
   }
 
-  // MENGAMBIL DAN MENGURUTKAN SAMPAH
-  Future<void> _fetchAndSortWaste() async {
+  // MENGAMBIL DAN MENGURUTKAN NASABAH
+  Future<void> _fetchAndSortCustomer() async {
     try {
-      List<dynamic> fetchedWaste = await Waste().getSellStock();
-      List<dynamic> wasteTypes = await Waste().getWaste();
+      List<dynamic> fetchedCustomers = await Customer().getLiquidity();
 
-      // Create a mapping from wasteTypeId to waste type name
-      wasteIdToName = {for (var type in wasteTypes) type['id']: type['name']};
-
-      // Replace wasteTypeId with the corresponding name
-      for (var waste in fetchedWaste) {
-        waste['wasteTypeName'] =
-            wasteIdToName[waste['wasteTypeId']] ?? 'Unknown';
-      }
-
-      // MENGURUTKAN SAMPAH
-      fetchedWaste.sort((b, a) {
+      // MENGURUTKAN NASABAH
+      fetchedCustomers.sort((b, a) {
         DateTime dateA = DateTime.parse(a['date']);
         DateTime dateB = DateTime.parse(b['date']);
         return dateA.compareTo(dateB);
       });
 
       setState(() {
-        wastes = fetchedWaste;
+        customers = fetchedCustomers;
         isLoading = false;
       });
     } catch (e) {
@@ -66,7 +56,7 @@ class _WasteHistoryState extends State<WasteHistory> {
           const Padding(
             padding: EdgeInsets.fromLTRB(25, 10, 25, 20),
             child: Text(
-              'Riwayat Jual Sampah',
+              'Riwayat Penarikan Saldo',
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
@@ -78,18 +68,18 @@ class _WasteHistoryState extends State<WasteHistory> {
                 ? const Center(child: CircularProgressIndicator())
                 : errorMessage != null
                     ? Center(child: Text('Error: $errorMessage'))
-                    : wastes.isEmpty
+                    : customers.isEmpty
                         ? const Center(child: Text('No nasabah found'))
                         : ListView.builder(
-                            itemCount: wastes.length,
+                            itemCount: customers.length,
                             itemBuilder: (context, index) {
-                              final waste = wastes[index];
-                              DateTime date = DateTime.parse(waste['date']);
+                              final customer = customers[index];
+                              DateTime date = DateTime.parse(customer['date']);
                               String formattedDate =
                                   DateFormat('yyyy-MM-dd HH:mm:ss')
                                       .format(date);
-                              String wasteTypeName =
-                                  waste['wasteTypeName'] ?? 'Unknown';
+                              String customerTypeName =
+                                  customer['name'] ?? 'Unknown';
 
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +104,7 @@ class _WasteHistoryState extends State<WasteHistory> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                wasteTypeName,
+                                                customerTypeName,
                                                 style: const TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.bold,
@@ -127,13 +117,13 @@ class _WasteHistoryState extends State<WasteHistory> {
                                                 ),
                                               ),
                                               Text(
-                                                'Jumlah Keluar: ${double.parse(waste['amount'].toString()).toStringAsFixed(1)} Kg',
+                                                'Saldo Keluar: Rp${(customer['amount'].toString())}',
                                                 style: const TextStyle(
                                                   fontSize: 15,
                                                 ),
                                               ),
                                               Text(
-                                                'Catatan: ${(waste['note'])}',
+                                                'Catatan: ${(customer['note'])}',
                                                 style: const TextStyle(
                                                   fontSize: 15,
                                                 ),
@@ -144,7 +134,7 @@ class _WasteHistoryState extends State<WasteHistory> {
                                       ),
                                     ),
                                   ),
-                                  if (index == wastes.length - 1)
+                                  if (index == customers.length - 1)
                                     const SizedBox(height: 20)
                                 ],
                               );
