@@ -12,6 +12,7 @@ class WasteHistory extends StatefulWidget {
 
 class _WasteHistoryState extends State<WasteHistory> {
   List<dynamic> wastes = [];
+  Map<String, String> wasteIdToName = {};
   bool isLoading = true;
   String? errorMessage;
 
@@ -25,12 +26,24 @@ class _WasteHistoryState extends State<WasteHistory> {
   Future<void> _fetchAndSortWaste() async {
     try {
       List<dynamic> fetchedWaste = await Waste().getStock();
+      List<dynamic> wasteTypes = await Waste().getWaste();
+
+      // Create a mapping from wasteTypeId to waste type name
+      wasteIdToName = {for (var type in wasteTypes) type['id']: type['name']};
+
+      // Replace wasteTypeId with the corresponding name
+      for (var waste in fetchedWaste) {
+        waste['wasteTypeName'] =
+            wasteIdToName[waste['wasteTypeId']] ?? 'Unknown';
+      }
+
       // MENGURUTKAN SAMPAH
-      fetchedWaste.sort((b, a) {
+      fetchedWaste.sort((a, b) {
         DateTime dateA = DateTime.parse(a['date']);
         DateTime dateB = DateTime.parse(b['date']);
         return dateA.compareTo(dateB);
       });
+
       setState(() {
         wastes = fetchedWaste;
         isLoading = false;
@@ -77,6 +90,9 @@ class _WasteHistoryState extends State<WasteHistory> {
                               String formattedDate =
                                   DateFormat('yyyy-MM-dd HH:mm:ss')
                                       .format(date);
+                              String wasteTypeName =
+                                  waste['wasteTypeName'] ?? 'Unknown';
+
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -100,20 +116,20 @@ class _WasteHistoryState extends State<WasteHistory> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                '${waste['wasteTypeId']}',
+                                                wasteTypeName,
                                                 style: const TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                               Text(
-                                                'Tanggal : $formattedDate',
+                                                'Tanggal: $formattedDate',
                                                 style: const TextStyle(
                                                   fontSize: 15,
                                                 ),
                                               ),
                                               Text(
-                                                'Jumlah Keluar : ${formatter.format(waste['amount'])} Kg',
+                                                'Jumlah Keluar: ${formatter.format(waste['amount'])} Kg',
                                                 style: const TextStyle(
                                                   fontSize: 15,
                                                 ),
