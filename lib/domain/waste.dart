@@ -80,4 +80,17 @@ class Waste {
       throw Exception(response.body);
     }
   }
+
+  Future<List<dynamic>> getStock() async {
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/stoksampahkeluar');
+    final headers = {'Content-Type': 'application/json'};
+
+    final response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception(response.body);
+    }
+  }
 }
