@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:waste_app/domain/waste.dart';
+import 'package:waste_app/presentation/page/home_page/methods/jual_sampah.dart';
 import 'package:waste_app/presentation/page/home_page/methods/riwayat.dart';
 
 class WasteCharts extends StatefulWidget {
@@ -308,7 +309,14 @@ class _WasteChartsState extends State<WasteCharts> {
                         SizedBox(
                           width: 150,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SellWaste(),
+                                ),
+                              );
+                            },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                                 const Color(0xffE66776),

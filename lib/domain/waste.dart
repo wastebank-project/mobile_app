@@ -93,4 +93,26 @@ class Waste {
       throw Exception(response.body);
     }
   }
+
+  Future<http.Response> sellWaste(
+    String wasteTypeId,
+    double amount,
+    String note,
+  ) async {
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/jualsampah');
+    final headers = {'Content-Type': 'application/json'};
+    final body = jsonEncode({
+      'wasteTypeId': wasteTypeId,
+      'amount': amount,
+      'note': note,
+    });
+
+    final response = await http.post(url, headers: headers, body: body);
+
+    if (response.statusCode == 201) {
+      return response;
+    } else {
+      throw Exception(response.body);
+    }
+  }
 }

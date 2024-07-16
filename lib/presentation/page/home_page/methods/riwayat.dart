@@ -38,7 +38,7 @@ class _WasteHistoryState extends State<WasteHistory> {
       }
 
       // MENGURUTKAN SAMPAH
-      fetchedWaste.sort((a, b) {
+      fetchedWaste.sort((b, a) {
         DateTime dateA = DateTime.parse(a['date']);
         DateTime dateB = DateTime.parse(b['date']);
         return dateA.compareTo(dateB);
