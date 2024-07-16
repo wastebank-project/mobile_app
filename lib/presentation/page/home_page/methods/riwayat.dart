@@ -58,8 +58,6 @@ class _WasteHistoryState extends State<WasteHistory> {
 
   @override
   Widget build(BuildContext context) {
-    final NumberFormat formatter = NumberFormat(
-        '#,##0', 'id_ID'); // FORMAT RIBUAN PEMISAH INDONESIA LOCALIZATION
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -129,7 +127,13 @@ class _WasteHistoryState extends State<WasteHistory> {
                                                 ),
                                               ),
                                               Text(
-                                                'Jumlah Keluar: ${formatter.format(waste['amount'])} Kg',
+                                                'Jumlah Keluar: ${double.parse(waste['amount'].toString()).toStringAsFixed(1)} Kg',
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Catatan: ${(waste['note'])}',
                                                 style: const TextStyle(
                                                   fontSize: 15,
                                                 ),

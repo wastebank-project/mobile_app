@@ -36,11 +36,9 @@ class _SellWasteState extends State<SellWaste> {
     EasyLoading.show(status: 'Loading');
     if (_formKey.currentState!.validate()) {
       try {
-        final response = await _waste.sellWaste(
-          selectedWasteType!,
-          double.parse(priceController.text),
-          noteController.text,
-        );
+        // ignore: unused_local_variable
+        final response = await _waste.sellWaste(selectedWasteType!,
+            double.parse(priceController.text), noteController.text);
         Navigator.push(
           // ignore: use_build_context_synchronously
           context,
