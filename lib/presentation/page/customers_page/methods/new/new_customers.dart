@@ -31,7 +31,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
     if (_formKey.currentState!.validate()) {
       try {
         // ignore: unused_local_variable
-        final response = await _customer.registerCusomer(
+        final response = await _customer.registerCustomer(
           nameController.text,
           emailController.text,
           addressController.text,

@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class Customer {
-  Future<http.Response> registerCusomer(
+  Future<http.Response> registerCustomer(
     String name,
     String email,
     String address,
@@ -21,10 +21,8 @@ class Customer {
     final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 201) {
-      // Registration successful
       return response;
     } else {
-      // Handle error
       throw Exception(response.body);
     }
   }
@@ -112,6 +110,28 @@ class Customer {
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<http.Response> liquidityCustomer(
+    String name,
+    double amount,
+    String note,
+  ) async {
+    final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/tariksaldo');
+    final headers = {'Content-Type': 'application/json'};
+    final body = jsonEncode({
+      'name': name,
+      'amount': amount,
+      'note': note,
+    });
+
+    final response = await http.post(url, headers: headers, body: body);
+
+    if (response.statusCode == 201) {
+      return response;
     } else {
       throw Exception(response.body);
     }

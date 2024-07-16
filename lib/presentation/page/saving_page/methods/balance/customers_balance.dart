@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:waste_app/domain/customers.dart';
-import 'package:waste_app/presentation/page/home_page/methods/jual_sampah.dart';
 import 'package:waste_app/presentation/page/saving_page/methods/balance/riwayat_penarikan.dart';
+import 'package:waste_app/presentation/page/saving_page/methods/balance/tarik_saldo.dart';
 
 class CustomersBalance extends StatefulWidget {
   const CustomersBalance({super.key});
@@ -164,7 +164,7 @@ class _CustomersBalanceState extends State<CustomersBalance> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const SellWaste(),
+                            builder: (context) => const LiquidityCustomers(),
                           ),
                         );
                       },
