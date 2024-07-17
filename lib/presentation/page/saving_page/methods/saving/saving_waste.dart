@@ -62,38 +62,29 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
   Future<void> _detectTrash(File inputImageFile) async {
     EasyLoading.show(status: "Loading");
     try {
-      // Use MLService to detect trash and get the processed image
       File detectedImage = await mlService.detectTrash(inputImageFile);
       List<Prediction> predictions = await mlService.detectText(inputImageFile);
 
       setState(() {
         _imageFile = detectedImage;
         _predictions = predictions;
-
         wasteItems.clear(); // Clear existing items
 
-        // Automatically fill the wasteItems if predictions are not empty
-        if (_predictions.isNotEmpty) {
-          wasteItems.clear();
-          wasteItems = _predictions.isNotEmpty
-              ? [
-                  ..._predictions
-                      .map((p) => {'wasteType': p.label, 'amount': ''})
-                ]
-              : [
-                  {'wasteType': '', 'amount': ''}
-                ];
-          // Ensure the first row is filled
-          if (wasteItems.isEmpty) {
-            wasteItems.add({'wasteType': '', 'amount': ''});
-          }
+        // This line is the key fix: Always add the initial empty row first
+        wasteItems.add({'wasteType': '', 'amount': ''});
+
+        // Fill in additional rows based on predictions
+        if (predictions.isNotEmpty) {
+          wasteItems.addAll(
+              predictions.map((p) => {'wasteType': p.label, 'amount': ''}));
         }
       });
     } catch (e) {
-      // Handle errors from MLService
-      print('Error: $e');
+      print('Error during trash detection: $e');
+      // Add user-facing error handling here (e.g., Snackbar)
+    } finally {
+      EasyLoading.dismiss();
     }
-    EasyLoading.dismiss();
   }
 
 // PENAMBAHAN WASTE ITEM ROW
@@ -254,17 +245,30 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
       setState(() {
         _errorMessage = 'Tolong isi Semua Data!';
       });
-      return EasyLoading.dismiss();
+      EasyLoading.dismiss();
+      return;
     }
+    List<Map<String, dynamic>> deposits = [];
 
-    List<Map<String, dynamic>> deposits = wasteItems.map((item) {
-      final selectedWasteType = wasteTypes
-          .firstWhere((wasteType) => wasteType['name'] == item['wasteType']);
-      return {
-        'wasteTypeId': selectedWasteType['id'],
-        'amount': double.parse(item['amount']), // Handle as double
-      };
-    }).toList();
+    // Filter out empty waste items
+    for (var item in wasteItems) {
+      if (item['wasteType'].isNotEmpty && item['amount'].isNotEmpty) {
+        final selectedWasteType = wasteTypes
+            .firstWhere((wasteType) => wasteType['name'] == item['wasteType']);
+        deposits.add({
+          'wasteTypeId': selectedWasteType['id'],
+          'amount': double.parse(item['amount']),
+        });
+      }
+    }
+    // Additional Validation: Check if any valid waste items exist
+    if (deposits.isEmpty) {
+      setState(() {
+        _errorMessage = 'Tolong isi setidaknya satu jenis sampah dan jumlah!';
+      });
+      EasyLoading.dismiss(); // Dismiss EasyLoading on error
+      return; // Exit the function if no valid waste items exist
+    }
 
     final response = await http.post(
       Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/tabung'),
@@ -518,7 +522,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                 ),
               ],
             ),
-            for (int i = 0; i < wasteItems.length; i++)
+            for (int i = 1; i < wasteItems.length; i++)
               WasteItemRow(
                 index: i,
                 wasteTypes: wasteTypes.map((e) => e['name']!).toList(),
