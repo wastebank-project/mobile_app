@@ -106,15 +106,12 @@ class _WasteChartsState extends State<WasteCharts> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 80, bottom: 30, left: 20, right: 20),
+                          padding: const EdgeInsets.only(top: 80, bottom: 30, left: 5, right: 5),
                           child: SizedBox(
-                            width:
-                                wasteData.length * 80, // Adjust width as needed
+                            width: wasteData.length * 80, // Adjust width as needed
                             child: BarChart(
                               BarChartData(
-                                barGroups:
-                                    List.generate(wasteData.length, (index) {
+                                barGroups: List.generate(wasteData.length, (index) {
                                   var data = wasteData[index];
                                   return BarChartGroupData(
                                     x: index,
@@ -127,8 +124,7 @@ class _WasteChartsState extends State<WasteCharts> {
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                     ],
-                                    showingTooltipIndicators:
-                                        touchedIndex == index ? [0] : [],
+                                    showingTooltipIndicators: touchedIndex == index ? [0] : [],
                                   );
                                 }),
                                 titlesData: FlTitlesData(
@@ -136,9 +132,12 @@ class _WasteChartsState extends State<WasteCharts> {
                                     sideTitles: SideTitles(
                                       showTitles: true,
                                       getTitlesWidget: (value, meta) {
-                                        return Text(value.toInt().toString());
+                                        return Text(value.toInt().toString(),
+                                            style: const TextStyle(fontSize: 12),
+                                          textAlign: TextAlign.left,
+                                        );
                                       },
-                                      interval: 10,
+                                      interval: 50, // Set interval to 50
                                     ),
                                   ),
                                   rightTitles: const AxisTitles(
@@ -152,22 +151,17 @@ class _WasteChartsState extends State<WasteCharts> {
                                       showTitles: true,
                                       getTitlesWidget: (value, meta) {
                                         int index = value.toInt();
-                                        if (index < 0 ||
-                                            index >= wasteData.length) {
+                                        if (index < 0 || index >= wasteData.length) {
                                           return const Text('');
                                         }
                                         return Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 5),
+                                          padding: const EdgeInsets.only(top: 5),
                                           child: Transform.rotate(
                                             angle: 350 * (pi / 180),
                                             child: Text(
-                                              wasteIdToName[wasteData[index]
-                                                      ['wasteTypeId']] ??
+                                              wasteIdToName[wasteData[index]['wasteTypeId']] ??
                                                   'Unknown',
-                                              style: const TextStyle(
-                                                  fontSize:
-                                                      12), // Adjust text style as needed
+                                              style: const TextStyle(fontSize: 12), // Adjust text style as needed
                                             ),
                                           ),
                                         );
@@ -175,18 +169,14 @@ class _WasteChartsState extends State<WasteCharts> {
                                     ),
                                   ),
                                 ),
-                                gridData: const FlGridData(
-                                    show: true), // Optionally hide grid
-                                borderData: FlBorderData(
-                                    show: false), // Optionally hide border
+                                gridData: const FlGridData(show: true), // Optionally hide grid
+                                borderData: FlBorderData(show: false), // Optionally hide border
                                 barTouchData: BarTouchData(
                                   touchTooltipData: BarTouchTooltipData(
-                                    getTooltipItem:
-                                        (group, groupIndex, rod, rodIndex) {
-                                      String wasteName = wasteIdToName[
-                                              wasteData[group.x.toInt()]
-                                                  ['wasteTypeId']] ??
-                                          'Unknown';
+                                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                                      String wasteName =
+                                          wasteIdToName[wasteData[group.x.toInt()]['wasteTypeId']] ??
+                                              'Unknown';
                                       return BarTooltipItem(
                                         '$wasteName\n',
                                         const TextStyle(
@@ -195,8 +185,7 @@ class _WasteChartsState extends State<WasteCharts> {
                                         ),
                                         children: <TextSpan>[
                                           TextSpan(
-                                            text:
-                                                '${rod.toY.toStringAsFixed(1)} Kg',
+                                            text: '${rod.toY.toStringAsFixed(1)} Kg',
                                             style: const TextStyle(
                                               color: Colors.yellow,
                                               fontWeight: FontWeight.w500,
@@ -206,8 +195,7 @@ class _WasteChartsState extends State<WasteCharts> {
                                       );
                                     },
                                   ),
-                                  touchCallback:
-                                      (FlTouchEvent event, barTouchResponse) {
+                                  touchCallback: (FlTouchEvent event, barTouchResponse) {
                                     setState(() {
                                       if (!event.isInterestedForInteractions ||
                                           barTouchResponse == null ||
@@ -215,8 +203,7 @@ class _WasteChartsState extends State<WasteCharts> {
                                         touchedIndex = -1;
                                         return;
                                       }
-                                      touchedIndex = barTouchResponse
-                                          .spot!.touchedBarGroupIndex;
+                                      touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
                                     });
                                   },
                                 ),
