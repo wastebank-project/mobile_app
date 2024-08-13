@@ -25,7 +25,7 @@ class _ListHistoryState extends State<ListHistory> {
   Future<List<dynamic>> _fetchAndSortCustomers() async {
     List<dynamic> customers = await Customer().getHistory();
     // MENGURUTKAN BY TANGGAL NASABAH MENABUNG
-    customers.sort((a, b) => a['date'].compareTo(b['date']));
+    customers.sort((b, a) => a['date'].compareTo(b['date']));
     _allNasabah = customers;
     _filteredNasabah = customers;
     return customers;

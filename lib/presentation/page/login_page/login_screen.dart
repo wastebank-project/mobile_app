@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/welcoming_page/welcoming_page.dart';
 import 'package:waste_app/presentation/widgets/text_fields.dart';
@@ -14,7 +15,32 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   final Authentication _authentication = Authentication();
+  Future<void> _login() async {
+    EasyLoading.show(status: 'Loading');
+    if (_formKey.currentState!.validate()) {
+      try {
+        // ignore: unused_local_variable
+        final response = await _authentication.login(
+            formKey: _formKey,
+            usernameController: usernameController,
+            passwordController: passwordController,
+            context: context,
+            setErrorMessage: (message) {
+              setState(() {
+                _errorMessage = message;
+              });
+            });
+      } catch (e) {
+        setState(() {
+          _errorMessage = e.toString().replaceFirst('Exception:', '');
+        });
+      }
+    }
+    EasyLoading.dismiss();
+  }
+
   String? _errorMessage;
 
   @override
@@ -103,16 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 40),
                   TextButton(
                     onPressed: () async {
-                      await _authentication.login(
-                          formKey: _formKey,
-                          usernameController: usernameController,
-                          passwordController: passwordController,
-                          context: context,
-                          setErrorMessage: (message) {
-                            setState(() {
-                              _errorMessage = message;
-                            });
-                          });
+                      _login();
                     },
                     style: ButtonStyle(
                       backgroundColor:

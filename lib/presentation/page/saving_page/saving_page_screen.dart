@@ -26,7 +26,6 @@ class SavingPageScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 10),
-                  // const Spacer(), // Pushes the SizedBox down
                   SizedBox(
                     child: Column(
                       children: [
@@ -286,7 +285,6 @@ class SavingPageScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // const Spacer(flex: 2), // Pushes the SizedBox up
                   SizedBox(height: MediaQuery.of(context).size.height / 7),
                 ],
               ),

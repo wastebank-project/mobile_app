@@ -80,7 +80,7 @@ class Authentication {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('accessToken', response['accessToken']);
     prefs.setString('refreshToken', response['refreshToken']);
-    // Optionally, you can save other user information like username and email
+    // Optionally, simpan yang lain
     prefs.setString('username', response['username']);
     prefs.setString('email', response['email']);
     // Save the access token expiration time

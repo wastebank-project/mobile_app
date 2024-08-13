@@ -92,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Positioned(
                   left: 0,
                   right: 0,
-                  bottom: 180,
+                  bottom: 150,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 90),
                     child: Column(
