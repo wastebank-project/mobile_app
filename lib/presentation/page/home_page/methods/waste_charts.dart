@@ -60,7 +60,7 @@ class _WasteChartsState extends State<WasteCharts> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                     const Text(
                       'Stok Sampah',
                       style: TextStyle(
                         fontSize: 30,

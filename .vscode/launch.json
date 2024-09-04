@@ -9,12 +9,7 @@
       "request": "launch",
       "type": "dart"
     },
-    {
-      "name": "waste_app (profile mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
-    },
+
     {
       "name": "waste_app (release mode)",
       "request": "launch",
