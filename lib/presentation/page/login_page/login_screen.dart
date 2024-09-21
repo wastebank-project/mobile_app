@@ -133,15 +133,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF7FB77E)),
-                      shape: MaterialStateProperty.all(
+                          WidgetStateProperty.all(const Color(0xFF7FB77E)),
+                      shape: WidgetStateProperty.all(
                         const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(10),
                           ),
                         ),
                       ),
-                      minimumSize: MaterialStateProperty.all(const Size(
+                      minimumSize: WidgetStateProperty.all(const Size(
                           350, 50)), // Set your custom width and height
                     ),
                     child: const Text("Masuk",

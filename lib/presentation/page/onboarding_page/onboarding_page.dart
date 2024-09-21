@@ -100,17 +100,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       children: [
                         TextButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
+                            backgroundColor: WidgetStateProperty.all(
                               const Color(0xFF7FB77E),
                             ),
-                            shape: MaterialStateProperty.all(
+                            shape: WidgetStateProperty.all(
                               const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(10),
                                 ),
                               ),
                             ),
-                            fixedSize: MaterialStateProperty.all(const Size(
+                            fixedSize: WidgetStateProperty.all(const Size(
                                 100, 40)), // Set custom width and height
                           ),
                           onPressed: () {

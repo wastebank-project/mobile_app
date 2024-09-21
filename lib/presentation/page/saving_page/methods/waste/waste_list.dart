@@ -83,10 +83,10 @@ class _WasteListState extends State<WasteList> {
                   Navigator.of(context).pop(true);
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
+                  backgroundColor: WidgetStateProperty.all(
                     const Color(0xffE66776),
                   ),
-                  shape: MaterialStateProperty.all(
+                  shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -108,9 +108,9 @@ class _WasteListState extends State<WasteList> {
                   Navigator.of(context).pop(false);
                 },
                 style: ButtonStyle(
-                  side: MaterialStateProperty.all(
+                  side: WidgetStateProperty.all(
                       const BorderSide(color: Colors.black, width: 2.5)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  shape: WidgetStateProperty.all(RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   )),
                 ),

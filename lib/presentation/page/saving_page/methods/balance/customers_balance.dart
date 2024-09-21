@@ -140,8 +140,8 @@ class _CustomersBalanceState extends State<CustomersBalance> {
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFF7ABA78)),
-                        shape: MaterialStateProperty.all(
+                            WidgetStateProperty.all(const Color(0xFF7ABA78)),
+                        shape: WidgetStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -169,10 +169,10 @@ class _CustomersBalanceState extends State<CustomersBalance> {
                         );
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
+                        backgroundColor: WidgetStateProperty.all(
                           const Color(0xffE66776),
                         ),
-                        shape: MaterialStateProperty.all(
+                        shape: WidgetStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),

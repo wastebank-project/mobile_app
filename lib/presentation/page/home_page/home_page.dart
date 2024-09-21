@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text('Error nih bos: ${snapshot.error}'));
         } else if (!snapshot.hasData) {
           return const Center(child: Text('No data available'));
         } else {
@@ -284,29 +284,43 @@ class _HomePageState extends State<HomePage> {
                                     const EdgeInsets.symmetric(vertical: 5),
                                 child: SizedBox(
                                   height: 200, // Add a height constraint
-                                  child: PieChart(
-                                    PieChartData(
-                                      sections: List.generate(wasteData.length,
-                                          (index) {
-                                        var data = wasteData[index];
-                                        double value =
-                                            data['totalAmount'].toDouble();
+                                  child: Builder(
+                                    builder: (context) {
+                                      try {
+                                        return PieChart(
+                                          PieChartData(
+                                            sections: List.generate(
+                                                wasteData.length, (index) {
+                                              var data = wasteData[index];
+                                              double value = data['totalAmount']
+                                                  .toDouble();
 
-                                        return PieChartSectionData(
-                                          value: value,
-                                          color: _getColor(index),
-                                          radius: 50,
-                                          title: value.toStringAsFixed(1),
-                                          titleStyle: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                                              return PieChartSectionData(
+                                                value: value,
+                                                color: _getColor(index),
+                                                radius: 50,
+                                                title: value.toStringAsFixed(1),
+                                                titleStyle: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              );
+                                            }),
+                                            sectionsSpace: 2,
+                                            centerSpaceRadius: 40,
                                           ),
                                         );
-                                      }),
-                                      sectionsSpace: 2,
-                                      centerSpaceRadius: 40,
-                                    ),
+                                      } catch (e) {
+                                        return Center(
+                                          child: Text(
+                                            'Error loading chart: $e',
+                                            style: const TextStyle(
+                                                color: Colors.red),
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                               ),

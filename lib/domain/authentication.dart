@@ -66,6 +66,7 @@ class Authentication {
           passwordController.text,
         );
         // Handle login response
+        // ignore: use_build_context_synchronously
         await handleLoginResponse(response, context);
       } catch (e) {
         // Handle login error
@@ -88,6 +89,7 @@ class Authentication {
         DateTime.now().millisecondsSinceEpoch + (2 * 60 * 1000); // 2 minutes
     prefs.setInt('accessTokenExpiration', accessTokenExpiration);
     // Navigate to the home screen
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => MainPage(
