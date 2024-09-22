@@ -68,18 +68,24 @@ class _LiquidHistoryState extends State<LiquidHistory> {
             child: isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : customers.isEmpty
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Lottie.network(
-                              'https://lottie.host/495775b6-a6cb-4731-8323-6d53680088c4/6q4qGAIhJV.json',
-                              width: 250,
-                              height: 250,
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Lottie.network(
+                                'https://lottie.host/495775b6-a6cb-4731-8323-6d53680088c4/6q4qGAIhJV.json',
+                                width: 250,
+                                height: 250,
+                              ),
                             ),
-                          ),
-                          Text('$errorMessage')
-                        ],
+                            Text(
+                              '$errorMessage',
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
                       )
                     : ListView.builder(
                         itemCount: customers.length,

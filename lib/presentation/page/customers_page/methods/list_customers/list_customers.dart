@@ -101,18 +101,24 @@ class _ListCustomersState extends State<ListCustomers> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError && !snapshot.hasData) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: Lottie.network(
-                            'https://lottie.host/495775b6-a6cb-4731-8323-6d53680088c4/6q4qGAIhJV.json',
-                            width: 250,
-                            height: 250,
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Lottie.network(
+                              'https://lottie.host/495775b6-a6cb-4731-8323-6d53680088c4/6q4qGAIhJV.json',
+                              width: 250,
+                              height: 250,
+                            ),
                           ),
-                        ),
-                        Text('${snapshot.error}')
-                      ],
+                          Text(
+                            '${snapshot.error}',
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      ),
                     );
                   } else {
                     return RefreshIndicator(
