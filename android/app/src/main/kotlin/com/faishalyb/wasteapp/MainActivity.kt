@@ -1,4 +1,4 @@
-package com.waste_app.waste_app
+package com.faishalyb.wasteapp
 
 import io.flutter.embedding.android.FlutterActivity
 
