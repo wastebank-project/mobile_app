@@ -1,11 +1,13 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:waste_app/domain/ml.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:waste_app/domain/yolo_service_tflite.dart';
 import 'package:waste_app/presentation/widgets/zoomable_view.dart';
 import 'package:waste_app/presentation/page/waste_detection/methods/models.dart';
 import 'package:waste_app/presentation/page/waste_detection/methods/recomendation.dart';
+import 'package:waste_app/tflite/yolo_bounding_box.dart';
 
 class WasteDetection extends StatefulWidget {
   const WasteDetection({super.key});
@@ -16,8 +18,14 @@ class WasteDetection extends StatefulWidget {
 
 class _WasteDetectionState extends State<WasteDetection> {
   File? _imageFile;
-  final MLService mlService = MLService();
-  List<Prediction> _predictions = [];
+  final YOLOService yoloService = YOLOService();
+  List<YOLOPrediction> _predictions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    yoloService.loadModel();
+  }
 
 // MENGAMBIL GAMBAR DENGAN MEMAKAI SUMBER DARI KAMERA
   Future<void> _takePicture() async {
@@ -29,6 +37,14 @@ class _WasteDetectionState extends State<WasteDetection> {
       });
       await _detectTrash(_imageFile!);
     }
+  }
+
+  Future<Size> _getImageSize(File imageFile) async {
+    final Uint8List bytes = await imageFile.readAsBytes();
+    final ui.Codec codec = await ui.instantiateImageCodec(bytes);
+    final ui.FrameInfo frameInfo = await codec.getNextFrame();
+    return Size(
+        frameInfo.image.width.toDouble(), frameInfo.image.height.toDouble());
   }
 
 // MENGAMBIL GAMBAR DENGAN MEMAKAI SUMBER DARI GALERI
@@ -45,22 +61,27 @@ class _WasteDetectionState extends State<WasteDetection> {
 
 // MENDETEKSI SAMPAH DENGAN API DETECTTRASH
   Future<void> _detectTrash(File inputImageFile) async {
-    EasyLoading.show(status: "Loading");
     try {
-      // Use MLService to detect trash and get the processed image
-      File detectedImage = await mlService.detectTrash(inputImageFile);
-      List<Prediction> predictions = await mlService.detectText(inputImageFile);
-
+      List<YOLOPrediction> predictions =
+          await yoloService.detectTrash(inputImageFile);
+      // ignore: avoid_print
+      print("Predictions received: ${predictions.length}"); // Debug print
       setState(() {
-        _imageFile = detectedImage;
         _predictions = predictions;
       });
+      if (_predictions.isEmpty) {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Tidak ada Objek terdeteksi, mohon ulangi lagi'),
+            duration: Duration(seconds: 4),
+          ),
+        );
+      }
     } catch (e) {
-      // Handle errors from MLService
       // ignore: avoid_print
-      print('Error: $e');
+      print('Error in _detectTrash: $e');
     }
-    EasyLoading.dismiss();
   }
 
   @override
@@ -134,7 +155,34 @@ class _WasteDetectionState extends State<WasteDetection> {
                     width: 400,
                     height: 400,
                     child: _imageFile != null
-                        ? Image.file(_imageFile!)
+                        ? FutureBuilder<Size>(
+                            future: _getImageSize(_imageFile!),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Stack(
+                                  children: [
+                                    Image.file(
+                                      _imageFile!,
+                                      fit: BoxFit.contain,
+                                      width: 800,
+                                      height: 800,
+                                    ),
+                                    CustomPaint(
+                                      painter: BoundingBoxPainter(
+                                        _predictions,
+                                        snapshot.data!,
+                                        const Size(1736, 2370),
+                                      ),
+                                      child: const SizedBox(
+                                          width: 800, height: 800),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
+                          )
                         : Image.asset(
                             'assets/png/placeholder.png',
                             fit: BoxFit.cover,
@@ -155,10 +203,15 @@ class _WasteDetectionState extends State<WasteDetection> {
                       decoration: const BoxDecoration(color: Color(0XFFF6F4BD)),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          _predictions.join('\n'),
-                          style: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _predictions.map((p) {
+                            return Text(
+                              '${p.label} (${(p.score * 100).toStringAsFixed(1)}%)',
+                              style: const TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            );
+                          }).toList(),
                         ),
                       ),
                     ),
