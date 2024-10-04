@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
 import 'package:waste_app/domain/yolo_service_tflite.dart';
 
@@ -7,21 +6,28 @@ class BoundingBoxPainter extends CustomPainter {
   final Size imageSize;
   final Size displaySize;
 
-  BoundingBoxPainter(this.predictions, this.imageSize, this.displaySize) {
-    print("BoundingBoxPainter constructor called");
-    print("Predictions: $predictions");
-    print("Image size: $imageSize");
-    print("Display size: $displaySize");
-  }
+  BoundingBoxPainter(this.predictions, this.imageSize, this.displaySize);
+
+  // Define a map of class labels to colors
+  final Map<String, Color> labelColors = {
+    'Botol Kaca': Colors.blue,
+    'Botol Plastik': Colors.green,
+    'Galon': Colors.red,
+    'Gelas Plastik': Colors.white,
+    'Kaleng': Colors.amber,
+    'Kantong Plastik': Colors.cyan,
+    'Kantong Semen': Colors.lightBlue,
+    'Kardus': Colors.limeAccent,
+    'Kemasan Plastik': Colors.tealAccent,
+    'Kertas Bekas': Colors.redAccent,
+    'Koran': Colors.purpleAccent,
+    'Pecahan Kaca': Colors.pinkAccent,
+    'Toples Kaca': Colors.indigoAccent,
+    'Tutup Galon': Colors.deepOrangeAccent,
+  };
 
   @override
   void paint(Canvas canvas, Size size) {
-    print("paint method called");
-    final paint = Paint()
-      ..color = Colors.yellow
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 4.0;
-
     final double scaleX = size.width / 640; // 640 is the YOLO model input size
     final double scaleY = size.height / 640;
 
@@ -33,17 +39,25 @@ class BoundingBoxPainter extends CustomPainter {
         prediction.boundingBox[3] * scaleY,
       );
 
-      print("Drawing rect: $rect");
+      // Get the color for the label and bounding box, or use a default color
+      final labelColor = labelColors[prediction.label] ?? Colors.yellow;
+
+      // Draw the bounding box with the color based on the label
+      final paint = Paint()
+        ..color = labelColor // Set the color based on the label
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 4.0;
       canvas.drawRect(rect, paint);
 
+      // Draw the label with the corresponding color
       TextPainter textPainter = TextPainter(
         text: TextSpan(
           text:
               "${prediction.label} (${(prediction.score * 100).toStringAsFixed(0)}%)",
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
             fontSize: 12,
-            backgroundColor: Colors.red,
+            backgroundColor: labelColor, // Use the color based on the label
             fontWeight: FontWeight.bold,
           ),
         ),
