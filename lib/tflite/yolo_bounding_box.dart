@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
 import 'package:waste_app/domain/yolo_service_tflite.dart';
 
@@ -17,23 +18,19 @@ class BoundingBoxPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     print("paint method called");
     final paint = Paint()
-      ..color = Colors.red
+      ..color = Colors.yellow
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0;
+      ..strokeWidth = 4.0;
 
-    final double scaleX = displaySize.width / imageSize.width;
-    final double scaleY = displaySize.height / imageSize.height;
-    final double scale = scaleX < scaleY ? scaleX : scaleY;
-
-    final double offsetX = (displaySize.width - imageSize.width * scale) / 2;
-    final double offsetY = (displaySize.height - imageSize.height * scale) / 2;
+    final double scaleX = size.width / 640; // 640 is the YOLO model input size
+    final double scaleY = size.height / 640;
 
     for (var prediction in predictions) {
       final rect = Rect.fromLTWH(
-        prediction.boundingBox[0] * scale + offsetX,
-        prediction.boundingBox[1] * scale + offsetY,
-        prediction.boundingBox[2] * scale,
-        prediction.boundingBox[3] * scale,
+        prediction.boundingBox[0] * scaleX,
+        prediction.boundingBox[1] * scaleY,
+        prediction.boundingBox[2] * scaleX,
+        prediction.boundingBox[3] * scaleY,
       );
 
       print("Drawing rect: $rect");
@@ -43,8 +40,12 @@ class BoundingBoxPainter extends CustomPainter {
         text: TextSpan(
           text:
               "${prediction.label} (${(prediction.score * 100).toStringAsFixed(0)}%)",
-          style: TextStyle(
-              color: Colors.red, fontSize: 12, backgroundColor: Colors.white),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            backgroundColor: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         textDirection: TextDirection.ltr,
       );

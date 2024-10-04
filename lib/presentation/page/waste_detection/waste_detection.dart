@@ -159,24 +159,37 @@ class _WasteDetectionState extends State<WasteDetection> {
                             future: _getImageSize(_imageFile!),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
-                                return Stack(
-                                  children: [
-                                    Image.file(
-                                      _imageFile!,
-                                      fit: BoxFit.contain,
-                                      width: 800,
-                                      height: 800,
-                                    ),
-                                    CustomPaint(
-                                      painter: BoundingBoxPainter(
-                                        _predictions,
-                                        snapshot.data!,
-                                        const Size(1736, 2370),
-                                      ),
-                                      child: const SizedBox(
-                                          width: 800, height: 800),
-                                    ),
-                                  ],
+                                return LayoutBuilder(
+                                  builder: (context, constraints) {
+                                    double aspectRatio = snapshot.data!.width /
+                                        snapshot.data!.height;
+                                    double width = constraints.maxWidth;
+                                    double height = width / aspectRatio;
+
+                                    if (height > constraints.maxHeight) {
+                                      height = constraints.maxHeight;
+                                      width = height * aspectRatio;
+                                    }
+
+                                    return Stack(
+                                      children: [
+                                        Image.file(
+                                          _imageFile!,
+                                          fit: BoxFit.contain,
+                                          width: width,
+                                          height: height,
+                                        ),
+                                        CustomPaint(
+                                          painter: BoundingBoxPainter(
+                                            _predictions,
+                                            snapshot.data!,
+                                            Size(width, height),
+                                          ),
+                                          size: Size(width, height),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
                               } else {
                                 return const CircularProgressIndicator();
