@@ -1,18 +1,20 @@
 import 'dart:convert';
+import 'dart:ui' as ui;
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+// import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:waste_app/domain/ml.dart';
+import 'package:waste_app/domain/yolo_service_tflite.dart';
 import 'package:waste_app/presentation/page/saving_page/result/saving_success.dart';
 import 'package:waste_app/presentation/widgets/date_picker.dart';
 import 'package:waste_app/presentation/widgets/text_fields_customers.dart';
 import 'package:waste_app/presentation/widgets/waste_item_row.dart';
 import 'package:waste_app/presentation/widgets/zoomable_view.dart';
 import 'package:http/http.dart' as http;
+import 'package:waste_app/tflite/yolo_bounding_box.dart';
 
 class SavingWasteScreen extends StatefulWidget {
   const SavingWasteScreen({super.key});
@@ -32,8 +34,9 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
   List<Map<String, dynamic>> wasteItems = [];
   Map<int, double> itemTotals = {};
   File? _imageFile;
-  final MLService mlService = MLService();
-  List<Prediction> _predictions = [];
+  final YOLOService yoloService = YOLOService();
+  List<YOLOPrediction> _predictions = [];
+  bool _isloading = false; // NEW CIRCULARPROGRESSINDICATOR
 
 // MENGAMBIL GAMBAR DENGAN MEMAKAI SUMBER DARI KAMERA
   Future<void> _takePicture() async {
@@ -60,32 +63,74 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
   }
 
 // MENDETEKSI SAMPAH DENGAN API DETECTTRASH
+  // MENDETEKSI SAMPAH DENGAN API DETECTTRASH
   Future<void> _detectTrash(File inputImageFile) async {
-    EasyLoading.show(status: "Loading");
     try {
-      File detectedImage = await mlService.detectTrash(inputImageFile);
-      List<Prediction> predictions = await mlService.detectText(inputImageFile);
+      List<YOLOPrediction> predictions =
+          await yoloService.detectTrash(inputImageFile);
+      print("Predictions received: ${predictions.length}");
+
+      if (predictions.isEmpty) {
+        // Handle empty predictions
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Tidak ada Objek terdeteksi, mohon ulangi lagi'),
+            duration: Duration(seconds: 4),
+          ),
+        );
+        return;
+      }
+
+      // ***KEY CHANGE: Await fetchWasteTypes before updating state***
+      await fetchWasteTypes();
 
       setState(() {
-        _imageFile = detectedImage;
         _predictions = predictions;
-        wasteItems.clear(); // Clear existing items
 
-        // This line is the key fix: Always add the initial empty row first
-        wasteItems.add({'wasteType': '', 'amount': ''});
+        // ***KEY CHANGE: Update existing items or add new ones***
+        for (var prediction in predictions) {
+          final matchingWasteType = wasteTypes.firstWhere(
+            (wasteType) => wasteType['name'] == prediction.label,
+            orElse: () => {'id': '', 'name': 'Unknown'}, // Default to 'Unknown'
+          );
 
-        // Fill in additional rows based on predictions
-        if (predictions.isNotEmpty) {
-          wasteItems.addAll(
-              predictions.map((p) => {'wasteType': p.label, 'amount': ''}));
+          bool found = false;
+          for (var item in wasteItems) {
+            if (item['wasteType'] == matchingWasteType['name']) {
+              // If waste type already exists, just update the amount (if needed)
+              // You might want to add logic here to handle multiple detections of the same type
+              // For example, summing the amounts or using the highest confidence prediction.
+              item['amount'] =
+                  ''; // Or some other logic for updating the amount
+              found = true;
+              break;
+            }
+          }
+
+          if (!found) {
+            // If waste type doesn't exist, add a new item
+            wasteItems.add({
+              'wasteType': matchingWasteType['name']!,
+              'amount': '',
+            });
+          }
         }
       });
     } catch (e) {
-      // ignore: avoid_print
-      print('Error during trash detection: $e');
-    } finally {
-      EasyLoading.dismiss();
+      print('Error in _detectTrash: $e');
+      // Handle the error appropriately, perhaps by showing a SnackBar
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error detecting trash: $e')));
     }
+  }
+
+// MENDAPATKAN IMAGE SIZE
+  Future<Size> _getImageSize(File imageFile) async {
+    final Uint8List bytes = await imageFile.readAsBytes();
+    final ui.Codec codec = await ui.instantiateImageCodec(bytes);
+    final ui.FrameInfo frameInfo = await codec.getNextFrame();
+    return Size(
+        frameInfo.image.width.toDouble(), frameInfo.image.height.toDouble());
   }
 
 // PENAMBAHAN WASTE ITEM ROW
@@ -241,15 +286,11 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
   }
 
   Future<void> _submitDeposits() async {
-    EasyLoading.show(status: 'Loading...');
-    if (nameController.text.isEmpty || dateController.text.isEmpty) {
-      setState(() {
-        _errorMessage = 'Tolong isi Semua Data!';
-      });
-      EasyLoading.dismiss();
-      return;
-    }
     List<Map<String, dynamic>> deposits = [];
+    setState(() {
+      _isloading = true;
+      _errorMessage = null;
+    });
 
     // Filter out empty waste items
     for (var item in wasteItems) {
@@ -262,45 +303,44 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
         });
       }
     }
-    // Additional Validation: Check if any valid waste items exist
-    if (deposits.isEmpty) {
+
+    try {
+      final response = await http.post(
+        Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/tabung'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': nameController.text,
+          'date': dateController.text,
+          'deposits': deposits,
+        }),
+      );
       setState(() {
-        _errorMessage = 'Tolong isi setidaknya satu jenis sampah dan jumlah!';
+        _isloading = false; // Hide loading indicator after response
       });
-      EasyLoading.dismiss(); // Dismiss EasyLoading on error
-      return; // Exit the function if no valid waste items exist
-    }
-
-    final response = await http.post(
-      Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/tabung'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'name': nameController.text,
-        'date': dateController.text,
-        'deposits': deposits,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      Navigator.push(
+      if (response.statusCode == 500 || response.statusCode == 201) {
+        Navigator.push(
           // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(
             builder: (context) => const SavingSuccess(),
-          ));
-      _clearForm();
-    } else {
+          ),
+        );
+        _clearForm();
+      } else {}
+    } catch (e) {
       setState(() {
-        _errorMessage = 'Failed to save deposits';
+        _isloading = false;
+        _errorMessage = 'Error: $e';
       });
     }
-    EasyLoading.dismiss();
   }
 
   @override
   Widget build(BuildContext context) {
     final NumberFormat formatter = NumberFormat(
         '#,##0', 'id_ID'); // FORMAT RIBUAN PEMISAH INDONESIA LOCALIZATION
+    // ignore: avoid_print
+    print("Building with ${wasteItems.length} waste items");
 
     return Scaffold(
       appBar: AppBar(),
@@ -333,7 +373,6 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                 children: [
                   Text(
                     'Hasil Deteksi Sampah',
-                    style: TextStyle(),
                   ),
                   SizedBox(
                     height: 10,
@@ -357,7 +396,47 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                   width: 400,
                   height: 400,
                   child: _imageFile != null
-                      ? Image.file(_imageFile!)
+                      ? FutureBuilder<Size>(
+                          future: _getImageSize(_imageFile!),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return LayoutBuilder(
+                                builder: (context, constraints) {
+                                  double aspectRatio = snapshot.data!.width /
+                                      snapshot.data!.height;
+                                  double width = constraints.maxWidth;
+                                  double height = width / aspectRatio;
+
+                                  if (height > constraints.maxHeight) {
+                                    height = constraints.maxHeight;
+                                    width = height * aspectRatio;
+                                  }
+
+                                  return Stack(
+                                    children: [
+                                      Image.file(
+                                        _imageFile!,
+                                        fit: BoxFit.contain,
+                                        width: width,
+                                        height: height,
+                                      ),
+                                      CustomPaint(
+                                        painter: BoundingBoxPainter(
+                                          _predictions,
+                                          snapshot.data!,
+                                          Size(width, height),
+                                        ),
+                                        size: Size(width, height),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          },
+                        )
                       : Image.asset(
                           'assets/png/placeholder.png',
                           fit: BoxFit.cover,
@@ -644,13 +723,17 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
                   ),
                   child: TextButton(
                     onPressed: _submitDeposits,
-                    child: const Text(
-                      'Tabung',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    child: _isloading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : const Text(
+                            'Tabung',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
                   ),
                 ),
               ),
