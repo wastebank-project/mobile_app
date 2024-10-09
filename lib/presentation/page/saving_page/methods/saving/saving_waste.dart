@@ -303,8 +303,21 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
         });
       }
     }
-
+    if (nameController.text.isEmpty || dateController.text.isEmpty) {
+      setState(() {
+        _isloading = false;
+        _errorMessage = 'Tolong isi Semua Data!';
+      });
+      return;
+    } else if (deposits.isEmpty) {
+      setState(() {
+        _isloading = false;
+        _errorMessage = 'Tolong isi setidaknya satu jenis sampah dan jumlah!';
+      });
+      return; // Exit the function if no valid waste items exist
+    }
     try {
+      Future.delayed(const Duration(seconds: 3));
       final response = await http.post(
         Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/tabung'),
         headers: {'Content-Type': 'application/json'},
@@ -326,7 +339,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
           ),
         );
         _clearForm();
-      } else {}
+      }
     } catch (e) {
       setState(() {
         _isloading = false;
@@ -340,7 +353,7 @@ class _SavingWasteScreenState extends State<SavingWasteScreen> {
     final NumberFormat formatter = NumberFormat(
         '#,##0', 'id_ID'); // FORMAT RIBUAN PEMISAH INDONESIA LOCALIZATION
     // ignore: avoid_print
-    print("Building with ${wasteItems.length} waste items");
+    // print("Building with ${wasteItems.length} waste items");
 
     return Scaffold(
       appBar: AppBar(),
