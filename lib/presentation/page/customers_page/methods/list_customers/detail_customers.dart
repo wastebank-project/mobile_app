@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:waste_app/domain/customers.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:convert';
+
+import 'package:waste_app/presentation/page/customers_page/methods/list_customers/history.dart';
 
 class DetailCustomer extends StatefulWidget {
   final Map<String, dynamic> nasabah;
@@ -12,14 +17,31 @@ class DetailCustomer extends StatefulWidget {
 
 class _DetailCustomerState extends State<DetailCustomer> {
   List<dynamic> _history = [];
-  bool _isLoading = false;
+  Map<String, String> wasteTypes = {};
+
+// MENGAMBIL DATA TIPE SAMPAH
+  Future<void> fetchWasteTypes() async {
+    final response = await http
+        .get(Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/wastetypes'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      setState(() {
+        wasteTypes = {
+          for (var e in data) e['id'] as String: e['name'] as String,
+        };
+      });
+    } else {
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to fetch history:')),
+        );
+      });
+    }
+  }
 
   // Fetch customer history from /tabung API
   Future<void> _fetchCustomerHistory() async {
-    setState(() {
-      _isLoading = true;
-    });
-
     try {
       List<dynamic> history =
           await Customer().getCustomerHistory(widget.nasabah['name']);
@@ -30,11 +52,13 @@ class _DetailCustomerState extends State<DetailCustomer> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to fetch history: $e')),
       );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchWasteTypes();
   }
 
   @override
@@ -46,12 +70,33 @@ class _DetailCustomerState extends State<DetailCustomer> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Detail Nasabah',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Detail Nasabah',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                    onPressed: () async {
+                      await _fetchCustomerHistory();
+                      if (_history.isNotEmpty) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TransactionHistoryPage(
+                              history: _history,
+                              wasteTypes: wasteTypes,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.history))
+              ],
             ),
             const SizedBox(height: 20),
             const Text(
@@ -63,44 +108,35 @@ class _DetailCustomerState extends State<DetailCustomer> {
             ),
             Text(widget.nasabah['name']),
             const SizedBox(height: 20),
-            // Add a button to fetch the history
-            Center(
-              child: ElevatedButton(
-                onPressed: _fetchCustomerHistory,
-                child: _isLoading
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text('Lihat History'),
+            const Text(
+              'Email',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
             ),
+            Text(widget.nasabah['email']),
             const SizedBox(height: 20),
-            // Display history if fetched
-            if (_history.isNotEmpty)
-              const Text('Riwayat Transaksi:',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            Expanded(
-              child: _history.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: _history.length,
-                      itemBuilder: (context, index) {
-                        final historyItem = _history[index];
-                        return ListTile(
-                          title: Text('Date: ${historyItem['date']}'),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  'Total Balance: ${historyItem['totalBalance']}'),
-                              ...historyItem['deposits'].map<Widget>((deposit) {
-                                return Text(
-                                    'Deposit Amount: ${deposit['amount']}');
-                              }).toList(),
-                            ],
-                          ),
-                        );
-                      },
-                    )
-                  : const Text('No history available.'),
+            const Text(
+              'Alamat',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
+            const SizedBox(height: 5),
+            Text(widget.nasabah['address']),
+            const SizedBox(height: 20),
+            const Text(
+              'Nomor Telepon',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(height: 5),
+            Text(widget.nasabah['phoneNumber']),
+            const SizedBox(height: 75),
           ],
         ),
       ),
