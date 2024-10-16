@@ -17,10 +17,30 @@ class DetailCustomer extends StatefulWidget {
 
 class _DetailCustomerState extends State<DetailCustomer> {
   List<dynamic> _history = [];
+  List<dynamic> _withdrawals = []; // Store withdrawal history
   Map<String, String> wasteTypes = {};
   int? _balance; // Store the customer's balance as int
 
-  // MENGAMBIL DATA TIPE SAMPAH
+  // Fetch customer withdrawal history (liquidity)
+  Future<void> fetchCustomerWithdrawals() async {
+    try {
+      List<dynamic> withdrawals = await Customer().getLiquidity();
+      // Filter withdrawal history by customer's name
+      final customerWithdrawals = withdrawals
+          .where((withdrawal) => withdrawal['name'] == widget.nasabah['name'])
+          .toList();
+
+      setState(() {
+        _withdrawals = customerWithdrawals;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to fetch withdrawals: $e')),
+      );
+    }
+  }
+
+// MENGAMBIL DATA TIPE SAMPAH
   Future<void> fetchWasteTypes() async {
     final response = await http
         .get(Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/wastetypes'));
@@ -55,6 +75,10 @@ class _DetailCustomerState extends State<DetailCustomer> {
         setState(() {
           _balance = customerBalance['totalBalance']; // Store as int
         });
+      } else {
+        setState(() {
+          Text('User tidak mempunyai saldo');
+        });
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -81,8 +105,9 @@ class _DetailCustomerState extends State<DetailCustomer> {
   @override
   void initState() {
     super.initState();
-    fetchWasteTypes();
+    fetchWasteTypes(); // Fetch waste types when the page is loaded
     fetchCustomerBalance(); // Fetch the balance when the page is loaded
+    fetchCustomerWithdrawals(); // Fetch withdrawal history when the page is loaded
   }
 
   @override
@@ -168,10 +193,29 @@ class _DetailCustomerState extends State<DetailCustomer> {
                 fontSize: 20,
               ),
             ),
-            _balance != null
-                ? Text('Rp$_balance') // Display balance as int
-                : const CircularProgressIndicator(), // Show loading indicator while fetching balance
-            const SizedBox(height: 75),
+            if (_balance != null) Text('Rp$_balance') else const Text('-'),
+            const SizedBox(height: 20),
+            const Text(
+              'Riwayat Penarikan',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            _withdrawals.isNotEmpty
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: _withdrawals.length,
+                      itemBuilder: (context, index) {
+                        final withdrawal = _withdrawals[index];
+                        return ListTile(
+                          title: Text('Penarikan: ${withdrawal['amount']}'),
+                          subtitle: Text('Tanggal: ${withdrawal['date']}'),
+                        );
+                      },
+                    ),
+                  )
+                : const Text('-'),
           ],
         ),
       ),
