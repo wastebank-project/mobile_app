@@ -18,8 +18,9 @@ class DetailCustomer extends StatefulWidget {
 class _DetailCustomerState extends State<DetailCustomer> {
   List<dynamic> _history = [];
   Map<String, String> wasteTypes = {};
+  int? _balance; // Store the customer's balance as int
 
-// MENGAMBIL DATA TIPE SAMPAH
+  // MENGAMBIL DATA TIPE SAMPAH
   Future<void> fetchWasteTypes() async {
     final response = await http
         .get(Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/wastetypes'));
@@ -34,13 +35,35 @@ class _DetailCustomerState extends State<DetailCustomer> {
     } else {
       setState(() {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to fetch history:')),
+          const SnackBar(content: Text('Failed to fetch waste types')),
         );
       });
     }
   }
 
-  // Fetch customer history from /tabung API
+  // Fetch customer balance
+  Future<void> fetchCustomerBalance() async {
+    try {
+      List<dynamic> balances = await Customer().getBalance();
+      // Find the balance for the current customer
+      final customerBalance = balances.firstWhere(
+        (balance) => balance['name'] == widget.nasabah['name'],
+        orElse: () => null,
+      );
+
+      if (customerBalance != null) {
+        setState(() {
+          _balance = customerBalance['totalBalance']; // Store as int
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to fetch balance: $e')),
+      );
+    }
+  }
+
+  // Fetch customer history
   Future<void> _fetchCustomerHistory() async {
     try {
       List<dynamic> history =
@@ -59,6 +82,7 @@ class _DetailCustomerState extends State<DetailCustomer> {
   void initState() {
     super.initState();
     fetchWasteTypes();
+    fetchCustomerBalance(); // Fetch the balance when the page is loaded
   }
 
   @override
@@ -136,6 +160,17 @@ class _DetailCustomerState extends State<DetailCustomer> {
             ),
             const SizedBox(height: 5),
             Text(widget.nasabah['phoneNumber']),
+            const SizedBox(height: 20),
+            const Text(
+              'Saldo',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            _balance != null
+                ? Text('Rp$_balance') // Display balance as int
+                : const CircularProgressIndicator(), // Show loading indicator while fetching balance
             const SizedBox(height: 75),
           ],
         ),
