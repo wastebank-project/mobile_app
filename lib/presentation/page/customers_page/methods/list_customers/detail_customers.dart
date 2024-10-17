@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:waste_app/domain/customers.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:waste_app/presentation/page/customers_page/methods/list_customers/edit_customers.dart';
 import 'dart:convert';
 
 import 'package:waste_app/presentation/page/customers_page/methods/list_customers/history.dart';
@@ -40,7 +41,7 @@ class _DetailCustomerState extends State<DetailCustomer> {
     }
   }
 
-// MENGAMBIL DATA TIPE SAMPAH
+  // MENGAMBIL DATA TIPE SAMPAH
   Future<void> fetchWasteTypes() async {
     final response = await http
         .get(Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/wastetypes'));
@@ -74,10 +75,6 @@ class _DetailCustomerState extends State<DetailCustomer> {
       if (customerBalance != null) {
         setState(() {
           _balance = customerBalance['totalBalance']; // Store as int
-        });
-      } else {
-        setState(() {
-          Text('User tidak mempunyai saldo');
         });
       }
     } catch (e) {
@@ -215,7 +212,41 @@ class _DetailCustomerState extends State<DetailCustomer> {
                       },
                     ),
                   )
-                : const Text('-'),
+                : const Text('Tidak ada riwayat penarikan.'),
+            const SizedBox(height: 5),
+            Center(
+              child: SizedBox(
+                width: 150,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Navigate to the EditCustomerScreen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EditCustomerScreen(nasabah: widget.nasabah),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(Color(0xff7ABA78)),
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    'Update Data',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),
