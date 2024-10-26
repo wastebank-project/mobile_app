@@ -18,16 +18,112 @@ class DetailCustomer extends StatefulWidget {
 
 class _DetailCustomerState extends State<DetailCustomer> {
   List<dynamic> _history = [];
-  List<dynamic> _withdrawals = []; // Store withdrawal history
+  List<dynamic> _withdrawals = [];
   Map<String, String> wasteTypes = {};
   int? _balance; // Store the customer's balance as int
-  bool _isLoadingWithdrawals = true;
-  bool _isLoadingBalance = true;
+  bool _isloading = true;
+
+  // HAPUS CUSTOMER
+  void _deleteCustomer(BuildContext context) async {
+    bool? confirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          icon: const Icon(
+            Icons.warning_amber,
+            size: 50,
+          ),
+          iconColor: Colors.red,
+          title: const Text(
+            'PENGHAPUSAN NASABAH',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
+          content: const Text(
+            'Setelah dihapus, anda tidak dapat memulihkan nasabah ini',
+            style: TextStyle(fontSize: 15),
+          ),
+          actions: [
+            SizedBox(
+              width: 120,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                    const Color(0xffE66776),
+                  ),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                child: const Text(
+                  'Hapus Data',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 5),
+            SizedBox(
+              width: 120,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                style: ButtonStyle(
+                  side: WidgetStateProperty.all(
+                      const BorderSide(color: Colors.black, width: 2.5)),
+                  shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  )),
+                ),
+                child: const Text(
+                  'Batal',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+// FUNGSI PEMANGGILAN API TERHADAP KODE DIATAS
+
+    if (confirmed == true) {
+      setState(() {
+        _isloading = true;
+      });
+      try {
+        await Future.delayed(const Duration(seconds: 1));
+        await Customer().deleteCustomer(widget.nasabah['id']);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context, true);
+      } catch (e) {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete customer: $e')),
+        );
+      } finally {
+        setState(() {
+          _isloading = false;
+        });
+      }
+    }
+  }
 
   // Fetch customer withdrawal history (liquidity)
   Future<void> fetchCustomerWithdrawals() async {
     setState(() {
-      _isLoadingWithdrawals = true;
+      _isloading = true;
     });
     try {
       List<dynamic> withdrawals = await Customer().getLiquidity();
@@ -45,7 +141,7 @@ class _DetailCustomerState extends State<DetailCustomer> {
       );
     } finally {
       setState(() {
-        _isLoadingWithdrawals = false;
+        _isloading = false;
       });
     }
   }
@@ -74,7 +170,7 @@ class _DetailCustomerState extends State<DetailCustomer> {
   // Fetch customer balance
   Future<void> fetchCustomerBalance() async {
     setState(() {
-      _isLoadingBalance = true;
+      _isloading = true;
     });
     try {
       List<dynamic> balances = await Customer().getBalance();
@@ -95,7 +191,7 @@ class _DetailCustomerState extends State<DetailCustomer> {
       );
     } finally {
       setState(() {
-        _isLoadingBalance = false;
+        _isloading = false;
       });
     }
   }
@@ -145,11 +241,13 @@ class _DetailCustomerState extends State<DetailCustomer> {
                 IconButton(
                     onPressed: () async {
                       await _fetchCustomerHistory();
-                      if (_history.isNotEmpty) {
+                      await fetchCustomerWithdrawals();
+                      {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => TransactionHistoryPage(
+                              withdrawals: _withdrawals,
                               history: _history,
                               wasteTypes: wasteTypes,
                             ),
@@ -206,65 +304,72 @@ class _DetailCustomerState extends State<DetailCustomer> {
                 fontSize: 20,
               ),
             ),
-            _isLoadingBalance
+            _isloading
                 ? const CircularProgressIndicator()
                 : Text('Rp${_balance ?? ' Tabungan Habis'}'),
-            const SizedBox(height: 20),
-            const Text(
-              'Riwayat Penarikan',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            _isLoadingWithdrawals
-                ? const CircularProgressIndicator()
-                : _withdrawals.isNotEmpty
-                    ? Expanded(
-                        child: ListView.builder(
-                          itemCount: _withdrawals.length,
-                          itemBuilder: (context, index) {
-                            final withdrawal = _withdrawals[index];
-                            return ListTile(
-                              title: Text('Penarikan: ${withdrawal['amount']}'),
-                              subtitle: Text('Tanggal: ${withdrawal['date']}'),
-                            );
-                          },
+            const SizedBox(height: 50),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Navigate to the EditCustomerScreen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              EditCustomerScreen(nasabah: widget.nasabah),
                         ),
-                      )
-                    : const Text('Tidak ada riwayat penarikan.'),
-            const SizedBox(height: 10),
-            Center(
-              child: SizedBox(
-                width: 150,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Navigate to the EditCustomerScreen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            EditCustomerScreen(nasabah: widget.nasabah),
-                      ),
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Color(0xff7ABA78)),
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          WidgetStateProperty.all(const Color(0xff7ABA78)),
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     ),
-                  ),
-                  child: const Text(
-                    'Update Data',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    child: const Text(
+                      'Edit',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
+                SizedBox(
+                  width: 150,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _deleteCustomer(context);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          WidgetStateProperty.all(Colors.red.shade400),
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                    child: _isloading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : const Text(
+                            'Hapus',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
