@@ -21,9 +21,14 @@ class _DetailCustomerState extends State<DetailCustomer> {
   List<dynamic> _withdrawals = []; // Store withdrawal history
   Map<String, String> wasteTypes = {};
   int? _balance; // Store the customer's balance as int
+  bool _isLoadingWithdrawals = true;
+  bool _isLoadingBalance = true;
 
   // Fetch customer withdrawal history (liquidity)
   Future<void> fetchCustomerWithdrawals() async {
+    setState(() {
+      _isLoadingWithdrawals = true;
+    });
     try {
       List<dynamic> withdrawals = await Customer().getLiquidity();
       // Filter withdrawal history by customer's name
@@ -38,6 +43,10 @@ class _DetailCustomerState extends State<DetailCustomer> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to fetch withdrawals: $e')),
       );
+    } finally {
+      setState(() {
+        _isLoadingWithdrawals = false;
+      });
     }
   }
 
@@ -64,6 +73,9 @@ class _DetailCustomerState extends State<DetailCustomer> {
 
   // Fetch customer balance
   Future<void> fetchCustomerBalance() async {
+    setState(() {
+      _isLoadingBalance = true;
+    });
     try {
       List<dynamic> balances = await Customer().getBalance();
       // Find the balance for the current customer
@@ -81,6 +93,10 @@ class _DetailCustomerState extends State<DetailCustomer> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to fetch balance: $e')),
       );
+    } finally {
+      setState(() {
+        _isLoadingBalance = false;
+      });
     }
   }
 
@@ -184,13 +200,15 @@ class _DetailCustomerState extends State<DetailCustomer> {
             Text(widget.nasabah['phoneNumber']),
             const SizedBox(height: 20),
             const Text(
-              'Saldo',
+              'Tabungan',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),
-            if (_balance != null) Text('Rp$_balance') else const Text('-'),
+            _isLoadingBalance
+                ? const CircularProgressIndicator()
+                : Text('Rp${_balance ?? ' Tabungan Habis'}'),
             const SizedBox(height: 20),
             const Text(
               'Riwayat Penarikan',
@@ -199,21 +217,23 @@ class _DetailCustomerState extends State<DetailCustomer> {
                 fontSize: 20,
               ),
             ),
-            _withdrawals.isNotEmpty
-                ? Expanded(
-                    child: ListView.builder(
-                      itemCount: _withdrawals.length,
-                      itemBuilder: (context, index) {
-                        final withdrawal = _withdrawals[index];
-                        return ListTile(
-                          title: Text('Penarikan: ${withdrawal['amount']}'),
-                          subtitle: Text('Tanggal: ${withdrawal['date']}'),
-                        );
-                      },
-                    ),
-                  )
-                : const Text('Tidak ada riwayat penarikan.'),
-            const SizedBox(height: 5),
+            _isLoadingWithdrawals
+                ? const CircularProgressIndicator()
+                : _withdrawals.isNotEmpty
+                    ? Expanded(
+                        child: ListView.builder(
+                          itemCount: _withdrawals.length,
+                          itemBuilder: (context, index) {
+                            final withdrawal = _withdrawals[index];
+                            return ListTile(
+                              title: Text('Penarikan: ${withdrawal['amount']}'),
+                              subtitle: Text('Tanggal: ${withdrawal['date']}'),
+                            );
+                          },
+                        ),
+                      )
+                    : const Text('Tidak ada riwayat penarikan.'),
+            const SizedBox(height: 10),
             Center(
               child: SizedBox(
                 width: 150,
@@ -246,7 +266,6 @@ class _DetailCustomerState extends State<DetailCustomer> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
           ],
         ),
       ),
