@@ -16,9 +16,9 @@ class EditCustomerScreen extends StatefulWidget {
 class _EditCustomerScreenState extends State<EditCustomerScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController nameController;
+  late TextEditingController emailController;
   late TextEditingController addressController;
   late TextEditingController phoneNumberController;
-  late TextEditingController emailController;
   String? _errorMessage;
 
   final Customer _customer = Customer();
@@ -27,12 +27,12 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.nasabah['name'] ?? '');
+    emailController =
+        TextEditingController(text: widget.nasabah['email'] ?? '');
     addressController =
         TextEditingController(text: widget.nasabah['address'] ?? '');
     phoneNumberController =
         TextEditingController(text: widget.nasabah['phoneNumber'] ?? '');
-    emailController =
-        TextEditingController(text: widget.nasabah['email'] ?? '');
   }
 
 // FUNGSI UPDATE NASABAH TERHADAP API
@@ -43,9 +43,9 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
         await _customer.updateCustomer(
           widget.nasabah['id'],
           nameController.text,
+          emailController.text,
           addressController.text,
           phoneNumberController.text,
-          emailController.text,
         );
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
