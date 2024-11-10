@@ -306,7 +306,7 @@ class _DetailCustomerState extends State<DetailCustomer> {
             ),
             _isloading
                 ? const CircularProgressIndicator()
-                : Text('Rp${_balance ?? ' Tabungan Habis'}'),
+                : Text('Rp ${_balance ?? '0'}'),
             const SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

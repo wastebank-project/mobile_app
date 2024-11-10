@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:waste_app/domain/customers.dart';
 import 'package:waste_app/presentation/page/customers_page/methods/list_customers/detail_customers.dart';
+import 'package:waste_app/presentation/page/saving_page/methods/balance/tarik_saldo.dart';
 
 class ListCustomers extends StatefulWidget {
   const ListCustomers({super.key});
@@ -164,6 +165,19 @@ class _ListCustomersState extends State<ListCustomers> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LiquidityCustomers(),
+            ),
+          );
+        },
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        child: Image.asset('assets/png/wd.png'),
       ),
     );
   }
