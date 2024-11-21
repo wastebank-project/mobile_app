@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/login_page/login_screen.dart';
 import 'package:waste_app/presentation/page/profile_page/methods/about.dart';
 import 'package:waste_app/presentation/page/profile_page/methods/edit_password.dart';
 import 'package:waste_app/presentation/page/profile_page/methods/edit_profile.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({
     super.key,
     required this.username,
@@ -14,6 +13,13 @@ class ProfilePage extends StatelessWidget {
   });
   final String username;
   final String email;
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  bool _isloading = false;
 
   void _logout(BuildContext context) async {
     bool? confirmed = await showDialog(
@@ -90,8 +96,11 @@ class ProfilePage extends StatelessWidget {
     );
 
     if (confirmed == true) {
-      EasyLoading.show(status: 'Logging out...');
       try {
+        setState(() {
+          _isloading = true;
+        });
+        await Future.delayed(const Duration(seconds: 1));
         await Authentication().logoutUser();
         Navigator.pushAndRemoveUntil(
           // ignore: use_build_context_synchronously
@@ -104,9 +113,12 @@ class ProfilePage extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to log out: $e')),
         );
+      } finally {
+        setState(() {
+          _isloading = false;
+        });
       }
     }
-    EasyLoading.dismiss();
   }
 
   @override
@@ -139,7 +151,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   Center(
                     child: Text(
-                      username,
+                      widget.username,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -148,7 +160,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   Center(
                     child: Text(
-                      email,
+                      widget.email,
                       style: const TextStyle(
                         fontSize: 14,
                       ),
@@ -176,8 +188,8 @@ class ProfilePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                EditProfile(username: username, email: email),
+                            builder: (context) => EditProfile(
+                                username: widget.username, email: widget.email),
                           ),
                         );
                       },
@@ -319,13 +331,17 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        child: const Text(
-                          'Keluar',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: _isloading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                'Keluar',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
                     ),
                   ),

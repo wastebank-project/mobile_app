@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waste_app/presentation/page/main_page/main_page.dart';
@@ -59,7 +58,6 @@ class Authentication {
       required BuildContext context,
       required Function(String) setErrorMessage}) async {
     if (formKey.currentState!.validate()) {
-      EasyLoading.show(status: 'Loading');
       try {
         final response = await loginUser(
           usernameController.text,
@@ -72,7 +70,6 @@ class Authentication {
         // Handle login error
         setErrorMessage(e.toString().replaceFirst('Exception: ', ''));
       }
-      EasyLoading.dismiss();
     }
   }
 

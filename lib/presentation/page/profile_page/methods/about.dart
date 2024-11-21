@@ -32,31 +32,31 @@ class AboutScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 7),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 SizedBox(
-                  height: 180,
+                  height: 300,
                   width: 102,
                   child: Column(
                     children: <Widget>[
-                      Image.asset('assets/png/fix_faishal.png'),
+                      Image.asset('assets/png/faishal.png', height: 150),
                       const Text(
                         'Faishal Yusuf',
                         style: TextStyle(fontSize: 12),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 9),
                       Image.asset('assets/png/fe.png'),
                     ],
                   ),
                 ),
                 SizedBox(
                   width: 102,
-                  height: 180,
+                  height: 300,
                   child: Column(
                     children: <Widget>[
-                      Image.asset('assets/png/fix_sofvi.png'),
+                      Image.asset('assets/png/sofvi.png', height: 150),
                       const Text(
                         'Sofviyah Aprilliani',
                         style: TextStyle(fontSize: 11),
@@ -68,15 +68,15 @@ class AboutScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   width: 102,
-                  height: 180,
+                  height: 300,
                   child: Column(
                     children: <Widget>[
-                      Image.asset('assets/png/fix_ikhwan.png'),
+                      Image.asset('assets/png/ikhwan.png', height: 150),
                       const Text(
                         'Ikhwan Nashir',
                         style: TextStyle(fontSize: 12),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 9),
                       Image.asset(
                         'assets/png/be.png',
                       ),

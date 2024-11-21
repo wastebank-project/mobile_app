@@ -102,6 +102,21 @@ class Customer {
     }
   }
 
+  Future<List<dynamic>> getCustomerHistory(String customerName) async {
+    final response =
+        await http.get(Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/tabung'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> allHistory = jsonDecode(response.body);
+      // Filter history by customer name
+      return allHistory
+          .where((history) => history['name'] == customerName)
+          .toList();
+    } else {
+      throw Exception('Failed to load customer history');
+    }
+  }
+
   Future<List<dynamic>> getLiquidity() async {
     final url = Uri.parse('${dotenv.env['BASE_URL_BACKEND']}/saldokeluar');
     final headers = {'Content-Type': 'application/json'};

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:waste_app/domain/authentication.dart';
 import 'package:waste_app/presentation/page/welcoming_page/welcoming_page.dart';
 import 'package:waste_app/presentation/widgets/text_fields.dart';
@@ -12,16 +11,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isloading = false;
   final _formKey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   final Authentication _authentication = Authentication();
   Future<void> _login() async {
-    EasyLoading.show(status: 'Loading');
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isloading = true;
+      });
       try {
-        // ignore: unused_local_variable
+        await Future.delayed(const Duration(seconds: 1));
         final response = await _authentication.login(
             formKey: _formKey,
             usernameController: usernameController,
@@ -36,9 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           _errorMessage = e.toString().replaceFirst('Exception:', '');
         });
+      } finally {
+        setState(() {
+          _isloading = false;
+        });
       }
     }
-    EasyLoading.dismiss();
   }
 
   String? _errorMessage;
@@ -144,11 +149,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       minimumSize: WidgetStateProperty.all(const Size(
                           350, 50)), // Set your custom width and height
                     ),
-                    child: const Text("Masuk",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600)),
+                    child: _isloading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text(
+                            "Masuk",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
+                          ),
                   ),
                 ],
               ),
