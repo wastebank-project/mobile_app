@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'WasteApp',
       theme: ThemeData(
         fontFamily: "Poppins",
-        bottomAppBarTheme: const BottomAppBarTheme(
+        bottomAppBarTheme: const BottomAppBarThemeData(
           elevation: 0,
           color: Colors.transparent,
         ),
