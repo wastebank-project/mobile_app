@@ -2,7 +2,7 @@ name: waste_app
 description: "A new Flutter project for Final Capstone Project Telecommunication
   Engineering"
 
-version: 1.1.1+4
+version: 1.1.2+5
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -31,7 +31,7 @@ dependencies:
   photo_view: ^0.15.0
   shared_preferences: ^2.2.3
   smooth_page_indicator: ^1.1.0
-  tflite_flutter: ^0.11.0
+  tflite_flutter: ^0.12.1
   url_launcher: ^6.3.0
 
 dev_dependencies:
