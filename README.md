@@ -1,6 +1,6 @@
 # waste_app
 
-A new Flutter project for Final Capstone Project Telecommunication Engineering
+A new Flutter project for Final Capstone Project Telecommunication Engineering.
 
 ## Getting Started
 
